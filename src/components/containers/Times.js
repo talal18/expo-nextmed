@@ -61,6 +61,7 @@ class Times extends Component {
           <Text style={styles.medTimesTitle}>Add Times</Text>
         </TouchableOpacity>
         <FlatList
+          keyExtractor={(item, index) => index.toString()}
           data={this.props.intake_times.sort(function(a, b) {
             return a.time - b.time;
           })}

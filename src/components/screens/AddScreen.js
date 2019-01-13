@@ -24,6 +24,8 @@ import Title from "../containers/Title";
 import Dosage from "../containers/Dosage";
 import Notes from "../containers/Notes";
 
+import AppNotifications from "../common/AppNotifications";
+
 class AddScreen extends Component {
   constructor(props) {
     super(props);
@@ -31,6 +33,8 @@ class AddScreen extends Component {
     this.state = {
       m_id: ""
     };
+
+    this.notify = new AppNotifications();
   }
 
   componentWillMount() {
@@ -80,6 +84,7 @@ class AddScreen extends Component {
         { cancelable: false }
       );
     } else {
+      this.notify.addNotification("test", "my test body", "minute", Date.now());
       this.props.addMedication({
         m_id: this.state.m_id,
         title: this.props.data.title,

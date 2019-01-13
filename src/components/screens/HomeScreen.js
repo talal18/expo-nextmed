@@ -9,6 +9,8 @@ import {
   StyleSheet
 } from "react-native";
 
+import { Permissions } from "expo";
+
 import Metrics from "../../styling/Metrics";
 
 import { connect } from "react-redux";
@@ -21,6 +23,10 @@ class HomeScreen extends React.Component {
     this.state = {
       data: []
     };
+  }
+
+  async componentDidMount() {
+    let result = await Permissions.askAsync(Permissions.NOTIFICATIONS);
   }
 
   componentWillMount() {}
