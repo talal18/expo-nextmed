@@ -22,17 +22,17 @@ class Recurrence extends Component {
 
     this.state = {
       recurrences: [
-        { label: "Daily", value: "daily" },
-        { label: "Weekly", value: "weekly" },
-        { label: "Monthly", value: "monthly" },
-        { label: "Yearly", value: "yearly" }
+        { label: "Daily", value: "day" },
+        { label: "Weekly", value: "week" },
+        { label: "Monthly", value: "month" },
+        { label: "Yearly", value: "year" }
       ],
       recurrence_label: "Daily"
     };
   }
 
   componentDidMount() {
-    this.props.set_recurrence("daily");
+    this.props.set_recurrence("day");
   }
 
   render() {

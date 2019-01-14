@@ -84,7 +84,43 @@ class AddScreen extends Component {
         { cancelable: false }
       );
     } else {
-      this.notify.addNotification("test", "my test body", "minute", Date.now());
+      var start_date = new Date(this.props.data.start_date);
+
+      this.props.data.intake_times.map(item => {
+        var myDate = new Date(item.time);
+        var minutes = myDate.getMinutes();
+        var hours = myDate.getHours();
+
+        var date = new Date(
+          start_date.getFullYear(),
+          start_date.getMonth(),
+          start_date.getDate(),
+          hours,
+          minutes,
+          "0",
+          "0"
+        );
+
+        var testDate = new Date(Date.now());
+
+        if (
+          testDate.getHours() > hours ||
+          (testDate.getHours() === hours && testDate.getMinutes() > minutes)
+        ) {
+        } else {
+          this.notify.addNotification(
+            this.props.data.title,
+            this.props.data.title +
+              ` is now due. You should take ${this.props.data.dosage} ${
+                this.props.data.type
+              }`,
+            this.props.data.recurrence,
+            date,
+            this.props.data.end_date
+          );
+        }
+      });
+
       this.props.addMedication({
         m_id: this.state.m_id,
         title: this.props.data.title,
