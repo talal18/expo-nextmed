@@ -7,7 +7,7 @@
     "platforms": ["ios", "android"],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/logo-main.png",
+    "icon": "./assets/Icon.png",
     "splash": {
       "image": "./assets/logo-main.png",
       "resizeMode": "contain",
