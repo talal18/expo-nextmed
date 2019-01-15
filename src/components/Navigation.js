@@ -21,24 +21,29 @@ const TabNavigator = createBottomTabNavigator(
   },
   {
     tabBarPosition: "bottom",
+    swipeEnabled: "true",
 
     tabBarOptions: {
       horizontal: true,
       showIcon: true,
       showLabel: false,
-      pressColor: "#595d63",
+      activeBackgroundColor: "#595d63",
+      inactiveBackgroundColor: "#009688",
 
       tabStyle: {
         flexDirection: "row",
-        height: Metrics.tabHeight,
-        backgroundColor: "#000",
-
-        justifyContent: "center"
+        justifyContent: "center",
+        alignItems: "center",
+        height: "100%"
+      },
+      style: {
+        backgroundColor: "trasparent",
+        justifyContent: "center",
+        alignItems: "center",
+        height: "8%"
       }
     },
-    style: {
-      backgroundColor: "#242424"
-    },
+
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
         const { routeName } = navigation.state;
@@ -46,14 +51,14 @@ const TabNavigator = createBottomTabNavigator(
           return (
             <Image
               style={styles.homeTabLogo}
-              source={require("../assets/images/home-tab2.png")}
+              source={require("../assets/images/home-tab4.png")}
             />
           );
         } else if (routeName === "Settings") {
           return (
             <Image
               style={styles.settingTabLogo}
-              source={require("../assets/images/settings-logo3.png")}
+              source={require("../assets/images/settings-tab.png")}
             />
           );
         }
@@ -70,7 +75,7 @@ const AppNavigator = createStackNavigator({
       headerStyle: {
         backgroundColor: "#595d63"
       },
-      headerTintColor: "#fff",
+      headerTintColor: "#d6d6d6",
       headerTitleStyle: {
         fontWeight: "bold"
       }
@@ -83,7 +88,7 @@ const AppNavigator = createStackNavigator({
       headerStyle: {
         backgroundColor: "#595d63"
       },
-      headerTintColor: "#fff",
+      headerTintColor: "#d6d6d6",
       headerTitleStyle: {
         fontWeight: "bold"
       }
@@ -96,7 +101,7 @@ const AppNavigator = createStackNavigator({
       headerStyle: {
         backgroundColor: "#595d63"
       },
-      headerTintColor: "#fff",
+      headerTintColor: "#d6d6d6",
       headerTitleStyle: {
         fontWeight: "bold"
       }

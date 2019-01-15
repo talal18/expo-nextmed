@@ -16,8 +16,15 @@ class SettingsScreen extends React.Component {
 
   render() {
     return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text>Settings!</Text>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "#242424"
+        }}
+      >
+        <Text style={{ color: "#fff" }}>Settings!</Text>
       </View>
     );
   }

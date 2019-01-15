@@ -139,7 +139,7 @@ class AddScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView>
+        <ScrollView style={styles.scrollViewContainer}>
           <Title />
           <View style={styles.contentDivder} />
           <Type />
@@ -166,10 +166,15 @@ class AddScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    padding: 0,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#262626"
-    //paddingTop: Metrics.formContainerPaddingTop
+    backgroundColor: "#242424"
+  },
+
+  scrollViewContainer: {
+    paddingLeft: Metrics.scrollViewContainerPaddingHorizontal,
+    paddingRight: Metrics.scrollViewContainerPaddingHorizontal
   },
   contentDivder: {
     width: Metrics.formContentDivider,

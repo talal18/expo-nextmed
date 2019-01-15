@@ -7,6 +7,9 @@ const metrics = {
   marginHorizontal: NormalizeSize.normalizeWidth(10),
   marginVertical: NormalizeSize.normalizeHeight(10),
 
+  fullScreenWidth: NormalizeSize.normalizeWidth(width),
+  fullScreenHeight: NormalizeSize.normalizeHeight(height),
+
   /*----------------- Login Page --------------------*/
 
   //Login page padding
@@ -24,7 +27,7 @@ const metrics = {
   logoHeaderHeight: NormalizeSize.normalizeHeight(50),
   titleHeaderWidth: NormalizeSize.normalizeWidth(150),
   titleHeaderHeight: NormalizeSize.normalizeHeight(50),
-  tabHeight: NormalizeSize.normalizeHeight(50),
+  tabHeight: NormalizeSize.normalizeHeight(60),
   homeListItemContainerHeight: NormalizeSize.normalizeHeight(70),
   homeListItemWidth: NormalizeSize.normalizeWidth(350),
   homeListItemHeight: NormalizeSize.normalizeHeight(50),
@@ -52,11 +55,11 @@ const metrics = {
 
   /*----------------- Form Page --------------------*/
 
-  //Form page padding
-  formContainerPaddingTop: NormalizeSize.normalizeHeight(30),
   //Form container
   formContainerPaddingLeft: NormalizeSize.normalizeWidth(15),
   formContainerPaddingRight: NormalizeSize.normalizeWidth(15),
+  //ScrollView
+  scrollViewContainerPaddingHorizontal: NormalizeSize.normalizeWidth(25),
   //form contents divider
   formContentDivider: NormalizeSize.normalizeWidth(350),
   //Title input box
