@@ -10,6 +10,8 @@ import {
   Image
 } from "react-native";
 
+import { Dropdown } from "react-native-material-dropdown";
+
 import Metrics from "../../styling/Metrics";
 
 import { connect } from "react-redux";
@@ -47,53 +49,20 @@ class Type extends Component {
           <Text style={styles.medTypeTitle}>Medicine type</Text>
         </View>
         <View>
-          {Platform.OS === "android" && (
-            <TouchableOpacity style={styles.selectedMedType}>
-              <View
-                style={{
-                  padding: 5,
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between"
-                }}
-              >
-                <Text style={styles.selectedValueText}>
-                  {this.state.type_label}
-                </Text>
-                <Image
-                  source={require("../../assets/images/list-arrow-242424.png")}
-                  style={styles.listArrow}
-                />
-              </View>
-            </TouchableOpacity>
-          )}
-          <Picker
-            itemStyle={styles.medTypeTitle}
-            selectedValue={this.props.type}
-            onValueChange={(type, itemIndex) => {
-              this.props.set_type(type);
-              this.setState({
-                type_label: this.state.type_picker.map(item => {
-                  return item.value === type && item.label;
-                })
-              });
+          <Dropdown
+            inputContainerStyle={{ borderBottomColor: "transparent" }}
+            value={this.props.type}
+            rippleOpacity={0}
+            dropdownOffset={{
+              top: 10,
+              left: 0
             }}
-            style={
-              Platform.OS === "android"
-                ? styles.medDropDownContainerAndroid
-                : styles.medDropDownContainer
-            }
-          >
-            {this.state.type_picker.map((type, index) => {
-              return (
-                <Picker.Item
-                  key={index}
-                  label={type.label}
-                  value={type.value}
-                />
-              );
-            })}
-          </Picker>
+            containerStyle={styles.textInputStyle}
+            data={this.state.type_picker}
+            onChangeText={(type, itemIndex, data) => {
+              this.props.set_type(type);
+            }}
+          />
         </View>
       </View>
     );
@@ -101,59 +70,17 @@ class Type extends Component {
 }
 
 const styles = StyleSheet.create({
-  medTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#fff"
-  },
   medTypeTitle: {
-    paddingBottom: Platform.OS === "ios" ? 60 : 0,
     fontSize: 20,
     fontWeight: "bold",
     color: "#fff"
   },
-  medDropDownContainerAndroid: {
-    backgroundColor: "transparent",
-    color: "transparent",
-    width: Metrics.fromTypeDropMenucontainerW,
-    height: Metrics.fromTypeDropMenucontainerH,
-    marginTop: 10,
-    marginBottom: 10,
+  textInputStyle: {
     justifyContent: "center",
-    borderColor: "grey",
-    borderRadius: 5,
-    shadowColor: "#303838",
-    shadowOffset: { width: 0, height: 5 },
-    shadowRadius: 10,
-    shadowOpacity: 0.35
-  },
-  medDropDownContainer: {
-    width: Metrics.fromTypeDropMenucontainerW,
-    height: Metrics.fromTypeDropMenucontainerH,
-    color: "white",
-    marginTop: 10,
-    marginBottom: 60,
-    justifyContent: "center",
-    borderColor: "grey",
-    borderRadius: 5,
-    shadowColor: "#303838",
-    shadowOffset: { width: 0, height: 5 },
-    shadowRadius: 10,
-    shadowOpacity: 0.35
-  },
-  selectedValueText: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#242424"
-  },
-  selectedMedType: {
-    width: Metrics.fromTypeDropMenucontainerW,
-    height: Metrics.fromTypeDropMenucontainerH,
-    backgroundColor: "#fff",
-    flexDirection: "column",
-    justifyContent: "center",
+    width: Metrics.formTitleinputBoxW,
+    height: Metrics.formTitleinputBoxH,
     paddingLeft: 5,
-    position: "absolute",
+    backgroundColor: "#fff",
     borderColor: "grey",
     borderRadius: 5,
     marginTop: 10,
@@ -162,38 +89,6 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 5 },
     shadowRadius: 10,
     shadowOpacity: 0.35
-  },
-
-  listArrow: {
-    width: 10,
-    height: 10
-  },
-
-  medTypeListContainer: {
-    margin: 20,
-    backgroundColor: "#efefef",
-    bottom: 20,
-    left: 20,
-    right: 20,
-    position: "absolute",
-    alignItems: "center",
-    justifyContent: "space-around",
-    borderRadius: 5,
-    borderColor: "grey"
-  },
-
-  medTypeListTitle: {
-    fontSize: 22,
-    fontWeight: "700",
-    color: "black",
-    marginBottom: 5,
-    marginTop: 5
-  },
-  medTypeList: {
-    fontSize: 18,
-    fontWeight: "300",
-    color: "black",
-    margin: 5
   }
 });
 
