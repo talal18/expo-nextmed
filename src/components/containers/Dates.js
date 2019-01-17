@@ -192,7 +192,11 @@ class Dates extends Component {
       }
     }
 
-    if (myDate.getDate() < today.getDate()) {
+    if (
+      myDate.getDate() < today.getDate() &&
+      myDate.getMonth() < today.getMonth() &&
+      myDate.getFullYear() < today.getFullYear()
+    ) {
       if (Platform.OS === "ios")
         return Alert.alert(
           "Error",

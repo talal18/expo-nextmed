@@ -86,6 +86,15 @@ class AddScreen extends Component {
     } else {
       var start_date = new Date(this.props.data.start_date);
 
+      /*
+        7:45 PM
+
+        Tuseday 15        
+        Wednesday 16
+        Thursday 17
+        Friday 18
+      */
+
       this.props.data.intake_times.map(item => {
         var myDate = new Date(item.time);
         var minutes = myDate.getMinutes();
@@ -101,24 +110,16 @@ class AddScreen extends Component {
           "0"
         );
 
-        var testDate = new Date(Date.now());
-
-        if (
-          testDate.getHours() > hours ||
-          (testDate.getHours() === hours && testDate.getMinutes() > minutes)
-        ) {
-        } else {
-          this.notify.addNotification(
-            this.props.data.title,
-            this.props.data.title +
-              ` is now due. You should take ${this.props.data.dosage} ${
-                this.props.data.type
-              }`,
-            this.props.data.recurrence,
-            date,
-            this.props.data.end_date
-          );
-        }
+        this.notify.addNotification(
+          this.props.data.title,
+          this.props.data.title +
+            ` is now due. You should take ${this.props.data.dosage} ${
+              this.props.data.type
+            }`,
+          this.props.data.recurrence,
+          date,
+          this.props.data.end_date
+        );
       });
 
       this.props.addMedication({

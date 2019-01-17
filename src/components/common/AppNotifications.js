@@ -24,9 +24,37 @@ export default class AppNotifications {
     };
 
     var schedulingOptions = {};
+
+    var today = new Date(Date.now());
     var start_day = date.getDate();
     var start_month = date.getMonth();
     var start_year = date.getFullYear();
+
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var isBeforeNow = false;
+
+    if (
+      start_day === today.getDate() &&
+      start_month === today.getMonth() &&
+      start_year === today.getFullYear()
+    ) {
+      if (today.getHours() === hours) {
+        if (today.getMinutes() > minutes) {
+          isBeforeNow = true;
+        } else {
+          isBeforeNow = false;
+        }
+      } else {
+        if (today.getHours() > hours) {
+          isBeforeNow = true;
+        } else {
+          isBeforeNow = false;
+        }
+      }
+    } else {
+      isBeforeNow = false;
+    }
 
     Date.daysBetween = function(date1, date2) {
       //Get 1 day in milliseconds
@@ -51,7 +79,7 @@ export default class AppNotifications {
         );
         days = days - 1;
 
-        for (var i = 0; i <= days; i++) {
+        for (var i = isBeforeNow ? 1 : 0; i <= days; i++) {
           let t = new Date(date);
           t.setDate(t.getDate() + i);
 
@@ -67,8 +95,89 @@ export default class AppNotifications {
           // );
         }
       } else if (repeat === "week") {
+        var days = Date.daysBetween(
+          new Date(start_year, start_month, start_day, 0, 0, 0, 0),
+          new Date(end_date)
+        );
+        days = days - 1;
+
+        var weeks = days / 7;
+
+        weeks = Math.floor(weeks);
+
+        for (var i = isBeforeNow ? 1 : 0; i <= weeks; i++) {
+          let t = new Date(date);
+          t.setDate(t.getDate() + i * 7);
+
+          schedulingOptions = {
+            time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+          };
+
+          console.log(new Date(schedulingOptions.time).toString());
+
+          // Notifications.scheduleLocalNotificationAsync(
+          //   localNotification,
+          //   schedulingOptions
+          // );
+        }
       } else if (repeat === "month") {
+        var months = 0;
+        var end_date = new Date(end_date);
+
+        if (date.getMonth() === end_date.getMonth()) {
+          if (end_date.getFullYear() > date.getFullYear()) {
+            var years = end_date.getFullYear() - date.getFullYear();
+            months += 12 * years;
+          }
+        } else {
+          months = end_date.getMonth() - date.getMonth();
+        }
+
+        console.log(months);
+
+        for (var i = isBeforeNow ? 1 : 0; i <= months; i++) {
+          let t = new Date(date);
+          t.setMonth(t.getMonth() + i);
+
+          schedulingOptions = {
+            time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+          };
+
+          console.log(new Date(schedulingOptions.time).toString());
+
+          // Notifications.scheduleLocalNotificationAsync(
+          //   localNotification,
+          //   schedulingOptions
+          // );
+        }
       } else if (repeat === "year") {
+        var years = 0;
+
+        var end_date = new Date(end_date);
+
+        if (start_year === end_date.getFullYear()) {
+          if (!isBeforeNow) {
+            years = 1;
+          }
+        } else {
+          years = end_date.getFullYear() - start_year;
+        }
+
+        for (var i = 0; i < years; i++) {
+          let t = new Date(date);
+          t.setFullYear(t.getFullYear() + i);
+
+          schedulingOptions = {
+            time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+          };
+
+          console.log(new Date(schedulingOptions.time).toString());
+
+          // Notifications.scheduleLocalNotificationAsync(
+          //   localNotification,
+          //   schedulingOptions
+          // );
+        }
       }
     } else {
       schedulingOptions = {

@@ -39,8 +39,7 @@ const TabNavigator = createBottomTabNavigator(
       style: {
         backgroundColor: "trasparent",
         justifyContent: "center",
-        alignItems: "center",
-        height: "8%"
+        alignItems: "center"
       }
     },
 
