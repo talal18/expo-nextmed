@@ -40,7 +40,7 @@ class Recurrence extends Component {
     return (
       <View>
         <View style={{ alignItems: "center", marginTop: 10 }}>
-          <Text style={styles.medRecTitle}>Medicine Recurrence</Text>
+          <Text style={styles.medRecTitle}>Frequency</Text>
         </View>
         <View>
           <Dropdown

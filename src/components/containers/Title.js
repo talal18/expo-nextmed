@@ -12,7 +12,7 @@ class Title extends Component {
     return (
       <View>
         <View style={{ alignItems: "center", marginTop: 10 }}>
-          <Text style={styles.medTitle}>Medicine title</Text>
+          <Text style={styles.medTitle}>Title</Text>
         </View>
         <View>
           <TextInput

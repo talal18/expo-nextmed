@@ -26,7 +26,11 @@ class HomeScreen extends React.Component {
   }
 
   async componentDidMount() {
-    let result = await Permissions.askAsync(Permissions.NOTIFICATIONS);
+    let result = await Permissions.askAsync(
+      Permissions.NOTIFICATIONS,
+      Permissions.CAMERA,
+      Permissions.CAMERA_ROLL
+    );
   }
 
   componentWillMount() {}
