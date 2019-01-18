@@ -3,7 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerNgrokUrl": "https://hc-ct2.anonymous.expo-nextmed.exp.direct",
+  "packagerNgrokUrl": "https://packager.hc-ct2.anonymous.expo-nextmed.exp.direct",
+  "ngrokPid": 1001
 }

@@ -10,6 +10,8 @@ import {
   Image
 } from "react-native";
 
+import { Dropdown } from "react-native-material-dropdown";
+
 import Metrics from "../../styling/Metrics";
 
 import { connect } from "react-redux";
@@ -26,8 +28,7 @@ class Recurrence extends Component {
         { label: "Weekly", value: "week" },
         { label: "Monthly", value: "month" },
         { label: "Yearly", value: "year" }
-      ],
-      recurrence_label: "Daily"
+      ]
     };
   }
 
@@ -42,53 +43,20 @@ class Recurrence extends Component {
           <Text style={styles.medRecTitle}>Medicine Recurrence</Text>
         </View>
         <View>
-          {Platform.OS === "android" && (
-            <TouchableOpacity style={styles.selectedRecType}>
-              <View
-                style={{
-                  padding: 5,
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between"
-                }}
-              >
-                <Text style={styles.selectedValueText}>
-                  {this.state.recurrence_label}
-                </Text>
-                <Image
-                  source={require("../../assets/images/list-arrow-242424.png")}
-                  style={styles.listArrow}
-                />
-              </View>
-            </TouchableOpacity>
-          )}
-          <Picker
-            itemStyle={styles.medRecTitle}
-            selectedValue={this.props.recurrence}
-            onValueChange={(recurrence, itemIndex) => {
-              this.props.set_recurrence(recurrence);
-              this.setState({
-                recurrence_label: this.state.recurrences.map(item => {
-                  return item.value === recurrence && item.label;
-                })
-              });
+          <Dropdown
+            inputContainerStyle={{ borderBottomColor: "transparent" }}
+            value={this.props.recurrence}
+            rippleOpacity={0}
+            dropdownOffset={{
+              top: 10,
+              left: 0
             }}
-            style={
-              Platform.OS === "android"
-                ? styles.medDropDownContainerAndroid
-                : styles.medDropDownContainer
-            }
-          >
-            {this.state.recurrences.map((recurrence, index) => {
-              return (
-                <Picker.Item
-                  key={index}
-                  label={recurrence.label}
-                  value={recurrence.value}
-                />
-              );
-            })}
-          </Picker>
+            containerStyle={styles.textInputStyle}
+            data={this.state.recurrences}
+            onChangeText={(recurrence, itemIndex, data) => {
+              this.props.set_recurrence(recurrence);
+            }}
+          />
         </View>
       </View>
     );
@@ -96,58 +64,17 @@ class Recurrence extends Component {
 }
 
 const styles = StyleSheet.create({
-  medDropDownContainerAndroid: {
-    backgroundColor: "transparent",
-    color: "transparent",
-    width: Metrics.fromTypeDropMenucontainerW,
-    height: Metrics.fromTypeDropMenucontainerH,
-    marginTop: 10,
-    marginBottom: 10,
-    justifyContent: "center",
-    borderColor: "grey",
-    borderRadius: 5,
-    shadowColor: "#303838",
-    shadowOffset: { width: 0, height: 5 },
-    shadowRadius: 10,
-    shadowOpacity: 0.35
-  },
-  medDropDownContainer: {
-    width: Metrics.fromTypeDropMenucontainerW,
-    height: Metrics.fromTypeDropMenucontainerH,
-    color: "white",
-    marginTop: 10,
-    marginBottom: 60,
-    justifyContent: "center",
-    borderColor: "grey",
-    borderRadius: 5,
-    shadowColor: "#303838",
-    shadowOffset: { width: 0, height: 5 },
-    shadowRadius: 10,
-    shadowOpacity: 0.35
-  },
-  selectedValueText: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#242424"
-  },
-  listArrow: {
-    width: 10,
-    height: 10
-  },
   medRecTitle: {
-    paddingBottom: Platform.OS === "ios" ? 60 : 0,
     fontSize: 20,
     fontWeight: "bold",
     color: "#fff"
   },
-  selectedRecType: {
-    width: Metrics.fromTypeDropMenucontainerW,
-    height: Metrics.fromTypeDropMenucontainerH,
-    backgroundColor: "#fff",
-    flexDirection: "column",
+  textInputStyle: {
     justifyContent: "center",
+    width: Metrics.formTitleinputBoxW,
+    height: Metrics.formTitleinputBoxH,
     paddingLeft: 5,
-    position: "absolute",
+    backgroundColor: "#fff",
     borderColor: "grey",
     borderRadius: 5,
     marginTop: 10,
