@@ -46,7 +46,7 @@ class Type extends Component {
     return (
       <View>
         <View style={{ alignItems: "center", marginTop: 10 }}>
-          <Text style={styles.medTypeTitle}>Medicine type</Text>
+          <Text style={styles.medTypeTitle}>Type</Text>
         </View>
         <View>
           <Dropdown

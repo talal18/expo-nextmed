@@ -23,6 +23,7 @@ import Type from "../containers/Type";
 import Title from "../containers/Title";
 import Dosage from "../containers/Dosage";
 import Notes from "../containers/Notes";
+import MedImage from "../containers/MedImage";
 
 import AppNotifications from "../common/AppNotifications";
 
@@ -142,14 +143,15 @@ class AddScreen extends Component {
       <View style={styles.container}>
         <ScrollView style={styles.scrollViewContainer}>
           <Title />
+          <MedImage />
           <View style={styles.contentDivder} />
           <Type />
           <View style={styles.contentDivder} />
+          <Times />
           <Dosage />
           <View style={styles.contentDivder} />
           <Recurrence />
           <View style={styles.contentDivder} />
-          <Times />
           <Dates />
           <Notes />
           <TouchableOpacity

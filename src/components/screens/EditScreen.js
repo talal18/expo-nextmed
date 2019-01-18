@@ -72,6 +72,12 @@ class EditScreen extends Component {
     this.getMedication(this.props.navigation.state.params.id);
   }
 
+  manageNotifications() {
+    this.props.navigation.navigate("Notifications", {
+      id: this.props.navigation.state.params.id
+    });
+  }
+
   updateNotification() {
     var errors = [];
 
@@ -127,18 +133,24 @@ class EditScreen extends Component {
           <View style={styles.contentDivder} />
           <Type />
           <View style={styles.contentDivder} />
+          <Times />
           <Dosage />
           <View style={styles.contentDivder} />
           <Recurrence />
           <View style={styles.contentDivder} />
-          <Times />
           <Dates />
+          <TouchableOpacity
+            onPress={this.manageNotifications.bind(this)}
+            style={styles.updateButton}
+          >
+            <Text style={styles.updateButtonTitle}>Manage Notifications</Text>
+          </TouchableOpacity>
           <Notes />
           <TouchableOpacity
             onPress={this.updateNotification.bind(this)}
             style={styles.updateButton}
           >
-            <Text style={styles.updateButtonTitle}>Update Medicine</Text>
+            <Text style={styles.updateButtonTitle}>Update</Text>
           </TouchableOpacity>
         </ScrollView>
       </View>
