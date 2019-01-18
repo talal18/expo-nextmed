@@ -14,6 +14,8 @@ import { addMedication } from "../../redux/actions/medications";
 
 import { reset_data } from "../../redux/actions/data";
 
+import { add_m_id, add_notification } from "../../redux/actions/notifications";
+
 import Metrics from "../../styling/Metrics";
 
 import Dates from "../containers/Dates";
@@ -25,8 +27,6 @@ import Dosage from "../containers/Dosage";
 import Notes from "../containers/Notes";
 import MedImage from "../containers/MedImage";
 
-import AppNotifications from "../common/AppNotifications";
-
 class AddScreen extends Component {
   constructor(props) {
     super(props);
@@ -34,8 +34,6 @@ class AddScreen extends Component {
     this.state = {
       m_id: ""
     };
-
-    this.notify = new AppNotifications();
   }
 
   componentWillMount() {
@@ -111,7 +109,10 @@ class AddScreen extends Component {
           "0"
         );
 
-        this.notify.addNotification(
+        this.props.add_m_id(this.state.m_id);
+
+        this.props.add_notification(
+          this.state.m_id,
           this.props.data.title,
           this.props.data.title +
             ` is now due. You should take ${this.props.data.dosage} ${
@@ -219,6 +220,8 @@ export default connect(
   mapStateToProps,
   {
     addMedication,
-    reset_data
+    reset_data,
+    add_m_id,
+    add_notification
   }
 )(AddScreen);

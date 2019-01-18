@@ -14,6 +14,13 @@ class SettingsScreen extends React.Component {
 
   componentDidMount() {}
 
+  /*
+    Add no items to flat list in home page
+    add / edit forms need to pull up when keyboard shows
+    image url
+    image buttons (camera/storage)
+  */
+
   render() {
     return (
       <View
