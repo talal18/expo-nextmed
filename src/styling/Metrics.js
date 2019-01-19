@@ -65,6 +65,7 @@ const metrics = {
   //Title input box
   formTitleinputBoxW: NormalizeSize.normalizeWidth(350),
   formTitleinputBoxH: NormalizeSize.normalizeHeight(50),
+
   //Type drop menu container
   fromTypeDropMenucontainerW: NormalizeSize.normalizeWidth(350),
   fromTypeDropMenucontainerH: NormalizeSize.normalizeHeight(50),
@@ -101,7 +102,11 @@ const metrics = {
   textAreaContainerHeight: NormalizeSize.normalizeHeight(100),
   textAreaContainerWidth: NormalizeSize.normalizeWidth(350),
   textAreaHeight: NormalizeSize.normalizeHeight(100),
-  textAreaWidth: NormalizeSize.normalizeWidth(340)
+  textAreaWidth: NormalizeSize.normalizeWidth(340),
+
+  //Manage Notifications FlatList search input box
+  searchInputBoxW: NormalizeSize.normalizeWidth(350),
+  searchInputBoxH: NormalizeSize.normalizeHeight(50)
 };
 
 export default metrics;

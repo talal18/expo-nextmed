@@ -93,6 +93,7 @@ class AddScreen extends Component {
         Thursday 17
         Friday 18
       */
+      this.props.add_m_id(this.state.m_id);
 
       this.props.data.intake_times.map(item => {
         var myDate = new Date(item.time);
@@ -108,8 +109,6 @@ class AddScreen extends Component {
           "0",
           "0"
         );
-
-        this.props.add_m_id(this.state.m_id);
 
         this.props.add_notification(
           this.state.m_id,
