@@ -30,7 +30,7 @@ class MedImage extends Component {
   _pickImage = async () => {
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
-      aspect: [4, 3]
+      aspect: [3, 4]
     });
 
     console.log(result);

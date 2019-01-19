@@ -35,6 +35,7 @@ import Type from "../containers/Type";
 import Title from "../containers/Title";
 import Dosage from "../containers/Dosage";
 import Notes from "../containers/Notes";
+import MedImage from "../containers/MedImage";
 
 class EditScreen extends Component {
   constructor(props) {
@@ -130,6 +131,7 @@ class EditScreen extends Component {
       <View style={styles.container}>
         <ScrollView>
           <Title />
+          <MedImage />
           <View style={styles.contentDivder} />
           <Type />
           <View style={styles.contentDivder} />
