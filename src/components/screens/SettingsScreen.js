@@ -19,9 +19,9 @@ class SettingsScreen extends React.Component {
     add / edit forms need to pull up when keyboard shows
     image url
     image buttons (camera/storage)
-    logo / icon colors
-    add image on home page flatlist
-    add switch on manage notifications flatlist
+    logo / icon colors  ------------------> DONE!
+    add image on home page flatlist ------> DONE!
+    add switch on manage notifications flatlist ----> DONE!
   */
 
   render() {

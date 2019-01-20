@@ -39,16 +39,20 @@ class HomeScreen extends React.Component {
     return (
       <View>
         <View style={styles.homeListItemContainer}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "stretch"
+          <TouchableOpacity
+            style={styles.MedImageContainer}
+            onPress={() => {
+              this.props.navigation.navigate("Edit", { id: item.m_id });
             }}
           >
+            <Image
+              source={require("../../assets/images/default-img.png")}
+              style={styles.MedImage}
+            />
+          </TouchableOpacity>
+
+          <View style={styles.homeListItem}>
             <TouchableOpacity
-              style={styles.homeListItem}
               onPress={() => {
                 this.props.navigation.navigate("Edit", { id: item.m_id });
               }}
@@ -139,19 +143,27 @@ const styles = StyleSheet.create({
     borderBottomColor: "#595d63",
     padding: 5
   },
-
   homeListItem: {
     flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-
-    justifyContent: "flex-start"
+    flexDirection: "column",
+    justifyContent: "center"
   },
 
   itemText: {
     color: "#fff",
     fontSize: 20,
     fontWeight: "bold"
+  },
+
+  MedImageContainer: {
+    justifyContent: "center",
+    alignContent: "center",
+    marginRight: 5
+  },
+  MedImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 5
   },
 
   deleteButtonContainer: {

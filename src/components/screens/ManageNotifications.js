@@ -3,7 +3,7 @@ import {
   Text,
   View,
   StyleSheet,
-  TouchableOpacity,
+  Switch,
   FlatList,
   TextInput
 } from "react-native";
@@ -148,20 +148,16 @@ class ManageNotifications extends React.Component {
   renderItem = ({ item }) => {
     return (
       <View>
-        <View style={styles.homeListItemContainer}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "stretch"
-            }}
-          >
+        <View style={styles.manageListItemContainer}>
+          <View style={styles.ListItem}>
             <Text style={styles.itemText}>
               {item && item.date
                 ? this.renderCustomDate(item.date).customText
                 : ""}
             </Text>
+          </View>
+          <View style={styles.switchContainer}>
+            <Switch style={styles.switch} />
           </View>
         </View>
       </View>
@@ -228,7 +224,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#242424"
   },
 
-  homeListItemContainer: {
+  manageListItemContainer: {
     height: Metrics.homeListItemContainerHeight,
     flex: 1,
     flexDirection: "row",
@@ -238,12 +234,10 @@ const styles = StyleSheet.create({
     padding: 5
   },
 
-  homeListItem: {
+  ListItem: {
     flex: 1,
-    flexDirection: "row",
-    alignItems: "center",
-
-    justifyContent: "flex-start"
+    flexDirection: "column",
+    justifyContent: "center"
   },
 
   itemText: {
@@ -252,12 +246,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
 
-  deleteButtonContainer: {
-    flex: 1,
-    justifyContent: "center",
+  switchContainer: {
+    justifyContent: "flex-end",
     alignContent: "center"
   },
-  deleteButtonImage: {
+  switch: {
     width: 50,
     height: 50,
     borderRadius: 5
@@ -287,7 +280,6 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     fontSize: 20,
     fontWeight: "bold",
-
     shadowColor: "#303838",
     shadowOffset: { width: 0, height: 5 },
     shadowRadius: 10,
