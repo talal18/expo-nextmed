@@ -2,8 +2,8 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 9020,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "packagerPid": 6184,
+  "expoServerNgrokUrl": "https://hc-ct2.yass0016.expo-nextmed.exp.direct",
+  "packagerNgrokUrl": "https://packager.hc-ct2.yass0016.expo-nextmed.exp.direct",
+  "ngrokPid": 7748
 }
