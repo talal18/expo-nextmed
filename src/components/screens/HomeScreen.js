@@ -151,7 +151,7 @@ const styles = StyleSheet.create({
 
   itemText: {
     color: "#fff",
-    fontSize: 20,
+    fontSize: Metrics.flatListItemFontSize,
     fontWeight: "bold"
   },
 

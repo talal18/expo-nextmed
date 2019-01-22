@@ -16,6 +16,7 @@ class Dosage extends Component {
         </View>
         <View>
           <TextInput
+            allowFontScaling={false}
             value={this.props.dosage}
             onChangeText={text => this.props.set_dosage(text)}
             keyboardType="number-pad"
@@ -35,7 +36,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderColor: "grey",
     borderRadius: 5,
-    fontSize: 20,
+    fontSize: Metrics.inputFontSize,
     fontWeight: "bold",
     marginTop: 10,
     marginBottom: 10,
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.35
   },
   medDosage: {
-    fontSize: 20,
+    fontSize: Metrics.titleFontSize,
     fontWeight: "bold",
     color: "#fff"
   }

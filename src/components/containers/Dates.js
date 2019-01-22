@@ -294,12 +294,14 @@ const styles = StyleSheet.create({
     height: Metrics.formAddTimeListHeight,
     width: Metrics.formAddTimeListWidth,
     flex: 1,
+
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
   },
   addDatesListItemText: {
-    fontSize: 20,
+    fontWeight: "bold",
+    fontSize: Metrics.flatListItemFontSize,
     color: "#fff",
     justifyContent: "flex-start"
   },
@@ -315,7 +317,7 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
   datesTitle: {
-    fontSize: 20,
+    fontSize: Metrics.titleFontSize,
     fontWeight: "bold",
     color: "#fff"
   }

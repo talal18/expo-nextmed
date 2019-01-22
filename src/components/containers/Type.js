@@ -50,13 +50,21 @@ class Type extends Component {
         </View>
         <View>
           <Dropdown
+            allowFontScaling={false}
+            fontSize={Metrics.dropDownFontSize}
+            fontWeight="bold"
+            itemTextStyle={{
+              fontSize: Metrics.dropDownFontSize,
+              fontWeight: "bold"
+            }}
             inputContainerStyle={{ borderBottomColor: "transparent" }}
             value={this.props.type}
             rippleOpacity={0}
             dropdownOffset={{
               top: 10,
-              left: 0
+              left: 20
             }}
+            itemPadding={20}
             containerStyle={styles.textInputStyle}
             data={this.state.type_picker}
             onChangeText={(type, itemIndex, data) => {
@@ -71,7 +79,7 @@ class Type extends Component {
 
 const styles = StyleSheet.create({
   medTypeTitle: {
-    fontSize: 20,
+    fontSize: Metrics.titleFontSize,
     fontWeight: "bold",
     color: "#fff"
   },

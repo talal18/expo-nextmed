@@ -134,6 +134,15 @@ export const add_notification = (m_id, title, body, repeat, date, end_date) => {
 
             console.log(new Date(schedulingOptions.time).toString());
 
+            dispatch({
+              type: ADD_NOTIFICATION,
+              notification: {
+                id: "1",
+                m_id,
+                date: new Date(schedulingOptions.time).toString()
+              }
+            });
+
             // Notifications.scheduleLocalNotificationAsync(
             //   localNotification,
             //   schedulingOptions
@@ -164,6 +173,15 @@ export const add_notification = (m_id, title, body, repeat, date, end_date) => {
 
             console.log(new Date(schedulingOptions.time).toString());
 
+            dispatch({
+              type: ADD_NOTIFICATION,
+              notification: {
+                id: "1",
+                m_id,
+                date: new Date(schedulingOptions.time).toString()
+              }
+            });
+
             // Notifications.scheduleLocalNotificationAsync(
             //   localNotification,
             //   schedulingOptions
@@ -191,6 +209,15 @@ export const add_notification = (m_id, title, body, repeat, date, end_date) => {
             };
 
             console.log(new Date(schedulingOptions.time).toString());
+
+            dispatch({
+              type: ADD_NOTIFICATION,
+              notification: {
+                id: "1",
+                m_id,
+                date: new Date(schedulingOptions.time).toString()
+              }
+            });
 
             // Notifications.scheduleLocalNotificationAsync(
             //   localNotification,

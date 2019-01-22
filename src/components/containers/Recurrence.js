@@ -44,6 +44,13 @@ class Recurrence extends Component {
         </View>
         <View>
           <Dropdown
+            allowFontScaling={false}
+            fontSize={Metrics.dropDownFontSize}
+            fontWeight="bold"
+            itemTextStyle={{
+              fontSize: Metrics.dropDownFontSize,
+              fontWeight: "bold"
+            }}
             inputContainerStyle={{ borderBottomColor: "transparent" }}
             value={this.props.recurrence}
             rippleOpacity={0}
@@ -65,7 +72,7 @@ class Recurrence extends Component {
 
 const styles = StyleSheet.create({
   medRecTitle: {
-    fontSize: 20,
+    fontSize: Metrics.titleFontSize,
     fontWeight: "bold",
     color: "#fff"
   },

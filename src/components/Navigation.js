@@ -78,6 +78,7 @@ const AppNavigator = createStackNavigator({
       },
       headerTintColor: "#d6d6d6",
       headerTitleStyle: {
+        fontSize: Metrics.navigationTitleFontSize,
         fontWeight: "bold"
       }
     }
@@ -91,6 +92,7 @@ const AppNavigator = createStackNavigator({
       },
       headerTintColor: "#d6d6d6",
       headerTitleStyle: {
+        fontSize: Metrics.navigationTitleFontSize,
         fontWeight: "bold"
       }
     }
@@ -104,6 +106,7 @@ const AppNavigator = createStackNavigator({
       },
       headerTintColor: "#d6d6d6",
       headerTitleStyle: {
+        fontSize: Metrics.navigationTitleFontSize,
         fontWeight: "bold"
       }
     }
@@ -117,6 +120,7 @@ const AppNavigator = createStackNavigator({
       },
       headerTintColor: "#d6d6d6",
       headerTitleStyle: {
+        fontSize: Metrics.navigationTitleFontSize,
         fontWeight: "bold"
       }
     }

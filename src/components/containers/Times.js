@@ -151,7 +151,7 @@ class Times extends Component {
 
 const styles = StyleSheet.create({
   medTimesTitle: {
-    fontSize: 20,
+    fontSize: Metrics.titleFontSize,
     fontWeight: "bold",
     color: "#fff"
   },
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   addTimesListItemText: {
-    fontSize: 20,
+    fontSize: Metrics.flatListItemFontSize,
     fontWeight: "bold",
     color: "#fff",
     justifyContent: "flex-start"

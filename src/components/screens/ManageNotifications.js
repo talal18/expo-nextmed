@@ -242,7 +242,7 @@ const styles = StyleSheet.create({
 
   itemText: {
     color: "#fff",
-    fontSize: 20,
+    fontSize: Metrics.flatListItemFontSize,
     fontWeight: "bold"
   },
 
@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     borderColor: "grey",
     borderRadius: 5,
-    fontSize: 20,
+    fontSize: Metrics.searchInputFontSize,
     fontWeight: "bold",
     shadowColor: "#303838",
     shadowOffset: { width: 0, height: 5 },

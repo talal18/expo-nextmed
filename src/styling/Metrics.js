@@ -106,7 +106,30 @@ const metrics = {
 
   //Manage Notifications FlatList search input box
   searchInputBoxW: NormalizeSize.normalizeWidth(350),
-  searchInputBoxH: NormalizeSize.normalizeHeight(50)
+  searchInputBoxH: NormalizeSize.normalizeHeight(50),
+  searchInputFontSize:
+    Platform.OS === "ios"
+      ? NormalizeSize.normalizeHeight(8)
+      : NormalizeSize.normalizeWidth(18),
+
+  // font
+  titleFontSize:
+    Platform.OS === "ios"
+      ? NormalizeSize.normalizeHeight(23)
+      : NormalizeSize.normalizeWidth(23),
+  inputFontSize:
+    Platform.OS === "ios"
+      ? NormalizeSize.normalizeHeight(23)
+      : NormalizeSize.normalizeWidth(23),
+  dropDownFontSize: NormalizeSize.normalizeHeight(23),
+  flatListItemFontSize:
+    Platform.OS === "ios"
+      ? NormalizeSize.normalizeHeight(23)
+      : NormalizeSize.normalizeWidth(23),
+  navigationTitleFontSize:
+    Platform.OS === "ios"
+      ? NormalizeSize.normalizeHeight(5)
+      : NormalizeSize.normalizeWidth(18)
 };
 
 export default metrics;

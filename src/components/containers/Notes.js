@@ -13,6 +13,7 @@ class Notes extends Component {
       <View>
         <View style={styles.textAreaContainer}>
           <TextInput
+            allowFontScaling={false}
             value={this.props.notes}
             style={styles.textArea}
             multiline={true}
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
   textArea: {
     height: Metrics.textAreaHeight,
     width: Metrics.textAreaWidth,
-    fontSize: 20,
+    fontSize: Metrics.inputFontSize,
     backgroundColor: "#fff",
     color: "#262626",
     textAlignVertical: "top",
