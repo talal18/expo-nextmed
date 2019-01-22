@@ -121,7 +121,10 @@ const metrics = {
     Platform.OS === "ios"
       ? NormalizeSize.normalizeHeight(23)
       : NormalizeSize.normalizeWidth(23),
-  dropDownFontSize: NormalizeSize.normalizeHeight(23),
+  dropDownFontSize:
+    Platform.OS === "ios"
+      ? NormalizeSize.normalizeHeight(23)
+      : NormalizeSize.normalizeWidth(18),
   flatListItemFontSize:
     Platform.OS === "ios"
       ? NormalizeSize.normalizeHeight(23)
