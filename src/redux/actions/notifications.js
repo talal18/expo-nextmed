@@ -226,10 +226,107 @@ export const add_notification = (m_id, title, body, repeat, date, end_date) => {
           }
         }
       } else {
-        schedulingOptions = {
-          time: date.getTime(), // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
-          repeat: repeat
-        };
+        if (repeat === "day") {
+          for (var i = 0; i < 365 * 10; i++) {
+            let t = new Date(date);
+            t.setDate(t.getDate() + i);
+
+            schedulingOptions = {
+              time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+            };
+
+            console.log(new Date(schedulingOptions.time).toString());
+
+            dispatch({
+              type: ADD_NOTIFICATION,
+              notification: {
+                id: "1",
+                m_id,
+                date: new Date(schedulingOptions.time).toString()
+              }
+            });
+
+            // Notifications.scheduleLocalNotificationAsync(
+            //   localNotification,
+            //   schedulingOptions
+            // );
+          }
+        } else if (repeat === "week") {
+          for (var i = 0; i < 52 * 10; i++) {
+            let t = new Date(date);
+            t.setDate(t.getDate() + i * 7);
+
+            schedulingOptions = {
+              time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+            };
+
+            console.log(new Date(schedulingOptions.time).toString());
+
+            dispatch({
+              type: ADD_NOTIFICATION,
+              notification: {
+                id: "1",
+                m_id,
+                date: new Date(schedulingOptions.time).toString()
+              }
+            });
+
+            // Notifications.scheduleLocalNotificationAsync(
+            //   localNotification,
+            //   schedulingOptions
+            // );
+          }
+        } else if (repeat === "month") {
+          for (var i = 0; i < 12 * 10; i++) {
+            let t = new Date(date);
+            t.setMonth(t.getMonth() + i);
+
+            schedulingOptions = {
+              time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+            };
+
+            console.log(new Date(schedulingOptions.time).toString());
+
+            dispatch({
+              type: ADD_NOTIFICATION,
+              notification: {
+                id: "1",
+                m_id,
+                date: new Date(schedulingOptions.time).toString()
+              }
+            });
+
+            // Notifications.scheduleLocalNotificationAsync(
+            //   localNotification,
+            //   schedulingOptions
+            // );
+          }
+        } else if (repeat === "year") {
+          for (var i = 0; i < 10; i++) {
+            let t = new Date(date);
+            t.setFullYear(t.getFullYear() + i);
+
+            schedulingOptions = {
+              time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+            };
+
+            console.log(new Date(schedulingOptions.time).toString());
+
+            dispatch({
+              type: ADD_NOTIFICATION,
+              notification: {
+                id: "1",
+                m_id,
+                date: new Date(schedulingOptions.time).toString()
+              }
+            });
+
+            // Notifications.scheduleLocalNotificationAsync(
+            //   localNotification,
+            //   schedulingOptions
+            // );
+          }
+        }
       }
 
       Notifications.cancelAllScheduledNotificationsAsync();

@@ -157,7 +157,11 @@ class ManageNotifications extends React.Component {
             </Text>
           </View>
           <View style={styles.switchContainer}>
-            <Switch style={styles.switch} thumbColor="#595d63" />
+            <Switch
+              onValueChange={value => {}}
+              style={styles.switch}
+              thumbColor="#595d63"
+            />
           </View>
         </View>
       </View>

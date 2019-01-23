@@ -6,7 +6,8 @@ import {
   Platform,
   TouchableOpacity,
   Text,
-  Image
+  Image,
+  Switch
 } from "react-native";
 
 import DateTimePicker from "react-native-modal-datetime-picker";
@@ -19,6 +20,7 @@ class Dates extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      end_date: false,
       start_date_label: "",
       end_date_label: "",
       isStartDate: false,
@@ -76,30 +78,47 @@ class Dates extends Component {
             </TouchableOpacity>
           </View>
         </View>
+        {!this.state.end_date && (
+          <View style={styles.addDateListItemContainer}>
+            <View style={styles.addDateListItem}>
+              <Text style={styles.addDatesListItemText}>
+                {this.props.end_date
+                  ? this.renderLabel(this.props.end_date)
+                  : "Set an end date"}
+              </Text>
+
+              <TouchableOpacity
+                onPress={this.handleSetEndDate.bind(this)}
+                style={styles.addButton}
+              >
+                {this.props.end_date ? (
+                  <Image
+                    source={require("../../assets/images/edit-button.png")}
+                    style={styles.addButtonImage}
+                  />
+                ) : (
+                  <Image
+                    source={require("../../assets/images/add-button.png")}
+                    style={styles.addButtonImage}
+                  />
+                )}
+              </TouchableOpacity>
+            </View>
+          </View>
+        )}
         <View style={styles.addDateListItemContainer}>
           <View style={styles.addDateListItem}>
-            <Text style={styles.addDatesListItemText}>
-              {this.props.end_date
-                ? this.renderLabel(this.props.end_date)
-                : "Set an end date"}
-            </Text>
+            <Text style={styles.addDatesListItemText}>Forever</Text>
 
-            <TouchableOpacity
-              onPress={this.handleSetEndDate.bind(this)}
-              style={styles.addButton}
-            >
-              {this.props.end_date ? (
-                <Image
-                  source={require("../../assets/images/edit-button.png")}
-                  style={styles.addButtonImage}
-                />
-              ) : (
-                <Image
-                  source={require("../../assets/images/add-button.png")}
-                  style={styles.addButtonImage}
-                />
-              )}
-            </TouchableOpacity>
+            <Switch
+              value={this.state.end_date}
+              onValueChange={value => {
+                if (value) this.props.set_end_date("");
+                this.setState({ end_date: value });
+              }}
+              style={styles.switch}
+              thumbColor="#595d63"
+            />
           </View>
         </View>
       </View>
@@ -279,6 +298,11 @@ class Dates extends Component {
 }
 
 const styles = StyleSheet.create({
+  switchContainer: {
+    justifyContent: "flex-end",
+    alignContent: "center"
+  },
+
   addDateListItemContainer: {
     height: Metrics.formAddTimeListContainerHeight,
     width: Metrics.formAddTimeListContainerWidth,
@@ -304,6 +328,12 @@ const styles = StyleSheet.create({
     fontSize: Metrics.flatListItemFontSize,
     color: "#fff",
     justifyContent: "flex-start"
+  },
+  switch: {
+    height: 30,
+    width: 30,
+    flexDirection: "column",
+    justifyContent: "center"
   },
   addButton: {
     height: 30,
