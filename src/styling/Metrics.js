@@ -109,7 +109,7 @@ const metrics = {
   searchInputBoxH: NormalizeSize.normalizeHeight(50),
   searchInputFontSize:
     Platform.OS === "ios"
-      ? NormalizeSize.normalizeHeight(8)
+      ? NormalizeSize.normalizeHeight(18)
       : NormalizeSize.normalizeWidth(18),
 
   // font
@@ -131,7 +131,7 @@ const metrics = {
       : NormalizeSize.normalizeWidth(23),
   navigationTitleFontSize:
     Platform.OS === "ios"
-      ? NormalizeSize.normalizeHeight(5)
+      ? NormalizeSize.normalizeHeight(18)
       : NormalizeSize.normalizeWidth(18)
 };
 

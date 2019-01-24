@@ -4,7 +4,10 @@
     "slug": "nextmed",
     "privacy": "public",
     "sdkVersion": "32.0.0",
-    "platforms": ["ios", "android"],
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/Icon.png",
@@ -16,12 +19,25 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.sayadev.nextmed",
+      "publishBundlePath": "ios/nextmed/Supporting/shell-app.bundle",
+      "publishManifestPath": "ios/nextmed/Supporting/shell-app-manifest.json"
     },
     "android": {
-      "package": "com.sayadev.nextmed"
-    }
+      "package": "com.sayadev.nextmed",
+      "publishBundlePath": "android/app/src/main/assets/shell-app.bundle",
+      "publishManifestPath": "android/app/src/main/assets/shell-app-manifest.json"
+    },
+    "isDetached": true,
+    "detach": {
+      "iosExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/ios-v2.10.2-sdk32.0.0-c59c23cd-1d49-49d2-a633-d03f9d554cf6.tar.gz",
+      "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v2.10.5-sdk32.0.0-6b87ee30-8cbe-4cc6-b5ba-b03b77e34f90.tar.gz"
+    },
+    "scheme": "expfb5040bdbcd842978cd75007c3aab514"
   }
 }
