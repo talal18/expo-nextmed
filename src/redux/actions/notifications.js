@@ -227,7 +227,7 @@ export const add_notification = (m_id, title, body, repeat, date, end_date) => {
         }
       } else {
         if (repeat === "day") {
-          for (var i = 0; i < 365 * 10; i++) {
+          for (var i = 0; i < 365 * 1; i++) {
             let t = new Date(date);
             t.setDate(t.getDate() + i);
 
@@ -235,7 +235,7 @@ export const add_notification = (m_id, title, body, repeat, date, end_date) => {
               time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
             };
 
-            console.log(new Date(schedulingOptions.time).toString());
+            // console.log(new Date(schedulingOptions.time).toString());
 
             dispatch({
               type: ADD_NOTIFICATION,
@@ -252,7 +252,7 @@ export const add_notification = (m_id, title, body, repeat, date, end_date) => {
             // );
           }
         } else if (repeat === "week") {
-          for (var i = 0; i < 52 * 10; i++) {
+          for (var i = 0; i < 52 * 1; i++) {
             let t = new Date(date);
             t.setDate(t.getDate() + i * 7);
 
@@ -260,7 +260,7 @@ export const add_notification = (m_id, title, body, repeat, date, end_date) => {
               time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
             };
 
-            console.log(new Date(schedulingOptions.time).toString());
+            // console.log(new Date(schedulingOptions.time).toString());
 
             dispatch({
               type: ADD_NOTIFICATION,
@@ -277,7 +277,7 @@ export const add_notification = (m_id, title, body, repeat, date, end_date) => {
             // );
           }
         } else if (repeat === "month") {
-          for (var i = 0; i < 12 * 10; i++) {
+          for (var i = 0; i < 12 * 1; i++) {
             let t = new Date(date);
             t.setMonth(t.getMonth() + i);
 
@@ -285,7 +285,7 @@ export const add_notification = (m_id, title, body, repeat, date, end_date) => {
               time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
             };
 
-            console.log(new Date(schedulingOptions.time).toString());
+            // console.log(new Date(schedulingOptions.time).toString());
 
             dispatch({
               type: ADD_NOTIFICATION,
@@ -302,7 +302,7 @@ export const add_notification = (m_id, title, body, repeat, date, end_date) => {
             // );
           }
         } else if (repeat === "year") {
-          for (var i = 0; i < 10; i++) {
+          for (var i = 0; i < 1; i++) {
             let t = new Date(date);
             t.setFullYear(t.getFullYear() + i);
 
@@ -310,7 +310,7 @@ export const add_notification = (m_id, title, body, repeat, date, end_date) => {
               time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
             };
 
-            console.log(new Date(schedulingOptions.time).toString());
+            // console.log(new Date(schedulingOptions.time).toString());
 
             dispatch({
               type: ADD_NOTIFICATION,
