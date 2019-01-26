@@ -28,7 +28,8 @@ class Recurrence extends Component {
         { label: "Weekly", value: "week" },
         { label: "Monthly", value: "month" },
         { label: "Yearly", value: "year" }
-      ]
+      ],
+      message: ""
     };
   }
 
@@ -65,6 +66,13 @@ class Recurrence extends Component {
             }}
           />
         </View>
+        {this.props.recurrence === "day" || this.props.recurrence === "week" ? (
+          <View style={styles.frequencyNoteContainer}>
+            <Text style={styles.frequencyNote}>
+              Note: Notifications will be set for 1 year only.
+            </Text>
+          </View>
+        ) : null}
       </View>
     );
   }
@@ -90,6 +98,14 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 5 },
     shadowRadius: 10,
     shadowOpacity: 0.35
+  },
+  frequencyNoteContainer: {
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  frequencyNote: {
+    color: "#FFF",
+    fontStyle: "italic"
   }
 });
 
