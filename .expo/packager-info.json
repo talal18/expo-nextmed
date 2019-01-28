@@ -3,13 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-<<<<<<< HEAD
-  "expoServerNgrokUrl": "https://yx-zi3.yass0016.expo-nextmed.exp.direct",
-  "packagerNgrokUrl": "https://packager.yx-zi3.yass0016.expo-nextmed.exp.direct",
-  "ngrokPid": 4801
-=======
-  "expoServerNgrokUrl": "https://r5-kqt.yass0016.expo-nextmed.exp.direct",
-  "packagerNgrokUrl": "https://packager.r5-kqt.yass0016.expo-nextmed.exp.direct",
-  "ngrokPid": 6068
->>>>>>> 05ba8db248cc0725365dd944cae9b18912d9e91b
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }

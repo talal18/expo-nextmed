@@ -11,14 +11,18 @@ import {
 import { connect } from "react-redux";
 import Metrics from "../../styling/Metrics";
 
-import { get_notifications } from "../../redux/actions/notifications";
+import {
+  get_notifications,
+  update_notification
+} from "../../redux/actions/notifications";
 
 class ManageNotifications extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      data: {}
+      data: {},
+      value: false
     };
 
     this.arrayholder = [];
@@ -146,6 +150,7 @@ class ManageNotifications extends React.Component {
   }
 
   renderItem = ({ item }) => {
+    console.log(item);
     return (
       <View>
         <View style={styles.manageListItemContainer}>
@@ -158,7 +163,17 @@ class ManageNotifications extends React.Component {
           </View>
           <View style={styles.switchContainer}>
             <Switch
-              onValueChange={value => {}}
+              value={item.status}
+              onValueChange={value => {
+                this.getNotifications();
+
+                this.props.update_notification(
+                  item.id,
+                  this.props.navigation.state.params.id,
+                  value,
+                  item.date
+                );
+              }}
               style={styles.switch}
               thumbColor="#595d63"
             />
@@ -168,7 +183,7 @@ class ManageNotifications extends React.Component {
     );
   };
 
-  componentDidMount() {
+  getNotifications() {
     this.props.notifications.map(item => {
       if (item.m_id === this.props.navigation.state.params.id) {
         this.setState({
@@ -182,9 +197,12 @@ class ManageNotifications extends React.Component {
     });
   }
 
+  componentDidMount() {
+    this.getNotifications();
+  }
+
   searchFilterFunction = text => {
     const newData = this.arrayholder.filter(item => {
-      console.log(item);
       const itemData = item.customText.toUpperCase();
       const textData = text.toUpperCase();
 
@@ -210,7 +228,7 @@ class ManageNotifications extends React.Component {
           {this.state.data !== undefined && this.state.data.notifications && (
             <FlatList
               data={this.state.data.notifications.sort(function(a, b) {
-                return new Date(a.date).getDate() - new Date(b.date).getDate();
+                return new Date(a.date) - new Date(b.date);
               })}
               renderItem={this.renderItem}
               keyExtractor={(item, index) => index.toString()}
@@ -300,6 +318,7 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    get_notifications
+    get_notifications,
+    update_notification
   }
 )(ManageNotifications);
