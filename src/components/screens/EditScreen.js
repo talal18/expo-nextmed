@@ -129,7 +129,7 @@ class EditScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <ScrollView>
+        <ScrollView style={styles.scrollViewContainer}>
           <Title />
           <MedImage />
           <View style={styles.contentDivder} />
@@ -168,6 +168,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center"
     //paddingTop: Metrics.formContainerPaddingTop
+  },
+  scrollViewContainer: {
+    paddingLeft: Metrics.scrollViewContainerPaddingHorizontal,
+    paddingRight: Metrics.scrollViewContainerPaddingHorizontal
   },
   contentDivder: {
     width: Metrics.formContentDivider,

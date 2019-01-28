@@ -6,8 +6,7 @@ import {
   Platform,
   TouchableOpacity,
   Text,
-  Image,
-  Switch
+  Image
 } from "react-native";
 
 import DateTimePicker from "react-native-modal-datetime-picker";
@@ -106,21 +105,6 @@ class Dates extends Component {
             </View>
           </View>
         )}
-        <View style={styles.addDateListItemContainer}>
-          <View style={styles.addDateListItem}>
-            <Text style={styles.addDatesListItemText}>Forever</Text>
-
-            <Switch
-              value={this.state.end_date}
-              onValueChange={value => {
-                if (value) this.props.set_end_date("");
-                this.setState({ end_date: value });
-              }}
-              style={styles.switch}
-              thumbColor="#595d63"
-            />
-          </View>
-        </View>
       </View>
     );
   }
@@ -298,11 +282,6 @@ class Dates extends Component {
 }
 
 const styles = StyleSheet.create({
-  switchContainer: {
-    justifyContent: "flex-end",
-    alignContent: "center"
-  },
-
   addDateListItemContainer: {
     height: Metrics.formAddTimeListContainerHeight,
     width: Metrics.formAddTimeListContainerWidth,
@@ -329,12 +308,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     justifyContent: "flex-start"
   },
-  switch: {
-    height: 30,
-    width: 30,
-    flexDirection: "column",
-    justifyContent: "center"
-  },
+
   addButton: {
     height: 30,
     width: 30,
