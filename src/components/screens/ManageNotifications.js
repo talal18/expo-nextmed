@@ -11,14 +11,18 @@ import {
 import { connect } from "react-redux";
 import Metrics from "../../styling/Metrics";
 
-import { get_notifications } from "../../redux/actions/notifications";
+import {
+  get_notifications,
+  update_notification
+} from "../../redux/actions/notifications";
 
 class ManageNotifications extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      data: {}
+      data: {},
+      value: false
     };
 
     this.arrayholder = [];
@@ -158,7 +162,16 @@ class ManageNotifications extends React.Component {
           </View>
           <View style={styles.switchContainer}>
             <Switch
-              onValueChange={value => {}}
+              value={item.status}
+              onValueChange={value => {
+                this.setState({ value });
+                this.props.update_notification(
+                  item.id,
+                  this.props.navigation.state.params.id,
+                  value,
+                  item.date
+                );
+              }}
               style={styles.switch}
               thumbColor="#595d63"
             />
@@ -168,13 +181,9 @@ class ManageNotifications extends React.Component {
     );
   };
 
-  componentDidMount() {
+  getNotifications() {
     this.props.notifications.map(item => {
       if (item.m_id === this.props.navigation.state.params.id) {
-        this.setState({
-          data: item
-        });
-
         this.arrayholder = item.notifications.map(data => {
           return this.renderCustomDate(data.date);
         });
@@ -182,9 +191,12 @@ class ManageNotifications extends React.Component {
     });
   }
 
+  componentDidMount() {
+    this.getNotifications();
+  }
+
   searchFilterFunction = text => {
     const newData = this.arrayholder.filter(item => {
-      console.log(item);
       const itemData = item.customText.toUpperCase();
       const textData = text.toUpperCase();
 
@@ -196,6 +208,14 @@ class ManageNotifications extends React.Component {
   };
 
   render() {
+    var data = [];
+    var medicines = this.props.notifications;
+    for (var i = 0; i < medicines.length; i++) {
+      if (medicines[i].m_id === this.props.navigation.state.params.id) {
+        data = medicines[i].notifications;
+      }
+    }
+
     return (
       <View style={{ flex: 1 }}>
         <View>
@@ -207,15 +227,17 @@ class ManageNotifications extends React.Component {
           />
         </View>
         <View style={styles.container}>
-          {this.state.data !== undefined && this.state.data.notifications && (
-            <FlatList
-              data={this.state.data.notifications.sort(function(a, b) {
-                return new Date(a.date).getDate() - new Date(b.date).getDate();
-              })}
-              renderItem={this.renderItem}
-              keyExtractor={(item, index) => index.toString()}
-            />
-          )}
+          <FlatList
+            // data={this.state.data.notifications.sort(function(a, b) {
+            //   return new Date(a.date) - new Date(b.date);
+            // })}
+            data={data}
+            extraData={data.map(item => {
+              return item;
+            })}
+            renderItem={this.renderItem}
+            keyExtractor={(item, index) => index.toString()}
+          />
         </View>
       </View>
     );
@@ -292,6 +314,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
+  console.log(state.notificationsState.data);
   return {
     notifications: state.notificationsState.data
   };
@@ -300,6 +323,7 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    get_notifications
+    get_notifications,
+    update_notification
   }
 )(ManageNotifications);

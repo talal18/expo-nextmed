@@ -55,25 +55,28 @@ class AddScreen extends Component {
     var errors = [];
 
     if (this.props.data.title.length <= 0) {
-      errors.push(`You must provide a title`);
+      errors.push(`You must provide a title\n`);
     }
     if (this.props.data.dosage.length <= 0) {
-      errors.push(`\nYou must provide a dosage amount`);
+      errors.push(`You must provide a dosage amount\n`);
     }
     if (this.props.data.dosage && parseInt(this.props.data.dosage) <= 0) {
-      errors.push(`\nDosage can't be less than or equal to 0`);
+      errors.push(`Dosage can't be less than or equal to 0\n`);
     }
     if (this.props.data.start_date.length <= 0) {
-      errors.push(`\nYou must provide a start date`);
+      errors.push(`You must provide a start date\n`);
+    }
+    if (this.props.data.end_date.length <= 0) {
+      errors.push(`You must provide an end date\n`);
     }
     if (this.props.data.intake_times.length <= 0) {
-      errors.push(`\nYou must have atleast 1 intake time`);
+      errors.push(`You must have atleast 1 intake time\n`);
     }
 
     if (errors.length > 0) {
       Alert.alert(
         "Error",
-        errors.toString(),
+        errors.join("").toString(),
         [
           {
             text: "OK",
@@ -85,14 +88,6 @@ class AddScreen extends Component {
     } else {
       var start_date = new Date(this.props.data.start_date);
 
-      /*
-        7:45 PM
-
-        Tuseday 15        
-        Wednesday 16
-        Thursday 17
-        Friday 18
-      */
       this.props.add_m_id(this.state.m_id);
 
       this.props.data.intake_times.map(item => {

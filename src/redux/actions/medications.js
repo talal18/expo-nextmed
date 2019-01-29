@@ -4,9 +4,14 @@ import {
   ADD_MEDICATION,
   RESET_MEDICATIONS
 } from "../types/medications";
+import { DELETE_NOTIFICATION } from "../types/notifications";
 
 export const deleteMedication = item => {
   return dispatch => {
+    dispatch({
+      type: DELETE_NOTIFICATION,
+      m_id: item.m_id
+    });
     dispatch({
       type: DELETE_MEDICATION,
       medication: item

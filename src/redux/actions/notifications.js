@@ -1,4 +1,8 @@
-import { ADD_NOTIFICATION, ADD_M_ID } from "../types/notifications";
+import {
+  ADD_NOTIFICATION,
+  ADD_M_ID,
+  UPDATE_NOTIFICATIONS
+} from "../types/notifications";
 
 import { Notifications } from "expo";
 
@@ -11,12 +15,13 @@ export const add_m_id = m_id => {
   };
 };
 
-export const add_notification = (m_id, title, body, repeat, date, end_date) => {
+export const update_notification = (id, m_id, status, date) => {
   return dispatch => {
-    function addNotification(m_id, title, body, repeat, date, end_date) {
+    if (status) {
+      console.log("New Notification");
       const localNotification = {
-        title: title,
-        body: body, // (string) — body text of the notification.
+        title: "one",
+        body: "body", // (string) — body text of the notification.
         ios: {
           // (optional) (object) — notification configuration specific to iOS.
           sound: true // (optional) (boolean) — if true, play a sound. Default: false.
@@ -33,310 +38,282 @@ export const add_notification = (m_id, title, body, repeat, date, end_date) => {
         }
       };
 
-      var schedulingOptions = {};
-
-      var today = new Date(Date.now());
-      var start_day = date.getDate();
-      var start_month = date.getMonth();
-      var start_year = date.getFullYear();
-
-      var hours = date.getHours();
-      var minutes = date.getMinutes();
-      var isBeforeNow = false;
-
-      if (
-        start_day === today.getDate() &&
-        start_month === today.getMonth() &&
-        start_year === today.getFullYear()
-      ) {
-        if (today.getHours() === hours) {
-          if (today.getMinutes() > minutes) {
-            isBeforeNow = true;
-          } else {
-            isBeforeNow = false;
-          }
-        } else {
-          if (today.getHours() > hours) {
-            isBeforeNow = true;
-          } else {
-            isBeforeNow = false;
-          }
-        }
-      } else {
-        isBeforeNow = false;
-      }
-
-      Date.daysBetween = function(date1, date2) {
-        //Get 1 day in milliseconds
-        var one_day = 1000 * 60 * 60 * 24;
-
-        // Convert both dates to milliseconds
-        var date1_ms = date1.getTime();
-        var date2_ms = date2.getTime();
-
-        // Calculate the difference in milliseconds
-        var difference_ms = date2_ms - date1_ms;
-
-        // Convert back to days and return
-        return Math.round(difference_ms / one_day);
+      var t = new Date(date);
+      var schedulingOptions = {
+        time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
       };
 
-      if (end_date.length > 0) {
-        if (repeat === "day") {
-          var days = Date.daysBetween(
-            new Date(start_year, start_month, start_day, 0, 0, 0, 0),
-            new Date(end_date)
-          );
-          days = days - 1;
+      Notifications.scheduleLocalNotificationAsync(
+        localNotification,
+        schedulingOptions
+      ).then(newId => {
+        schedulingOptions = {
+          time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+        };
 
-          for (var i = isBeforeNow ? 1 : 0; i <= days; i++) {
-            let t = new Date(date);
-            t.setDate(t.getDate() + i);
-
-            schedulingOptions = {
-              time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
-            };
-
-            console.log(new Date(schedulingOptions.time).toString());
-
-            dispatch({
-              type: ADD_NOTIFICATION,
-              notification: {
-                id: "1",
-                m_id,
-                date: new Date(schedulingOptions.time).toString()
-              }
-            });
-
-            // Notifications.scheduleLocalNotificationAsync(
-            //   localNotification,
-            //   schedulingOptions
-            // );
+        dispatch({
+          type: UPDATE_NOTIFICATIONS,
+          notification: {
+            prevId: id,
+            id: newId,
+            m_id,
+            date: new Date(schedulingOptions.time).toString(),
+            status: false
           }
-        } else if (repeat === "week") {
-          var days = Date.daysBetween(
-            new Date(start_year, start_month, start_day, 0, 0, 0, 0),
-            new Date(end_date)
-          );
-          days = days - 1;
+        });
+      });
+    } else {
+      console.log("Cancel Notification");
+      Notifications.cancelScheduledNotificationAsync(id);
 
-          var weeks = days / 7;
+      dispatch({
+        type: UPDATE_NOTIFICATIONS,
+        notification: {
+          prevId: id,
+          id,
+          m_id,
+          date,
+          status: true
+        }
+      });
+    }
+  };
+};
 
-          weeks = Math.floor(weeks);
+export const add_notification = (m_id, title, body, repeat, date, end_date) => {
+  return dispatch => {
+    Notifications.cancelAllScheduledNotificationsAsync();
 
-          for (var i = isBeforeNow ? 1 : 0; i <= weeks; i++) {
-            let t = new Date(date);
-            t.setDate(t.getDate() + i * 7);
+    const localNotification = {
+      title: title,
+      body: body, // (string) — body text of the notification.
+      ios: {
+        // (optional) (object) — notification configuration specific to iOS.
+        sound: true // (optional) (boolean) — if true, play a sound. Default: false.
+      },
+      // (optional) (object) — notification configuration specific to Android.
+      android: {
+        sound: true, // (optional) (boolean) — if true, play a sound. Default: false.
+        //icon (optional) (string) — URL of icon to display in notification drawer.
+        //color (optional) (string) — color of the notification icon in notification drawer.
+        priority: "high", // (optional) (min | low | high | max) — android may present notifications according to the priority, for example a high priority notification will likely to be shown as a heads-up notification.
+        sticky: false, // (optional) (boolean) — if true, the notification will be sticky and not dismissable by user. The notification must be programmatically dismissed. Default: false.
+        vibrate: true // (optional) (boolean or array) — if true, vibrate the device. An array can be supplied to specify the vibration pattern, e.g. - [ 0, 500 ].
+        // link (optional) (string) — external link to open when notification is selected.
+      }
+    };
 
-            schedulingOptions = {
-              time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
-            };
+    var today = new Date(Date.now());
+    var start_day = date.getDate();
+    var start_month = date.getMonth();
+    var start_year = date.getFullYear();
 
-            console.log(new Date(schedulingOptions.time).toString());
+    var hours = date.getHours();
+    var minutes = date.getMinutes();
+    var isBeforeNow = false;
 
-            dispatch({
-              type: ADD_NOTIFICATION,
-              notification: {
-                id: "1",
-                m_id,
-                date: new Date(schedulingOptions.time).toString()
-              }
-            });
-
-            // Notifications.scheduleLocalNotificationAsync(
-            //   localNotification,
-            //   schedulingOptions
-            // );
-          }
-        } else if (repeat === "month") {
-          var months = 0;
-          var end_date = new Date(end_date);
-
-          if (date.getMonth() === end_date.getMonth()) {
-            if (end_date.getFullYear() > date.getFullYear()) {
-              var years = end_date.getFullYear() - date.getFullYear();
-              months += 12 * years;
-            }
-          } else {
-            months = end_date.getMonth() - date.getMonth();
-          }
-
-          console.log(months);
-
-          for (var i = isBeforeNow ? 1 : 0; i <= months; i++) {
-            let t = new Date(date);
-            t.setMonth(t.getMonth() + i);
-
-            schedulingOptions = {
-              time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
-            };
-
-            console.log(new Date(schedulingOptions.time).toString());
-
-            dispatch({
-              type: ADD_NOTIFICATION,
-              notification: {
-                id: "1",
-                m_id,
-                date: new Date(schedulingOptions.time).toString()
-              }
-            });
-
-            // Notifications.scheduleLocalNotificationAsync(
-            //   localNotification,
-            //   schedulingOptions
-            // );
-          }
-        } else if (repeat === "year") {
-          var years = 0;
-
-          var end_date = new Date(end_date);
-
-          if (start_year === end_date.getFullYear()) {
-            if (!isBeforeNow) {
-              years = 1;
-            }
-          } else {
-            years = end_date.getFullYear() - start_year;
-          }
-
-          for (var i = 0; i < years; i++) {
-            let t = new Date(date);
-            t.setFullYear(t.getFullYear() + i);
-
-            schedulingOptions = {
-              time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
-            };
-
-            console.log(new Date(schedulingOptions.time).toString());
-
-            dispatch({
-              type: ADD_NOTIFICATION,
-              notification: {
-                id: "1",
-                m_id,
-                date: new Date(schedulingOptions.time).toString()
-              }
-            });
-
-            // Notifications.scheduleLocalNotificationAsync(
-            //   localNotification,
-            //   schedulingOptions
-            // );
-          }
+    if (
+      start_day === today.getDate() &&
+      start_month === today.getMonth() &&
+      start_year === today.getFullYear()
+    ) {
+      if (today.getHours() === hours) {
+        if (today.getMinutes() > minutes) {
+          isBeforeNow = true;
+        } else {
+          isBeforeNow = false;
         }
       } else {
-        if (repeat === "day") {
-          for (var i = 0; i < 365 * 10; i++) {
-            let t = new Date(date);
-            t.setDate(t.getDate() + i);
-
-            schedulingOptions = {
-              time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
-            };
-
-            console.log(new Date(schedulingOptions.time).toString());
-
-            dispatch({
-              type: ADD_NOTIFICATION,
-              notification: {
-                id: "1",
-                m_id,
-                date: new Date(schedulingOptions.time).toString()
-              }
-            });
-
-            // Notifications.scheduleLocalNotificationAsync(
-            //   localNotification,
-            //   schedulingOptions
-            // );
-          }
-        } else if (repeat === "week") {
-          for (var i = 0; i < 52 * 10; i++) {
-            let t = new Date(date);
-            t.setDate(t.getDate() + i * 7);
-
-            schedulingOptions = {
-              time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
-            };
-
-            console.log(new Date(schedulingOptions.time).toString());
-
-            dispatch({
-              type: ADD_NOTIFICATION,
-              notification: {
-                id: "1",
-                m_id,
-                date: new Date(schedulingOptions.time).toString()
-              }
-            });
-
-            // Notifications.scheduleLocalNotificationAsync(
-            //   localNotification,
-            //   schedulingOptions
-            // );
-          }
-        } else if (repeat === "month") {
-          for (var i = 0; i < 12 * 10; i++) {
-            let t = new Date(date);
-            t.setMonth(t.getMonth() + i);
-
-            schedulingOptions = {
-              time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
-            };
-
-            console.log(new Date(schedulingOptions.time).toString());
-
-            dispatch({
-              type: ADD_NOTIFICATION,
-              notification: {
-                id: "1",
-                m_id,
-                date: new Date(schedulingOptions.time).toString()
-              }
-            });
-
-            // Notifications.scheduleLocalNotificationAsync(
-            //   localNotification,
-            //   schedulingOptions
-            // );
-          }
-        } else if (repeat === "year") {
-          for (var i = 0; i < 10; i++) {
-            let t = new Date(date);
-            t.setFullYear(t.getFullYear() + i);
-
-            schedulingOptions = {
-              time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
-            };
-
-            console.log(new Date(schedulingOptions.time).toString());
-
-            dispatch({
-              type: ADD_NOTIFICATION,
-              notification: {
-                id: "1",
-                m_id,
-                date: new Date(schedulingOptions.time).toString()
-              }
-            });
-
-            // Notifications.scheduleLocalNotificationAsync(
-            //   localNotification,
-            //   schedulingOptions
-            // );
-          }
+        if (today.getHours() > hours) {
+          isBeforeNow = true;
+        } else {
+          isBeforeNow = false;
         }
       }
-
-      Notifications.cancelAllScheduledNotificationsAsync();
-
-      // Notifications.scheduleLocalNotificationAsync(
-      //   localNotification,
-      //   schedulingOptions
-      // );
+    } else {
+      isBeforeNow = false;
     }
 
-    addNotification(m_id, title, body, repeat, date, end_date);
+    Date.daysBetween = function(date1, date2) {
+      //Get 1 day in milliseconds
+      var one_day = 1000 * 60 * 60 * 24;
+
+      // Convert both dates to milliseconds
+      var date1_ms = date1.getTime();
+      var date2_ms = date2.getTime();
+
+      // Calculate the difference in milliseconds
+      var difference_ms = date2_ms - date1_ms;
+
+      // Convert back to days and return
+      return Math.round(difference_ms / one_day);
+    };
+
+    if (end_date.length > 0) {
+      if (repeat === "day") {
+        var days = Date.daysBetween(
+          new Date(start_year, start_month, start_day, 0, 0, 0, 0),
+          new Date(end_date)
+        );
+
+        if (days > 365) {
+          days = 365;
+        }
+
+        days = days - 1;
+
+        for (var i = isBeforeNow ? 1 : 0; i <= days; i++) {
+          let t = new Date(date);
+          t.setDate(t.getDate() + i);
+
+          var schedulingOptions = {
+            time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+          };
+
+          // console.log(new Date(schedulingOptions.time).toString());
+
+          Notifications.scheduleLocalNotificationAsync(
+            localNotification,
+            schedulingOptions
+          ).then(id => {
+            schedulingOptions = {
+              time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+            };
+
+            dispatch({
+              type: ADD_NOTIFICATION,
+              notification: {
+                id: id,
+                m_id,
+                date: new Date(schedulingOptions.time).toString(),
+                status: true
+              }
+            });
+          });
+        }
+      } else if (repeat === "week") {
+        var days = Date.daysBetween(
+          new Date(start_year, start_month, start_day, 0, 0, 0, 0),
+          new Date(end_date)
+        );
+        days = days - 1;
+
+        if (days > 365) {
+          days = 365;
+        }
+
+        var weeks = days / 7;
+
+        weeks = Math.floor(weeks);
+
+        for (var i = isBeforeNow ? 1 : 0; i <= weeks; i++) {
+          let t = new Date(date);
+          t.setDate(t.getDate() + i * 7);
+
+          var schedulingOptions = {
+            time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+          };
+
+          Notifications.scheduleLocalNotificationAsync(
+            localNotification,
+            schedulingOptions
+          ).then(id => {
+            schedulingOptions = {
+              time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+            };
+
+            dispatch({
+              type: ADD_NOTIFICATION,
+              notification: {
+                id,
+                m_id,
+                date: new Date(schedulingOptions.time).toString(),
+                status: true
+              }
+            });
+          });
+        }
+      } else if (repeat === "month") {
+        var months = 0;
+        var endDate = new Date(end_date);
+
+        if (date.getMonth() === endDate.getMonth()) {
+          if (endDate.getFullYear() > date.getFullYear()) {
+            var years = endDate.getFullYear() - date.getFullYear();
+            months += 12 * years;
+          }
+        } else {
+          months = endDate.getMonth() - date.getMonth();
+        }
+
+        for (var i = isBeforeNow ? 1 : 0; i <= months; i++) {
+          let t = new Date(date);
+          t.setMonth(t.getMonth() + i);
+
+          var schedulingOptions = {
+            time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+          };
+
+          Notifications.scheduleLocalNotificationAsync(
+            localNotification,
+            schedulingOptions
+          ).then(id => {
+            schedulingOptions = {
+              time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+            };
+
+            dispatch({
+              type: ADD_NOTIFICATION,
+              notification: {
+                id,
+                m_id,
+                date: new Date(schedulingOptions.time).toString(),
+                status: true
+              }
+            });
+          });
+        }
+      } else if (repeat === "year") {
+        var years = 0;
+
+        var endDate = new Date(end_date);
+
+        if (start_year === endDate.getFullYear()) {
+          if (!isBeforeNow) {
+            years = 1;
+          }
+        } else {
+          years = endDate.getFullYear() - start_year;
+        }
+
+        for (var i = 0; i < years; i++) {
+          let t = new Date(date);
+          t.setFullYear(t.getFullYear() + i);
+
+          var schedulingOptions = {
+            time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+          };
+
+          Notifications.scheduleLocalNotificationAsync(
+            localNotification,
+            schedulingOptions
+          ).then(id => {
+            schedulingOptions = {
+              time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+            };
+
+            dispatch({
+              type: ADD_NOTIFICATION,
+              notification: {
+                id,
+                m_id,
+                date: new Date(schedulingOptions.time).toString(),
+                status: true
+              }
+            });
+          });
+        }
+      }
+    }
   };
 };
