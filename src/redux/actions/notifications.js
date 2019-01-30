@@ -1,10 +1,97 @@
 import {
   ADD_NOTIFICATION,
   ADD_M_ID,
-  UPDATE_NOTIFICATIONS
+  UPDATE_NOTIFICATIONS,
+  DELETE_NOTIFICATION,
+  DELETE_NOTIFICATIONS_ID,
+  GET_DATA
 } from "../types/notifications";
-
 import { Notifications } from "expo";
+
+export const get_data = (notifi_id, status, data) => {
+  return dispatch => {
+    var newData = data.notifications.slice();
+
+    dispatch({
+      type: DELETE_NOTIFICATIONS_ID,
+      m_id: data.m_id
+    });
+
+    newData.map(item => {
+      if (item.status === true) {
+        const localNotification = {
+          title: item.title,
+          body: item.body, // (string) — body text of the notification.
+          ios: {
+            // (optional) (object) — notification configuration specific to iOS.
+            sound: true // (optional) (boolean) — if true, play a sound. Default: false.
+          },
+          // (optional) (object) — notification configuration specific to Android.
+          android: {
+            sound: true, // (optional) (boolean) — if true, play a sound. Default: false.
+            //icon (optional) (string) — URL of icon to display in notification drawer.
+            //color (optional) (string) — color of the notification icon in notification drawer.
+            priority: "high", // (optional) (min | low | high | max) — android may present notifications according to the priority, for example a high priority notification will likely to be shown as a heads-up notification.
+            sticky: false, // (optional) (boolean) — if true, the notification will be sticky and not dismissable by user. The notification must be programmatically dismissed. Default: false.
+            vibrate: true // (optional) (boolean or array) — if true, vibrate the device. An array can be supplied to specify the vibration pattern, e.g. - [ 0, 500 ].
+            // link (optional) (string) — external link to open when notification is selected.
+          }
+        };
+
+        var t = new Date(item.date);
+        var schedulingOptions = {
+          time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+        };
+
+        Notifications.scheduleLocalNotificationAsync(
+          localNotification,
+          schedulingOptions
+        ).then(newId => {
+          schedulingOptions = {
+            time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+          };
+
+          dispatch({
+            type: ADD_NOTIFICATION,
+            notification: {
+              id: newId,
+              notifi_id: item.notifi_id,
+              m_id: data.m_id,
+              date: new Date(schedulingOptions.time).toString(),
+              status: !item.status,
+              title: item.title,
+              body: item.body
+            }
+          });
+          dispatch({
+            type: GET_DATA
+          });
+        });
+      } else {
+        var t = new Date(item.date);
+        var schedulingOptions = {
+          time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
+        };
+
+        dispatch({
+          type: ADD_NOTIFICATION,
+          notification: {
+            id: item.id,
+            notifi_id: item.notifi_id,
+            m_id: data.m_id,
+            date: new Date(schedulingOptions.time).toString(),
+            status: !item.status,
+            title: item.title,
+            body: item.body
+          }
+        });
+        dispatch({
+          type: GET_DATA
+        });
+      }
+    });
+  };
+};
 
 export const add_m_id = m_id => {
   return dispatch => {
@@ -15,68 +102,28 @@ export const add_m_id = m_id => {
   };
 };
 
-export const update_notification = (id, m_id, status, date) => {
+export const update_notification = (
+  id,
+  notifi_id,
+  m_id,
+  title,
+  body,
+  status,
+  date
+) => {
   return dispatch => {
-    if (status) {
-      console.log("New Notification");
-      const localNotification = {
-        title: "one",
-        body: "body", // (string) — body text of the notification.
-        ios: {
-          // (optional) (object) — notification configuration specific to iOS.
-          sound: true // (optional) (boolean) — if true, play a sound. Default: false.
-        },
-        // (optional) (object) — notification configuration specific to Android.
-        android: {
-          sound: true, // (optional) (boolean) — if true, play a sound. Default: false.
-          //icon (optional) (string) — URL of icon to display in notification drawer.
-          //color (optional) (string) — color of the notification icon in notification drawer.
-          priority: "high", // (optional) (min | low | high | max) — android may present notifications according to the priority, for example a high priority notification will likely to be shown as a heads-up notification.
-          sticky: false, // (optional) (boolean) — if true, the notification will be sticky and not dismissable by user. The notification must be programmatically dismissed. Default: false.
-          vibrate: true // (optional) (boolean or array) — if true, vibrate the device. An array can be supplied to specify the vibration pattern, e.g. - [ 0, 500 ].
-          // link (optional) (string) — external link to open when notification is selected.
-        }
-      };
-
-      var t = new Date(date);
-      var schedulingOptions = {
-        time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
-      };
-
-      Notifications.scheduleLocalNotificationAsync(
-        localNotification,
-        schedulingOptions
-      ).then(newId => {
-        schedulingOptions = {
-          time: t.getTime() // (date or number) — A Date object representing when to fire the notification or a number in Unix epoch time. Example: (new Date()).getTime() + 1000 is one second from now.
-        };
-
-        dispatch({
-          type: UPDATE_NOTIFICATIONS,
-          notification: {
-            prevId: id,
-            id: newId,
-            m_id,
-            date: new Date(schedulingOptions.time).toString(),
-            status: false
-          }
-        });
-      });
-    } else {
-      console.log("Cancel Notification");
-      Notifications.cancelScheduledNotificationAsync(id);
-
-      dispatch({
-        type: UPDATE_NOTIFICATIONS,
-        notification: {
-          prevId: id,
-          id,
-          m_id,
-          date,
-          status: true
-        }
-      });
-    }
+    dispatch({
+      type: UPDATE_NOTIFICATIONS,
+      notification: {
+        id,
+        notifi_id,
+        m_id,
+        date,
+        status,
+        title,
+        body
+      }
+    });
   };
 };
 
@@ -184,9 +231,17 @@ export const add_notification = (m_id, title, body, repeat, date, end_date) => {
               type: ADD_NOTIFICATION,
               notification: {
                 id: id,
+                notifi_id:
+                  "_" +
+                  Math.random()
+                    .toString(36)
+                    .substr(2, 9) +
+                  Date.now(),
                 m_id,
                 date: new Date(schedulingOptions.time).toString(),
-                status: true
+                status: true,
+                title,
+                body
               }
             });
           });
@@ -226,9 +281,17 @@ export const add_notification = (m_id, title, body, repeat, date, end_date) => {
               type: ADD_NOTIFICATION,
               notification: {
                 id,
+                notifi_id:
+                  "_" +
+                  Math.random()
+                    .toString(36)
+                    .substr(2, 9) +
+                  Date.now(),
                 m_id,
                 date: new Date(schedulingOptions.time).toString(),
-                status: true
+                status: true,
+                title,
+                body
               }
             });
           });
@@ -266,9 +329,17 @@ export const add_notification = (m_id, title, body, repeat, date, end_date) => {
               type: ADD_NOTIFICATION,
               notification: {
                 id,
+                notifi_id:
+                  "_" +
+                  Math.random()
+                    .toString(36)
+                    .substr(2, 9) +
+                  Date.now(),
                 m_id,
                 date: new Date(schedulingOptions.time).toString(),
-                status: true
+                status: true,
+                title,
+                body
               }
             });
           });
@@ -306,9 +377,17 @@ export const add_notification = (m_id, title, body, repeat, date, end_date) => {
               type: ADD_NOTIFICATION,
               notification: {
                 id,
+                notifi_id:
+                  "_" +
+                  Math.random()
+                    .toString(36)
+                    .substr(2, 9) +
+                  Date.now(),
                 m_id,
                 date: new Date(schedulingOptions.time).toString(),
-                status: true
+                status: true,
+                title,
+                body
               }
             });
           });

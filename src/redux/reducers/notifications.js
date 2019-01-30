@@ -3,7 +3,9 @@ import {
   UPDATE_NOTIFICATIONS,
   GET_NOTIFICATIONS,
   ADD_M_ID,
-  DELETE_NOTIFICATION
+  DELETE_NOTIFICATION,
+  DELETE_NOTIFICATIONS_ID,
+  GET_DATA
 } from "../types/notifications";
 
 const defaultState = {
@@ -12,6 +14,11 @@ const defaultState = {
 
 export default function reducer(state = defaultState, action) {
   switch (action.type) {
+    case GET_DATA:
+      console.log(state.data);
+      return {
+        ...state
+      };
     case ADD_M_ID:
       return {
         ...state,
@@ -22,12 +29,13 @@ export default function reducer(state = defaultState, action) {
 
       data.map(item => {
         if (action.notification.m_id === item.m_id) {
-          console.log(action.notification.date);
-
           item.notifications.push({
             id: action.notification.id,
+            notifi_id: action.notification.notifi_id,
             date: action.notification.date,
-            status: action.notification.status
+            status: action.notification.status,
+            body: action.notification.body,
+            title: action.notification.title
           });
         }
       });
@@ -45,6 +53,7 @@ export default function reducer(state = defaultState, action) {
       //     item: [
       //       {
       //         id,
+      //         notifi_id,
       //         date,
       //         status
       //       }
@@ -60,11 +69,14 @@ export default function reducer(state = defaultState, action) {
         if (action.notification.m_id === item.m_id) {
           dataIndex = d;
           item.notifications.map((notification, n) => {
-            if (action.notification.prevId === notification.id) {
+            if (action.notification.notifi_id === notification.notifi_id) {
               notificationsIndex = n;
               updatedNotification.id = action.notification.id;
+              updatedNotification.notifi_id = action.notification.notifi_id;
               updatedNotification.status = !action.notification.status;
               updatedNotification.date = action.notification.date;
+              updatedNotification.title = action.notification.title;
+              updatedNotification.body = action.notification.body;
             }
           });
         }
@@ -83,13 +95,30 @@ export default function reducer(state = defaultState, action) {
     case DELETE_NOTIFICATION:
       var data = state.data;
 
-      var newDate = data.map(item => {
+      var newData = data.map(item => {
         return action.m_id !== item.m_id;
       });
 
       return {
         ...state,
-        data: []
+        data: newData
+      };
+    case DELETE_NOTIFICATIONS_ID:
+      var data = state.data;
+
+      var itemIndex = -1;
+
+      data.map((item, index) => {
+        if (action.m_id === item.m_id) {
+          itemIndex = index;
+        }
+      });
+
+      data[itemIndex].notifications = [];
+
+      return {
+        ...state,
+        data
       };
     default:
       return state;

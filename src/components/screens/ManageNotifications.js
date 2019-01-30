@@ -13,7 +13,8 @@ import Metrics from "../../styling/Metrics";
 
 import {
   get_notifications,
-  update_notification
+  update_notification,
+  get_data
 } from "../../redux/actions/notifications";
 
 class ManageNotifications extends React.Component {
@@ -22,7 +23,7 @@ class ManageNotifications extends React.Component {
 
     this.state = {
       data: {},
-      value: false
+      on: false
     };
 
     this.arrayholder = [];
@@ -164,13 +165,17 @@ class ManageNotifications extends React.Component {
             <Switch
               value={item.status}
               onValueChange={value => {
-                this.setState({ value });
                 this.props.update_notification(
                   item.id,
+                  item.notifi_id,
                   this.props.navigation.state.params.id,
+                  item.title,
+                  item.body,
                   value,
                   item.date
                 );
+                this.props.get_data(item.notifi_id, value, this.state.data);
+                this.getNotifications();
               }}
               style={styles.switch}
               thumbColor="#595d63"
@@ -182,8 +187,11 @@ class ManageNotifications extends React.Component {
   };
 
   getNotifications() {
+    // console.log(this.props.notifications);
     this.props.notifications.map(item => {
       if (item.m_id === this.props.navigation.state.params.id) {
+        this.setState({ data: item });
+
         this.arrayholder = item.notifications.map(data => {
           return this.renderCustomDate(data.date);
         });
@@ -208,14 +216,8 @@ class ManageNotifications extends React.Component {
   };
 
   render() {
-    var data = [];
-    var medicines = this.props.notifications;
-    for (var i = 0; i < medicines.length; i++) {
-      if (medicines[i].m_id === this.props.navigation.state.params.id) {
-        data = medicines[i].notifications;
-      }
-    }
-
+    // console.log("Local State");
+    // console.log(this.props.notifications);
     return (
       <View style={{ flex: 1 }}>
         <View>
@@ -227,17 +229,21 @@ class ManageNotifications extends React.Component {
           />
         </View>
         <View style={styles.container}>
-          <FlatList
-            // data={this.state.data.notifications.sort(function(a, b) {
-            //   return new Date(a.date) - new Date(b.date);
-            // })}
-            data={data}
-            extraData={data.map(item => {
-              return item;
-            })}
-            renderItem={this.renderItem}
-            keyExtractor={(item, index) => index.toString()}
-          />
+          {this.state.data &&
+          this.state.data.notifications &&
+          this.state.data.notifications.length > 0 ? (
+            <FlatList
+              data={this.state.data.notifications.sort(function(a, b) {
+                return new Date(a.date) - new Date(b.date);
+              })}
+              // data={data}
+              extraData={this.state.data.notifications.map(item => {
+                return item;
+              })}
+              renderItem={this.renderItem}
+              keyExtractor={(item, index) => index.toString()}
+            />
+          ) : null}
         </View>
       </View>
     );
@@ -314,7 +320,9 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  console.log(state.notificationsState.data);
+  // console.log("Redux State");
+  // console.log(state.notificationsState.data);
+
   return {
     notifications: state.notificationsState.data
   };
@@ -324,6 +332,7 @@ export default connect(
   mapStateToProps,
   {
     get_notifications,
-    update_notification
+    update_notification,
+    get_data
   }
 )(ManageNotifications);
