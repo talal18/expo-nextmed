@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
   itemText: {
     color: "#fff",
     fontSize: Metrics.flatListItemFontSize,
-    fontWeight: "bold"
+    fontFamily: "champBold"
   },
 
   MedImageContainer: {
