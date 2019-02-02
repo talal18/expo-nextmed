@@ -88,8 +88,6 @@ class AddScreen extends Component {
     } else {
       var start_date = new Date(this.props.data.start_date);
 
-      this.props.add_m_id(this.state.m_id);
-
       this.props.data.intake_times.map(item => {
         var myDate = new Date(item.time);
         var minutes = myDate.getMinutes();
