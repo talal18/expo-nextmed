@@ -15,13 +15,12 @@ class SettingsScreen extends React.Component {
   componentDidMount() {}
 
   /*
-    Add no items to flat list in home page
+    HomeScreen Add Button Styling
+    HomeScreen Empty Text Styling
+    Fonts
     add / edit forms need to pull up when keyboard shows
     image url
     image buttons (camera/storage)
-    add switch on manage notifications flatlist (Style) ----> DONE!
-    add switch on manage notifications flatlist (Functionality)
-    addButton styling
   */
 
   render() {

@@ -1,5 +1,5 @@
 import React from "react";
-import { Image, StyleSheet } from "react-native";
+import { Image, StyleSheet, TouchableOpacity } from "react-native";
 import {
   createBottomTabNavigator,
   createAppContainer,
@@ -80,7 +80,19 @@ const AppNavigator = createStackNavigator({
       headerTitleStyle: {
         fontSize: Metrics.navigationTitleFontSize,
         fontWeight: "bold"
-      }
+      },
+      headerRight: (
+        <TouchableOpacity onPress={() => alert("This is a button!")}>
+          <Image
+            style={{
+              width: Metrics.homeAddButtonWidth,
+              height: Metrics.homeAddButtonHeight,
+              marginRight: 10
+            }}
+            source={require("../assets/images/add-navbar.png")}
+          />
+        </TouchableOpacity>
+      )
     }
   },
   Add: {
@@ -130,12 +142,5 @@ const AppNavigator = createStackNavigator({
 export default createAppContainer(AppNavigator);
 
 const styles = StyleSheet.create({
-  // homeTabLogo: {
-  //   width: Metrics.homeTabLogoWidth,
-  //   height: Metrics.homeTabLogoHeight
-  // },
-  // settingTabLogo: {
-  //   width: Metrics.settingsTabLogoWidth,
-  //   height: Metrics.settingsTabLogoHeight
-  // }
+  addButtonStyle: {}
 });

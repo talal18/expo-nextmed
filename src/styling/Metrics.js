@@ -35,6 +35,8 @@ const metrics = {
   settingsTabLogoHeight: NormalizeSize.normalizeHeight(35),
   homeTabLogoWidth: NormalizeSize.normalizeWidth(35),
   homeTabLogoHeight: NormalizeSize.normalizeHeight(35),
+  homeAddButtonWidth: NormalizeSize.normalizeWidth(35),
+  homeAddButtonHeight: NormalizeSize.normalizeHeight(35),
 
   //Input
   inputBoxW: NormalizeSize.normalizeWidth(300),

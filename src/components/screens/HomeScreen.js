@@ -104,11 +104,18 @@ class HomeScreen extends React.Component {
     return (
       <View style={{ flex: 1 }}>
         <View style={styles.container}>
-          <FlatList
-            data={this.props.medications}
-            renderItem={this.renderItem}
-            keyExtractor={(item, index) => index.toString()}
-          />
+          {this.props.medications.length > 0 ? (
+            <FlatList
+              data={this.props.medications}
+              renderItem={this.renderItem}
+              keyExtractor={(item, index) => index.toString()}
+            />
+          ) : (
+            <Text style={styles.emptyFlatListText}>
+              You have not scheduled any medicine. Use the add button to
+              schedule a new medicine
+            </Text>
+          )}
 
           <View>
             <TouchableOpacity
@@ -192,7 +199,8 @@ const styles = StyleSheet.create({
   addButtonImage: {
     width: 60,
     height: 60
-  }
+  },
+  emptyFlatListText: {}
 });
 
 const mapStateToProps = state => {
