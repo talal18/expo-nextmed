@@ -125,7 +125,8 @@ class AddScreen extends Component {
         intake_times: this.props.data.intake_times,
         recurrence: this.props.data.recurrence,
         dosage: this.props.data.dosage,
-        notes: this.props.data.notes
+        notes: this.props.data.notes,
+        uri: this.props.data.uri
       });
       this.props.navigation.navigate("Home");
     }

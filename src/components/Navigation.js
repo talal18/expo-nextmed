@@ -18,8 +18,50 @@ import ManageNotifications from "./screens/ManageNotifications";
 
 const TabNavigator = createBottomTabNavigator(
   {
-    Home: HomeScreen,
-    Settings: SettingsScreen
+    Home: createStackNavigator({
+      Home: {
+        screen: HomeScreen,
+        navigationOptions: ({ navigation }) => ({
+          headerTitle: "Medicine List",
+          headerStyle: {
+            backgroundColor: "#595d63"
+          },
+          headerTintColor: "#d6d6d6",
+          headerTitleStyle: {
+            fontSize: Metrics.navigationTitleFontSize,
+            fontWeight: "bold"
+          },
+          headerRight: (
+            <TouchableOpacity onPress={() => navigation.navigate("Add")}>
+              <Image
+                style={{
+                  width: Metrics.homeAddButtonWidth,
+                  height: Metrics.homeAddButtonHeight,
+                  marginRight: 10
+                }}
+                source={require("../assets/images/add-navbar.png")}
+              />
+            </TouchableOpacity>
+          )
+        })
+      }
+    }),
+    Settings: createStackNavigator({
+      Settings: {
+        screen: SettingsScreen,
+        navigationOptions: {
+          headerTitle: "Settings",
+          headerStyle: {
+            backgroundColor: "#595d63"
+          },
+          headerTintColor: "#d6d6d6",
+          headerTitleStyle: {
+            fontSize: Metrics.navigationTitleFontSize,
+            fontWeight: "bold"
+          }
+        }
+      }
+    })
   },
   {
     tabBarPosition: "bottom",
@@ -44,7 +86,6 @@ const TabNavigator = createBottomTabNavigator(
         alignItems: "center"
       }
     },
-
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
         const { routeName } = navigation.state;
@@ -72,7 +113,7 @@ const AppNavigator = createStackNavigator({
   Tabs: {
     screen: TabNavigator,
     navigationOptions: {
-      title: "Medicine List",
+      header: null,
       headerStyle: {
         backgroundColor: "#595d63"
       },
@@ -80,19 +121,7 @@ const AppNavigator = createStackNavigator({
       headerTitleStyle: {
         fontSize: Metrics.navigationTitleFontSize,
         fontWeight: "bold"
-      },
-      headerRight: (
-        <TouchableOpacity onPress={() => alert("This is a button!")}>
-          <Image
-            style={{
-              width: Metrics.homeAddButtonWidth,
-              height: Metrics.homeAddButtonHeight,
-              marginRight: 10
-            }}
-            source={require("../assets/images/add-navbar.png")}
-          />
-        </TouchableOpacity>
-      )
+      }
     }
   },
   Add: {

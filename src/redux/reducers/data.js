@@ -12,7 +12,8 @@ import {
   ADD_TIME,
   DELETE_TIME,
   SET_USER_ID,
-  SET_M_ID
+  SET_M_ID,
+  SET_IMAGE_URI
 } from "../types/data";
 
 const defaultState = {
@@ -26,12 +27,15 @@ const defaultState = {
     notes: "",
     intake_times: [],
     start_date: "",
-    end_date: ""
+    end_date: "",
+    uri: ""
   }
 };
 
 export default function reducer(state = defaultState, action) {
   switch (action.type) {
+    case SET_IMAGE_URI:
+      return { ...state, data: { ...state.data, uri: action.uri } };
     case SET_USER_ID:
       return { ...state, data: { ...state.data, userId: action.userId } };
     case SET_M_ID:

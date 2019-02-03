@@ -10,8 +10,18 @@ import {
   SET_START_DATE,
   SET_END_DATE,
   SET_USER_ID,
-  SET_M_ID
+  SET_M_ID,
+  SET_IMAGE_URI
 } from "../types/data";
+
+export const set_image_uri = uri => {
+  return dispatch => {
+    dispatch({
+      type: SET_IMAGE_URI,
+      uri
+    });
+  };
+};
 
 export const set_user_id = userId => {
   return dispatch => {

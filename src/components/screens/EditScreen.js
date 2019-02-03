@@ -13,6 +13,7 @@ import { connect } from "react-redux";
 import { updateMedication } from "../../redux/actions/medications";
 
 import {
+  set_image_uri,
   set_m_id,
   set_user_id,
   set_title,
@@ -53,6 +54,7 @@ class EditScreen extends Component {
   getMedication(id) {
     this.props.medications.map(item => {
       if (item.m_id === id) {
+        console.log(item);
         this.props.set_m_id(item.m_id);
         this.props.set_title(item.title);
         this.props.set_dosage(item.dosage);
@@ -61,6 +63,7 @@ class EditScreen extends Component {
         this.props.set_start_date(item.start_date);
         this.props.set_end_date(item.end_date);
         this.props.set_type(item.type);
+        this.props.set_image_uri(item.uri);
 
         item.intake_times.map(time => {
           this.props.add_time(time);
@@ -123,7 +126,8 @@ class EditScreen extends Component {
         intake_times: this.props.data.intake_times,
         recurrence: this.props.data.recurrence,
         dosage: this.props.data.dosage,
-        notes: this.props.data.notes
+        notes: this.props.data.notes,
+        uri: this.props.data.uri
       });
       this.props.navigation.navigate("Home");
     }
@@ -227,6 +231,7 @@ export default connect(
     set_end_date,
     set_notes,
     set_m_id,
-    set_user_id
+    set_user_id,
+    set_image_uri
   }
 )(EditScreen);

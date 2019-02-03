@@ -1,53 +1,106 @@
 import React, { Component } from "react";
-import { StyleSheet, Button, Image, View } from "react-native";
-import { ImagePicker } from "expo";
+import {
+  Modal,
+  StyleSheet,
+  Button,
+  Image,
+  View,
+  TouchableHighlight,
+  Text
+} from "react-native";
+import { ImagePicker, MediaLibrary } from "expo";
 
 import Metrics from "../../styling/Metrics";
 
 import { connect } from "react-redux";
 
+import { set_image_uri } from "../../redux/actions/data";
+
 class MedImage extends Component {
-  state = {
-    image: null
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      modalVisible: false
+    };
+  }
+
+  setModalVisible(visible) {
+    this.setState({ modalVisible: visible });
+  }
 
   render() {
-    let { image } = this.state;
-
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <Button
-          title="Pick an image from camera roll"
-          onPress={this._pickImage}
-        />
-        {image && (
-          <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />
+        <TouchableHighlight
+          onPress={() => {
+            this.setModalVisible(true);
+          }}
+        >
+          <Text>Show Modal</Text>
+        </TouchableHighlight>
+        {this.props.uri && (
+          <Image
+            source={{ uri: this.props.uri }}
+            style={{ width: 200, height: 200 }}
+          />
         )}
+        <Modal
+          animationType="slide"
+          transparent={false}
+          visible={this.state.modalVisible}
+          onRequestClose={() => {
+            this.setModalVisible(false);
+          }}
+        >
+          <View>
+            <Button
+              title="Pick an image from camera roll"
+              onPress={this._pickImageCamera}
+            />
+            <Button
+              title="Pick an image from library"
+              onPress={this._pickImageLibrary}
+            />
+          </View>
+        </Modal>
       </View>
     );
   }
 
-  _pickImage = async () => {
+  _pickImageLibrary = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      allowsEditing: true,
+      aspect: [3, 4]
+    });
+
+    this.setModalVisible(false);
+
+    this.props.set_image_uri(result.uri);
+  };
+
+  _pickImageCamera = async () => {
     let result = await ImagePicker.launchCameraAsync({
       allowsEditing: true,
       aspect: [3, 4]
     });
 
-    console.log(result);
+    this.setModalVisible(false);
 
-    if (!result.cancelled) {
-      this.setState({ image: result.uri });
-    }
+    this.props.set_image_uri(result.uri);
   };
 }
 
 const styles = StyleSheet.create({});
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    uri: state.dataState.data.uri
+  };
 };
 
 export default connect(
   mapStateToProps,
-  {}
+  {
+    set_image_uri
+  }
 )(MedImage);

@@ -15,12 +15,13 @@ class SettingsScreen extends React.Component {
   componentDidMount() {}
 
   /*
-    HomeScreen Add Button Styling
-    HomeScreen Empty Text Styling
-    Fonts
-    add / edit forms need to pull up when keyboard shows
-    image url
-    image buttons (camera/storage)
+    Medicine Image Styling
+    Modal Styling --> Talal
+    HomeScreen Add Button Styling --> Talal
+    HomeScreen Empty Text Styling --> Talal
+    Fonts --> Talal + Saleh
+    add / edit forms need to pull up when keyboard shows --> Saleh + Talal
+    Updating the Medicine times (Functionality) Saleh
   */
 
   render() {

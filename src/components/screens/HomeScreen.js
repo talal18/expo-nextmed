@@ -45,10 +45,14 @@ class HomeScreen extends React.Component {
               this.props.navigation.navigate("Edit", { id: item.m_id });
             }}
           >
-            <Image
-              source={require("../../assets/images/default-img.png")}
-              style={styles.MedImage}
-            />
+            {item.uri ? (
+              <Image source={{ uri: item.uri }} style={styles.MedImage} />
+            ) : (
+              <Image
+                source={require("../../assets/images/default-img.png")}
+                style={styles.MedImage}
+              />
+            )}
           </TouchableOpacity>
 
           <View style={styles.homeListItem}>
@@ -96,10 +100,6 @@ class HomeScreen extends React.Component {
     );
   };
 
-  addData() {
-    this.props.navigation.navigate("Add");
-  }
-
   render() {
     return (
       <View style={{ flex: 1 }}>
@@ -116,19 +116,6 @@ class HomeScreen extends React.Component {
               schedule a new medicine
             </Text>
           )}
-
-          <View>
-            <TouchableOpacity
-              style={styles.addButton}
-              position="bottomRight"
-              onPress={this.addData.bind(this)}
-            >
-              <Image
-                source={require("../../assets/images/add-floating.png")}
-                style={styles.addButtonImage}
-              />
-            </TouchableOpacity>
-          </View>
         </View>
       </View>
     );
