@@ -33,7 +33,9 @@ export default function reducer(state = defaultState, action) {
     case DELETE_NOTIFICATION:
       return {
         ...state,
-        data: []
+        data: state.data.filter(item => {
+          return item.m_id !== action.m_id;
+        })
       };
     case DELETE_NOTIFICATIONS:
       return {

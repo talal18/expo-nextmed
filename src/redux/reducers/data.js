@@ -96,7 +96,8 @@ export default function reducer(state = defaultState, action) {
           notes: "",
           intake_times: [],
           start_date: "",
-          end_date: ""
+          end_date: "",
+          uri: ""
         }
       };
     default:
