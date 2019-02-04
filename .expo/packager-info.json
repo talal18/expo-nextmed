@@ -3,7 +3,7 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "expoServerNgrokUrl": "https://r5-kqt.yass0016.expo-nextmed.exp.direct",
+  "packagerNgrokUrl": "https://packager.r5-kqt.yass0016.expo-nextmed.exp.direct",
+  "ngrokPid": 2198
 }
