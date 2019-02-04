@@ -39,7 +39,7 @@ class MedImage extends Component {
         >
           <Text style={styles.imageAddButtonText}>Add Image</Text>
         </TouchableHighlight>
-        {this.props.uri.length > 0 && (
+        {this.props.uri !== undefined && this.props.uri.length > 0 && (
           <Image
             source={{ uri: this.props.uri }}
             style={{ width: 200, height: 200 }}
@@ -56,18 +56,16 @@ class MedImage extends Component {
           <View style={styles.modalContainer}>
             <TouchableHighlight
               style={styles.buttons}
-              onPress={this._pickImageLibrary}
+              onPress={this._pickImageCamera}
             >
-              <Text style={styles.buttonText}>
-                Pick an image from camera roll
-              </Text>
+              <Text style={styles.buttonText}>Take a picture from camera</Text>
             </TouchableHighlight>
 
             <TouchableHighlight
               style={styles.buttons}
               onPress={this._pickImageLibrary}
             >
-              <Text style={styles.buttonText}>Pick an image from library</Text>
+              <Text style={styles.buttonText}>Pick an image from device</Text>
             </TouchableHighlight>
           </View>
         </Modal>

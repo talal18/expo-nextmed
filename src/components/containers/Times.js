@@ -16,6 +16,7 @@ import { connect } from "react-redux";
 import { add_time, delete_time } from "../../redux/actions/data";
 
 import Metrics from "../../styling/Metrics";
+import { ScrollView } from "react-native-gesture-handler";
 
 class Times extends Component {
   constructor(props) {
@@ -60,33 +61,35 @@ class Times extends Component {
         >
           <Text style={styles.medTimesTitle}>Add Times</Text>
         </TouchableOpacity>
-        <FlatList
-          keyExtractor={(item, index) => index.toString()}
-          data={this.props.intake_times.sort(function(a, b) {
-            return a.time - b.time;
-          })}
-          renderItem={({ item }) => (
-            <View style={styles.addTimeListItemContainer}>
-              <View style={styles.addTimeListItem}>
-                <Text style={styles.addTimesListItemText}>
-                  {this.renderTimeText(item.time)}
-                </Text>
+        {this.props.intake_times.length > 0 && (
+          <FlatList
+            keyExtractor={(item, index) => index.toString()}
+            data={this.props.intake_times.sort(function(a, b) {
+              return a.time - b.time;
+            })}
+            renderItem={({ item }) => (
+              <View style={styles.addTimeListItemContainer}>
+                <View style={styles.addTimeListItem}>
+                  <Text style={styles.addTimesListItemText}>
+                    {this.renderTimeText(item.time)}
+                  </Text>
 
-                <TouchableOpacity
-                  onPress={() => {
-                    this.props.delete_time(item);
-                  }}
-                  style={styles.deleteButton}
-                >
-                  <Image
-                    source={require("../../assets/images/delete-icon2.png")}
-                    style={styles.deleteButtonImage}
-                  />
-                </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => {
+                      this.props.delete_time(item);
+                    }}
+                    style={styles.deleteButton}
+                  >
+                    <Image
+                      source={require("../../assets/images/delete-icon2.png")}
+                      style={styles.deleteButtonImage}
+                    />
+                  </TouchableOpacity>
+                </View>
               </View>
-            </View>
-          )}
-        />
+            )}
+          />
+        )}
       </View>
     );
   }
