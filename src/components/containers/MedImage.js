@@ -38,7 +38,7 @@ class MedImage extends Component {
         >
           <Text>Show Modal</Text>
         </TouchableHighlight>
-        {this.props.uri && (
+        {this.props.uri.length > 0 && (
           <Image
             source={{ uri: this.props.uri }}
             style={{ width: 200, height: 200 }}

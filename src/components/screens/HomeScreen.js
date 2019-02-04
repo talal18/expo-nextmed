@@ -191,6 +191,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
+  console.log(state);
   return {
     medications: state.medState.medications
   };

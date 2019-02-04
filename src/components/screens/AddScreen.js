@@ -8,6 +8,8 @@ import {
   Alert
 } from "react-native";
 
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
 import { connect } from "react-redux";
 
 import { addMedication } from "../../redux/actions/medications";
@@ -134,28 +136,30 @@ class AddScreen extends Component {
 
   render() {
     return (
-      <View style={styles.container}>
-        <ScrollView style={styles.scrollViewContainer}>
-          <Title />
-          <MedImage />
-          <View style={styles.contentDivder} />
-          <Type />
-          <View style={styles.contentDivder} />
-          <Times />
-          <Dosage />
-          <View style={styles.contentDivder} />
-          <Recurrence />
-          <View style={styles.contentDivder} />
-          <Dates />
-          <Notes />
-          <TouchableOpacity
-            onPress={this.addNotification.bind(this)}
-            style={styles.addButton}
-          >
-            <Text style={styles.addButtonTitle}>Add Medicine</Text>
-          </TouchableOpacity>
-        </ScrollView>
-      </View>
+      <KeyboardAwareScrollView>
+        <View style={styles.container}>
+          <ScrollView style={styles.scrollViewContainer}>
+            <Title />
+            <MedImage />
+            <View style={styles.contentDivder} />
+            <Type />
+            <View style={styles.contentDivder} />
+            <Times />
+            <Dosage />
+            <View style={styles.contentDivder} />
+            <Recurrence />
+            <View style={styles.contentDivder} />
+            <Dates />
+            <Notes />
+            <TouchableOpacity
+              onPress={this.addNotification.bind(this)}
+              style={styles.addButton}
+            >
+              <Text style={styles.addButtonTitle}>Add Medicine</Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
+      </KeyboardAwareScrollView>
     );
   }
 }

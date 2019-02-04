@@ -1,11 +1,11 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text, Platform } from "react-native";
 
 import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from "react-redux";
 import { store, persistor } from "./src/redux";
 
-import { Font } from "expo";
+import { Font, Notifications } from "expo";
 
 import Navigation from "./src/components/Navigation";
 
@@ -24,6 +24,15 @@ export default class App extends React.Component {
   }
 
   async componentDidMount() {
+    if (Platform.OS === "android") {
+      Notifications.createChannelAndroidAsync("nextmedNotifications", {
+        name: "Medicine Notifications",
+        sound: true,
+        vibrate: true, // (optional) (boolean or array) — if true, vibrate the device. An array can be supplied to specify the vibration pattern, e.g. - [ 0, 500 ].
+        priority: "high" // (optional) (min | low | high | max) — android may present notifications according to the priority, for example a high priority notification will likely to be shown as a heads-up notification.
+      });
+    }
+
     await Font.loadAsync({
       champ: require("./assets/fonts/champ.ttf"),
       champBold: require("./assets/fonts/champ-bold.ttf"),

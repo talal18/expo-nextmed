@@ -13,6 +13,7 @@ export const update_notification = (notification, status) => {
         },
         // (optional) (object) — notification configuration specific to Android.
         android: {
+          channelId: "nextmedNotifications",
           sound: true, // (optional) (boolean) — if true, play a sound. Default: false.
           //icon (optional) (string) — URL of icon to display in notification drawer.
           //color (optional) (string) — color of the notification icon in notification drawer.
@@ -68,6 +69,7 @@ export const add_notification = (m_id, title, body, repeat, date, end_date) => {
       },
       // (optional) (object) — notification configuration specific to Android.
       android: {
+        channelId: "nextmedNotifications",
         sound: true, // (optional) (boolean) — if true, play a sound. Default: false.
         //icon (optional) (string) — URL of icon to display in notification drawer.
         //color (optional) (string) — color of the notification icon in notification drawer.
