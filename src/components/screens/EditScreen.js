@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -6,11 +6,17 @@ import {
   StyleSheet,
   TouchableOpacity,
   Alert
-} from "react-native";
+} from 'react-native';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-import { updateMedication } from "../../redux/actions/medications";
+import { updateMedication } from '../../redux/actions/medications';
+
+import {
+  add_notification,
+  update_notifications,
+  delete_notifications
+} from '../../redux/actions/notifications';
 
 import {
   set_image_uri,
@@ -25,25 +31,25 @@ import {
   set_end_date,
   set_notes,
   reset_data
-} from "../../redux/actions/data";
+} from '../../redux/actions/data';
 
-import Metrics from "../../styling/Metrics";
+import Metrics from '../../styling/Metrics';
 
-import Dates from "../containers/Dates";
-import Recurrence from "../containers/Recurrence";
-import Times from "../containers/Times";
-import Type from "../containers/Type";
-import Title from "../containers/Title";
-import Dosage from "../containers/Dosage";
-import Notes from "../containers/Notes";
-import MedImage from "../containers/MedImage";
+import Dates from '../containers/Dates';
+import Recurrence from '../containers/Recurrence';
+import Times from '../containers/Times';
+import Type from '../containers/Type';
+import Title from '../containers/Title';
+import Dosage from '../containers/Dosage';
+import Notes from '../containers/Notes';
+import MedImage from '../containers/MedImage';
 
 class EditScreen extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      m_id: ""
+      m_id: ''
     };
   }
 
@@ -54,7 +60,6 @@ class EditScreen extends Component {
   getMedication(id) {
     this.props.medications.map(item => {
       if (item.m_id === id) {
-        console.log(item);
         this.props.set_m_id(item.m_id);
         this.props.set_title(item.title);
         this.props.set_dosage(item.dosage);
@@ -77,7 +82,7 @@ class EditScreen extends Component {
   }
 
   manageNotifications() {
-    this.props.navigation.navigate("Notifications", {
+    this.props.navigation.navigate('Notifications', {
       id: this.props.navigation.state.params.id
     });
   }
@@ -106,17 +111,61 @@ class EditScreen extends Component {
 
     if (errors.length > 0) {
       Alert.alert(
-        "Error",
-        errors.join("").toString(),
+        'Error',
+        errors.join('').toString(),
         [
           {
-            text: "OK",
+            text: 'OK',
             onPress: () => {}
           }
         ],
         { cancelable: false }
       );
     } else {
+      // this.props.update_notifications(
+      //   this.props.data.m_id,
+      //   this.props.data.start_date,
+      //   this.props.data.end_date,
+      //   this.props.data.intake_times,
+      //   this.props.notifications
+      // );
+
+      var orig_notifications = this.props.notifications.slice();
+
+      this.props.delete_notifications(orig_notifications, this.props.data.m_id);
+
+      var start_date = new Date(this.props.data.start_date);
+
+      this.props.data.intake_times.map(item => {
+        var myDate = new Date(item.time);
+        var minutes = myDate.getMinutes();
+        var hours = myDate.getHours();
+
+        var date = new Date(
+          start_date.getFullYear(),
+          start_date.getMonth(),
+          start_date.getDate(),
+          hours,
+          minutes,
+          '0',
+          '0'
+        );
+
+        this.props.update_notifications(
+          this.props.data.m_id,
+          this.props.data.title,
+          this.props.data.title +
+            ` is now due. You should take ${this.props.data.dosage} ${
+              this.props.data.type
+            }`,
+          this.props.data.recurrence,
+          date,
+          this.props.data.end_date,
+          true,
+          orig_notifications
+        );
+      });
+
       this.props.updateMedication({
         m_id: this.props.data.m_id,
         title: this.props.data.title,
@@ -129,7 +178,7 @@ class EditScreen extends Component {
         notes: this.props.data.notes,
         uri: this.props.data.uri
       });
-      this.props.navigation.navigate("Home");
+      this.props.navigation.navigate('Home');
     }
   }
 
@@ -170,10 +219,10 @@ class EditScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: "column",
-    backgroundColor: "#262626",
-    justifyContent: "center",
-    alignItems: "center"
+    flexDirection: 'column',
+    backgroundColor: '#262626',
+    justifyContent: 'center',
+    alignItems: 'center'
     //paddingTop: Metrics.formContainerPaddingTop
   },
   scrollViewContainer: {
@@ -182,28 +231,28 @@ const styles = StyleSheet.create({
   },
   contentDivder: {
     width: Metrics.formContentDivider,
-    borderTopColor: "#595d63",
+    borderTopColor: '#595d63',
     borderTopWidth: 3,
     marginTop: 10
   },
   updateButtonTitle: {
     fontSize: 20,
-    fontWeight: "bold",
-    color: "#fff"
+    fontWeight: 'bold',
+    color: '#fff'
   },
   updateButton: {
     width: Metrics.formAddTimeButtonWidth,
     height: Metrics.formAddTimeButtonHeight,
-    backgroundColor: "#009688",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
+    backgroundColor: '#009688',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     paddingLeft: 5,
-    borderColor: "grey",
+    borderColor: 'grey',
     borderRadius: 5,
     marginTop: 10,
     marginBottom: 10,
-    shadowColor: "#303838",
+    shadowColor: '#303838',
     shadowOffset: { width: 0, height: 5 },
     shadowRadius: 10,
     shadowOpacity: 0.35
@@ -213,7 +262,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     data: state.dataState.data,
-    medications: state.medState.medications
+    medications: state.medState.medications,
+    notifications: state.notificationsState.data
   };
 };
 
@@ -232,6 +282,9 @@ export default connect(
     set_notes,
     set_m_id,
     set_user_id,
-    set_image_uri
+    set_image_uri,
+    add_notification,
+    update_notifications,
+    delete_notifications
   }
 )(EditScreen);

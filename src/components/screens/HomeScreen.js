@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Text,
   View,
@@ -7,15 +7,15 @@ import {
   TouchableOpacity,
   Image,
   StyleSheet
-} from "react-native";
+} from 'react-native';
 
-import { Permissions } from "expo";
+import { Permissions } from 'expo';
 
-import Metrics from "../../styling/Metrics";
+import Metrics from '../../styling/Metrics';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-import { deleteMedication } from "../../redux/actions/medications";
+import { deleteMedication } from '../../redux/actions/medications';
 
 class HomeScreen extends React.Component {
   constructor() {
@@ -42,14 +42,14 @@ class HomeScreen extends React.Component {
           <TouchableOpacity
             style={styles.MedImageContainer}
             onPress={() => {
-              this.props.navigation.navigate("Edit", { id: item.m_id });
+              this.props.navigation.navigate('Edit', { id: item.m_id });
             }}
           >
             {item.uri ? (
               <Image source={{ uri: item.uri }} style={styles.MedImage} />
             ) : (
               <Image
-                source={require("../../assets/images/default-img.png")}
+                source={require('../../assets/images/default-img.png')}
                 style={styles.MedImage}
               />
             )}
@@ -58,11 +58,11 @@ class HomeScreen extends React.Component {
           <View style={styles.homeListItem}>
             <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate("Edit", { id: item.m_id });
+                this.props.navigation.navigate('Edit', { id: item.m_id });
               }}
             >
               <Text style={styles.itemText}>
-                {item && item.title ? item.title : ""}
+                {item && item.title ? item.title : ''}
               </Text>
             </TouchableOpacity>
           </View>
@@ -71,15 +71,15 @@ class HomeScreen extends React.Component {
               style={styles.deleteButtonContainer}
               onPress={() => {
                 Alert.alert(
-                  "Delete",
-                  "Are you sure do you want to delete " + item.title,
+                  'Delete',
+                  'Are you sure do you want to delete ' + item.title,
                   [
                     {
-                      text: "NO",
+                      text: 'NO',
                       onPress: () => {}
                     },
                     {
-                      text: "YES",
+                      text: 'YES',
                       onPress: () => {
                         this.props.deleteMedication(item);
                       }
@@ -90,7 +90,7 @@ class HomeScreen extends React.Component {
               }}
             >
               <Image
-                source={require("../../assets/images/delete-icon2.png")}
+                source={require('../../assets/images/delete-icon2.png')}
                 style={styles.deleteButtonImage}
               />
             </TouchableOpacity>
@@ -125,33 +125,33 @@ class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#242424"
+    backgroundColor: '#242424'
   },
 
   homeListItemContainer: {
     height: Metrics.homeListItemContainerHeight,
     flex: 1,
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     borderBottomWidth: 1,
-    borderBottomColor: "#595d63",
+    borderBottomColor: '#595d63',
     padding: 5
   },
   homeListItem: {
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "center"
+    flexDirection: 'column',
+    justifyContent: 'center'
   },
 
   itemText: {
-    color: "#fff",
+    color: '#fff',
     fontSize: Metrics.flatListItemFontSize,
-    fontFamily: "champBold"
+    fontFamily: 'champBold'
   },
 
   MedImageContainer: {
-    justifyContent: "center",
-    alignContent: "center",
+    justifyContent: 'center',
+    alignContent: 'center',
     marginRight: 5
   },
   MedImage: {
@@ -162,8 +162,8 @@ const styles = StyleSheet.create({
 
   deleteButtonContainer: {
     flex: 1,
-    justifyContent: "center",
-    alignContent: "center"
+    justifyContent: 'center',
+    alignContent: 'center'
   },
   deleteButtonImage: {
     width: 50,
@@ -175,12 +175,12 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: "#009688",
-    position: "absolute",
+    backgroundColor: '#009688',
+    position: 'absolute',
     bottom: 10,
     right: 10,
-    alignItems: "center",
-    justifyContent: "center"
+    alignItems: 'center',
+    justifyContent: 'center'
   },
 
   addButtonImage: {
@@ -188,12 +188,11 @@ const styles = StyleSheet.create({
     height: 60
   },
   emptyFlatListText: {
-    color: "#d6d6d6"
+    color: '#d6d6d6'
   }
 });
 
 const mapStateToProps = state => {
-  console.log(state);
   return {
     medications: state.medState.medications
   };

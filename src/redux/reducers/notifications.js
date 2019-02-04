@@ -3,7 +3,7 @@ import {
   UPDATE_NOTIFICATION,
   DELETE_NOTIFICATION,
   DELETE_NOTIFICATIONS
-} from "../types/notifications";
+} from '../types/notifications';
 
 const defaultState = {
   data: []
