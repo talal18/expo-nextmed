@@ -1,5 +1,18 @@
-import { ADD_NOTIFICATION, UPDATE_NOTIFICATION } from "../types/notifications";
+import {
+  ADD_NOTIFICATION,
+  UPDATE_NOTIFICATION,
+  DELETE_NOTIFICATION
+} from "../types/notifications";
 import { Notifications } from "expo";
+
+export const delete_notifications = m_id => {
+  return dispatch => {
+    dispatch({
+      type: DELETE_NOTIFICATION,
+      m_id
+    });
+  };
+};
 
 export const update_notification = (notification, status) => {
   return dispatch => {

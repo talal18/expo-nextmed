@@ -14,7 +14,7 @@ import { addMedication } from "../../redux/actions/medications";
 
 import { reset_data } from "../../redux/actions/data";
 
-import { add_m_id, add_notification } from "../../redux/actions/notifications";
+import { add_notification } from "../../redux/actions/notifications";
 
 import Metrics from "../../styling/Metrics";
 
@@ -214,7 +214,6 @@ export default connect(
   {
     addMedication,
     reset_data,
-    add_m_id,
     add_notification
   }
 )(AddScreen);
