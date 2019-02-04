@@ -187,7 +187,9 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60
   },
-  emptyFlatListText: {}
+  emptyFlatListText: {
+    color: "#d6d6d6"
+  }
 });
 
 const mapStateToProps = state => {

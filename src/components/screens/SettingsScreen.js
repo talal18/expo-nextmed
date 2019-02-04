@@ -34,7 +34,7 @@ class SettingsScreen extends React.Component {
           backgroundColor: "#242424"
         }}
       >
-        <Text style={{ color: "#fff" }}>Settings!</Text>
+        <Text style={{ color: "#d6d6d6" }}>Settings!</Text>
       </View>
     );
   }

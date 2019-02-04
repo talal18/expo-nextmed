@@ -32,11 +32,12 @@ class MedImage extends Component {
     return (
       <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
         <TouchableHighlight
+          style={styles.imageAddButton}
           onPress={() => {
             this.setModalVisible(true);
           }}
         >
-          <Text>Show Modal</Text>
+          <Text style={styles.imageAddButtonText}>Add Image</Text>
         </TouchableHighlight>
         {this.props.uri.length > 0 && (
           <Image
@@ -46,21 +47,28 @@ class MedImage extends Component {
         )}
         <Modal
           animationType="slide"
-          transparent={false}
+          transparent={true}
           visible={this.state.modalVisible}
           onRequestClose={() => {
             this.setModalVisible(false);
           }}
         >
-          <View>
-            <Button
-              title="Pick an image from camera roll"
-              onPress={this._pickImageCamera}
-            />
-            <Button
-              title="Pick an image from library"
+          <View style={styles.modalContainer}>
+            <TouchableHighlight
+              style={styles.buttons}
               onPress={this._pickImageLibrary}
-            />
+            >
+              <Text style={styles.buttonText}>
+                Pick an image from camera roll
+              </Text>
+            </TouchableHighlight>
+
+            <TouchableHighlight
+              style={styles.buttons}
+              onPress={this._pickImageLibrary}
+            >
+              <Text style={styles.buttonText}>Pick an image from library</Text>
+            </TouchableHighlight>
           </View>
         </Modal>
       </View>
@@ -90,7 +98,62 @@ class MedImage extends Component {
   };
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  modalContainer: {
+    marginTop: Metrics.modalMarginVertical,
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "flex-end",
+    alignItems: "center",
+    backgroundColor: "#d6d6d6"
+  },
+
+  imageAddButton: {
+    width: Metrics.formAddImageButtonWidth,
+    height: Metrics.formAddImageButtonHeight,
+    backgroundColor: "#009688",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingLeft: 5,
+    borderColor: "grey",
+    borderRadius: 5,
+    marginTop: 10,
+    marginBottom: 10,
+    shadowColor: "#303838",
+    shadowOffset: { width: 0, height: 5 },
+    shadowRadius: 10,
+    shadowOpacity: 0.35
+  },
+
+  imageAddButtonText: {
+    fontSize: Metrics.titleFontSize,
+    fontWeight: "bold",
+    color: "#fff"
+  },
+
+  buttons: {
+    width: Metrics.modalButtonWidth,
+    height: Metrics.modalButtonHeight,
+    backgroundColor: "#009688",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingLeft: 5,
+    borderColor: "grey",
+    borderRadius: 5,
+    marginTop: 10,
+    marginBottom: 10,
+    shadowColor: "#303838",
+    shadowOffset: { width: 0, height: 5 },
+    shadowRadius: 10,
+    shadowOpacity: 0.35
+  },
+  buttonText: {
+    fontSize: Metrics.ModalButtonsFontSize,
+    color: "#d6d6d6"
+  }
+});
 
 const mapStateToProps = state => {
   return {

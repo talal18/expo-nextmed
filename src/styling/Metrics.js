@@ -78,6 +78,14 @@ const metrics = {
   formTypeDropMenuArrowW: NormalizeSize.normalizeWidth(15),
   formTypeDropMenuArrowH: NormalizeSize.normalizeHeight(15),
 
+  //Add Image
+  formAddImageButtonWidth: NormalizeSize.normalizeWidth(350),
+  formAddImageButtonHeight: NormalizeSize.normalizeHeight(50),
+  //Modal
+  modalMarginVertical: NormalizeSize.normalizeHeight(540),
+  modalButtonWidth: NormalizeSize.normalizeWidth(350),
+  modalButtonHeight: NormalizeSize.normalizeHeight(60),
+
   //Add times list
   formAddTimeListContainerHeight: NormalizeSize.normalizeHeight(60),
   formAddTimeListContainerWidth: NormalizeSize.normalizeWidth(350),
@@ -134,7 +142,11 @@ const metrics = {
   navigationTitleFontSize:
     Platform.OS === "ios"
       ? NormalizeSize.normalizeHeight(18)
-      : NormalizeSize.normalizeWidth(18)
+      : NormalizeSize.normalizeWidth(18),
+  ModalButtonsFontSize:
+    Platform.OS === "ios"
+      ? NormalizeSize.normalizeHeight(22)
+      : NormalizeSize.normalizeWidth(22)
 };
 
 export default metrics;
