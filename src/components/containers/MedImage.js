@@ -37,13 +37,23 @@ class MedImage extends Component {
             this.setModalVisible(true);
           }}
         >
-          <Text style={styles.imageAddButtonText}>Add Image</Text>
+          <Text style={styles.imageAddButtonText}>
+            {this.props.uri.length > 0 ? "Edit Image" : "Add Image"}
+          </Text>
         </TouchableHighlight>
         {this.props.uri !== undefined && this.props.uri.length > 0 && (
-          <Image
-            source={{ uri: this.props.uri }}
-            style={{ width: 200, height: 200 }}
-          />
+          <View>
+            <Image
+              source={{ uri: this.props.uri }}
+              style={{ width: 200, height: 200 }}
+            />
+            <TouchableHighlight onPress={() => this.props.set_image_uri("")}>
+              <Image
+                source={require("../../assets/images/delete-icon2.png")}
+                style={{ width: 32, height: 32 }}
+              />
+            </TouchableHighlight>
+          </View>
         )}
         <Modal
           animationType="slide"

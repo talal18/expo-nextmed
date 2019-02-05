@@ -10,6 +10,8 @@ import {
   Image
 } from "react-native";
 
+import { localizedStrings } from "../../common/languages";
+
 import { Dropdown } from "react-native-material-dropdown";
 
 import Metrics from "../../styling/Metrics";
@@ -24,7 +26,8 @@ class Type extends Component {
 
     this.state = {
       type_picker: [
-        { label: "Drops", value: "drops" },
+        { label: "Capsules", value: "capsules" },
+        { label: localizedStrings["en"].typeLabels.dropsLabel, value: "drops" },
         { label: "Injection", value: "injection" },
         { label: "Liquid", value: "liquid" },
         { label: "Ointment (Cream, Gel,...)", value: "ointment" },
@@ -34,12 +37,12 @@ class Type extends Component {
         { label: "Suppositories", value: "suppositories" },
         { label: "Troches", value: "troches" }
       ],
-      type_label: "Drops"
+      type_label: "Capsules"
     };
   }
 
   componentDidMount() {
-    this.props.set_type("drops");
+    this.props.set_type("capsules");
   }
 
   render() {

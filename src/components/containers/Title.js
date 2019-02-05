@@ -7,12 +7,16 @@ import { set_title } from "../../redux/actions/data";
 
 import { connect } from "react-redux";
 
+import { localizedStrings } from "../../common/languages";
+
 class Title extends Component {
   render() {
     return (
       <View>
         <View style={{ alignItems: "center", marginTop: 10 }}>
-          <Text style={styles.medTitle}>Title</Text>
+          <Text style={styles.medTitle}>
+            {localizedStrings["fr"].medicineTitleLabel}
+          </Text>
         </View>
         <View>
           <TextInput

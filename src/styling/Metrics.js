@@ -37,6 +37,7 @@ const metrics = {
   homeTabLogoHeight: NormalizeSize.normalizeHeight(35),
   homeAddButtonWidth: NormalizeSize.normalizeWidth(35),
   homeAddButtonHeight: NormalizeSize.normalizeHeight(35),
+  homeAddButtonMarginRight: NormalizeSize.normalizeWidth(10),
 
   //Input
   inputBoxW: NormalizeSize.normalizeWidth(300),
@@ -137,8 +138,8 @@ const metrics = {
       : NormalizeSize.normalizeWidth(18),
   flatListItemFontSize:
     Platform.OS === "ios"
-      ? NormalizeSize.normalizeHeight(23)
-      : NormalizeSize.normalizeWidth(23),
+      ? NormalizeSize.normalizeHeight(26)
+      : NormalizeSize.normalizeWidth(26),
   navigationTitleFontSize:
     Platform.OS === "ios"
       ? NormalizeSize.normalizeHeight(18)

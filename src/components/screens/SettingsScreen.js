@@ -15,13 +15,16 @@ class SettingsScreen extends React.Component {
   componentDidMount() {}
 
   /*
-    Medicine Image Styling
-    Modal Styling --> Talal
+    Search Funcationality in Manage Notifications
+    Medicine Image (Delete Button Styling) in Add / Edit Medicine
+    Modal Styling (Padding Top and Bottom) --> Talal
     HomeScreen Add Button Styling --> Talal
     HomeScreen Empty Text Styling --> Talal
     Fonts --> Talal + Saleh
     add / edit forms need to pull up when keyboard shows --> Saleh + Talal
-    Updating the Medicine times (Functionality) Saleh
+    settings -> choose language Saleh
+    settings -> About Button
+    languages support Talal
   */
 
   render() {

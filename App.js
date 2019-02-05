@@ -37,8 +37,15 @@ export default class App extends React.Component {
       champ: require("./assets/fonts/champ.ttf"),
       champBold: require("./assets/fonts/champ-bold.ttf"),
       champItalic: require("./assets/fonts/champ-italic.ttf"),
-      champBoldItaic: require("./assets/fonts/champ-bold-italic.ttf")
+      champBoldItaic: require("./assets/fonts/champ-bold-italic.ttf"),
+      sansBold: require("./assets/fonts/Sansation-Bold.ttf"),
+      sansBoldItalic: require("./assets/fonts/Sansation-BoldItalic.ttf"),
+      sansItalic: require("./assets/fonts/Sansation-Italic.ttf"),
+      sansLight: require("./assets/fonts/Sansation-Light.ttf"),
+      sansLightItalic: require("./assets/fonts/Sansation-LightItalic.ttf"),
+      sansRegular: require("./assets/fonts/Sansation-Regular.ttf")
     });
+
     this.setState({ fontLoad: true });
   }
   render() {

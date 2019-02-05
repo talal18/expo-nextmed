@@ -37,7 +37,7 @@ const TabNavigator = createBottomTabNavigator(
                 style={{
                   width: Metrics.homeAddButtonWidth,
                   height: Metrics.homeAddButtonHeight,
-                  marginRight: 10
+                  marginRight: Metrics.homeAddButtonMarginRight
                 }}
                 source={require("../assets/images/add-navbar.png")}
               />

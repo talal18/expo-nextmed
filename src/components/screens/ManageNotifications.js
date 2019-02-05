@@ -158,12 +158,19 @@ class ManageNotifications extends React.Component {
           </View>
           <View style={styles.switchContainer}>
             <Switch
-              value={item.status}
+              style={styles.switch}
+              disabled={
+                new Date(item.date).getTime() < new Date(Date.now()).getTime()
+              }
+              value={
+                new Date(item.date).getTime() < new Date(Date.now()).getTime()
+                  ? false
+                  : item.status
+              }
               onValueChange={status => {
                 this.props.update_notification(item, status);
               }}
-              style={styles.switch}
-              thumbColor="#595d63"
+              thumbColor="#D4D4D4"
             />
           </View>
         </View>
@@ -184,7 +191,6 @@ class ManageNotifications extends React.Component {
   };
 
   render() {
-    console.log(this.props.notifications);
     return (
       <View style={{ flex: 1 }}>
         <View>
