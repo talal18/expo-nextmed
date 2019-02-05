@@ -15,7 +15,7 @@ class Title extends Component {
       <View>
         <View style={{ alignItems: "center", marginTop: 10 }}>
           <Text style={styles.medTitle}>
-            {localizedStrings["fr"].medicineTitleLabel}
+            {localizedStrings["ar"].medicineTitleLabel}
           </Text>
         </View>
         <View>

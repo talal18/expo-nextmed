@@ -1,38 +1,40 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Text,
   View,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  Alert
-} from 'react-native';
+  Alert,
+  KeyboardAvoidingView,
+  Platform
+} from "react-native";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import { addMedication } from '../../redux/actions/medications';
+import { addMedication } from "../../redux/actions/medications";
 
-import { reset_data } from '../../redux/actions/data';
+import { reset_data } from "../../redux/actions/data";
 
-import { add_m_id, add_notification } from '../../redux/actions/notifications';
+import { add_m_id, add_notification } from "../../redux/actions/notifications";
 
-import Metrics from '../../styling/Metrics';
+import Metrics from "../../styling/Metrics";
 
-import Dates from '../containers/Dates';
-import Recurrence from '../containers/Recurrence';
-import Times from '../containers/Times';
-import Type from '../containers/Type';
-import Title from '../containers/Title';
-import Dosage from '../containers/Dosage';
-import Notes from '../containers/Notes';
-import MedImage from '../containers/MedImage';
+import Dates from "../containers/Dates";
+import Recurrence from "../containers/Recurrence";
+import Times from "../containers/Times";
+import Type from "../containers/Type";
+import Title from "../containers/Title";
+import Dosage from "../containers/Dosage";
+import Notes from "../containers/Notes";
+import MedImage from "../containers/MedImage";
 
 class AddScreen extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      m_id: ''
+      m_id: ""
     };
   }
 
@@ -43,7 +45,7 @@ class AddScreen extends Component {
   componentDidMount() {
     this.setState({
       m_id:
-        '_' +
+        "_" +
         Math.random()
           .toString(36)
           .substr(2, 9) +
@@ -75,11 +77,11 @@ class AddScreen extends Component {
 
     if (errors.length > 0) {
       Alert.alert(
-        'Error',
-        errors.join('').toString(),
+        "Error",
+        errors.join("").toString(),
         [
           {
-            text: 'OK',
+            text: "OK",
             onPress: () => {}
           }
         ],
@@ -99,8 +101,8 @@ class AddScreen extends Component {
           start_date.getDate(),
           hours,
           minutes,
-          '0',
-          '0'
+          "0",
+          "0"
         );
 
         this.props.add_notification(
@@ -129,13 +131,21 @@ class AddScreen extends Component {
         notes: this.props.data.notes,
         uri: this.props.data.uri
       });
-      this.props.navigation.navigate('Home');
+      this.props.navigation.navigate("Home");
     }
   }
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior="padding"
+        keyboardVerticalOffset={Platform.select({
+          ios: () => 0,
+          android: () => 80
+        })()}
+        enabled
+      >
         <ScrollView style={styles.scrollViewContainer}>
           <Title />
           <MedImage />
@@ -156,7 +166,7 @@ class AddScreen extends Component {
             <Text style={styles.addButtonTitle}>Add Medicine</Text>
           </TouchableOpacity>
         </ScrollView>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -165,9 +175,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 0,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#242424'
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#242424"
   },
 
   scrollViewContainer: {
@@ -176,28 +186,28 @@ const styles = StyleSheet.create({
   },
   contentDivder: {
     width: Metrics.formContentDivider,
-    borderTopColor: '#595d63',
+    borderTopColor: "#595d63",
     borderTopWidth: 3,
     marginTop: 10
   },
   addButtonTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#fff'
+    fontWeight: "bold",
+    color: "#fff"
   },
   addButton: {
     width: Metrics.formAddTimeButtonWidth,
     height: Metrics.formAddTimeButtonHeight,
-    backgroundColor: '#009688',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#009688",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
     paddingLeft: 5,
-    borderColor: 'grey',
+    borderColor: "grey",
     borderRadius: 5,
     marginTop: 10,
     marginBottom: 10,
-    shadowColor: '#303838',
+    shadowColor: "#303838",
     shadowOffset: { width: 0, height: 5 },
     shadowRadius: 10,
     shadowOpacity: 0.35

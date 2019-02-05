@@ -35,8 +35,8 @@ const metrics = {
   settingsTabLogoHeight: NormalizeSize.normalizeHeight(35),
   homeTabLogoWidth: NormalizeSize.normalizeWidth(35),
   homeTabLogoHeight: NormalizeSize.normalizeHeight(35),
-  homeAddButtonWidth: NormalizeSize.normalizeWidth(35),
-  homeAddButtonHeight: NormalizeSize.normalizeHeight(35),
+  homeAddButtonWidth: 35,
+  homeAddButtonHeight: 35,
   homeAddButtonMarginRight: NormalizeSize.normalizeWidth(10),
 
   //Input
@@ -140,10 +140,7 @@ const metrics = {
     Platform.OS === "ios"
       ? NormalizeSize.normalizeHeight(26)
       : NormalizeSize.normalizeWidth(26),
-  navigationTitleFontSize:
-    Platform.OS === "ios"
-      ? NormalizeSize.normalizeHeight(18)
-      : NormalizeSize.normalizeWidth(18),
+  navigationTitleFontSize: 18,
   ModalButtonsFontSize:
     Platform.OS === "ios"
       ? NormalizeSize.normalizeHeight(22)

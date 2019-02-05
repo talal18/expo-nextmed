@@ -18,7 +18,6 @@ class SettingsScreen extends React.Component {
     Search Funcationality in Manage Notifications
     Medicine Image (Delete Button Styling) in Add / Edit Medicine
     Modal Styling (Padding Top and Bottom) --> Talal
-    HomeScreen Add Button Styling --> Talal
     HomeScreen Empty Text Styling --> Talal
     Fonts --> Talal + Saleh
     add / edit forms need to pull up when keyboard shows --> Saleh + Talal

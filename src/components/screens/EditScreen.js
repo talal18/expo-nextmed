@@ -1,22 +1,24 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import {
   Text,
   View,
   ScrollView,
   StyleSheet,
   TouchableOpacity,
-  Alert
-} from 'react-native';
+  Alert,
+  KeyboardAvoidingView,
+  Platform
+} from "react-native";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-import { updateMedication } from '../../redux/actions/medications';
+import { updateMedication } from "../../redux/actions/medications";
 
 import {
   add_notification,
   update_notifications,
   delete_notifications
-} from '../../redux/actions/notifications';
+} from "../../redux/actions/notifications";
 
 import {
   set_image_uri,
@@ -31,25 +33,25 @@ import {
   set_end_date,
   set_notes,
   reset_data
-} from '../../redux/actions/data';
+} from "../../redux/actions/data";
 
-import Metrics from '../../styling/Metrics';
+import Metrics from "../../styling/Metrics";
 
-import Dates from '../containers/Dates';
-import Recurrence from '../containers/Recurrence';
-import Times from '../containers/Times';
-import Type from '../containers/Type';
-import Title from '../containers/Title';
-import Dosage from '../containers/Dosage';
-import Notes from '../containers/Notes';
-import MedImage from '../containers/MedImage';
+import Dates from "../containers/Dates";
+import Recurrence from "../containers/Recurrence";
+import Times from "../containers/Times";
+import Type from "../containers/Type";
+import Title from "../containers/Title";
+import Dosage from "../containers/Dosage";
+import Notes from "../containers/Notes";
+import MedImage from "../containers/MedImage";
 
 class EditScreen extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      m_id: ''
+      m_id: ""
     };
   }
 
@@ -82,7 +84,7 @@ class EditScreen extends Component {
   }
 
   manageNotifications() {
-    this.props.navigation.navigate('Notifications', {
+    this.props.navigation.navigate("Notifications", {
       id: this.props.navigation.state.params.id
     });
   }
@@ -111,11 +113,11 @@ class EditScreen extends Component {
 
     if (errors.length > 0) {
       Alert.alert(
-        'Error',
-        errors.join('').toString(),
+        "Error",
+        errors.join("").toString(),
         [
           {
-            text: 'OK',
+            text: "OK",
             onPress: () => {}
           }
         ],
@@ -147,8 +149,8 @@ class EditScreen extends Component {
           start_date.getDate(),
           hours,
           minutes,
-          '0',
-          '0'
+          "0",
+          "0"
         );
 
         this.props.update_notifications(
@@ -178,13 +180,21 @@ class EditScreen extends Component {
         notes: this.props.data.notes,
         uri: this.props.data.uri
       });
-      this.props.navigation.navigate('Home');
+      this.props.navigation.navigate("Home");
     }
   }
 
   render() {
     return (
-      <View style={styles.container}>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior="padding"
+        keyboardVerticalOffset={Platform.select({
+          ios: () => 0,
+          android: () => 80
+        })()}
+        enabled
+      >
         <ScrollView style={styles.scrollViewContainer}>
           <Title />
           <MedImage />
@@ -211,7 +221,7 @@ class EditScreen extends Component {
             <Text style={styles.updateButtonTitle}>Update</Text>
           </TouchableOpacity>
         </ScrollView>
-      </View>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -219,10 +229,10 @@ class EditScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    backgroundColor: '#262626',
-    justifyContent: 'center',
-    alignItems: 'center'
+    flexDirection: "column",
+    backgroundColor: "#262626",
+    justifyContent: "center",
+    alignItems: "center"
     //paddingTop: Metrics.formContainerPaddingTop
   },
   scrollViewContainer: {
@@ -231,28 +241,28 @@ const styles = StyleSheet.create({
   },
   contentDivder: {
     width: Metrics.formContentDivider,
-    borderTopColor: '#595d63',
+    borderTopColor: "#595d63",
     borderTopWidth: 3,
     marginTop: 10
   },
   updateButtonTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#fff'
+    fontWeight: "bold",
+    color: "#fff"
   },
   updateButton: {
     width: Metrics.formAddTimeButtonWidth,
     height: Metrics.formAddTimeButtonHeight,
-    backgroundColor: '#009688',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: "#009688",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
     paddingLeft: 5,
-    borderColor: 'grey',
+    borderColor: "grey",
     borderRadius: 5,
     marginTop: 10,
     marginBottom: 10,
-    shadowColor: '#303838',
+    shadowColor: "#303838",
     shadowOffset: { width: 0, height: 5 },
     shadowRadius: 10,
     shadowOpacity: 0.35
