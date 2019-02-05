@@ -19,8 +19,8 @@ class SettingsScreen extends React.Component {
     Medicine Image (Delete Button Styling) in Add / Edit Medicine
     Modal Styling (Padding Top and Bottom) --> Talal
     HomeScreen Empty Text Styling --> Talal
+
     Fonts --> Talal + Saleh
-    add / edit forms need to pull up when keyboard shows --> Saleh + Talal
     settings -> choose language Saleh
     settings -> About Button
     languages support Talal

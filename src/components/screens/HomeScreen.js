@@ -111,10 +111,19 @@ class HomeScreen extends React.Component {
               keyExtractor={(item, index) => index.toString()}
             />
           ) : (
-            <Text style={styles.emptyFlatListText}>
-              You have not scheduled any medicine. Use the add button to
-              schedule a new medicine
-            </Text>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: "space-around",
+                alignItems: "center",
+                backgroundColor: "red"
+              }}
+            >
+              <Text style={styles.emptyFlatListText}>
+                You have not scheduled any medicine. Use the add button to
+                schedule a new medicine
+              </Text>
+            </View>
           )}
         </View>
       </View>
@@ -188,7 +197,10 @@ const styles = StyleSheet.create({
     height: 60
   },
   emptyFlatListText: {
-    color: "#d6d6d6"
+    color: "#d6d6d6",
+    fontSize: 20,
+    textAlign: "center",
+    flexWrap: "wrap"
   }
 });
 
