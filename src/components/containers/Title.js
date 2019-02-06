@@ -15,7 +15,7 @@ class Title extends Component {
       <View>
         <View style={{ alignItems: "center", marginTop: 10 }}>
           <Text style={styles.medTitle}>
-            {localizedStrings["ar"].medicineTitleLabel}
+            {localizedStrings["en"].medicineTitleLabel}
           </Text>
         </View>
         <View>
@@ -32,26 +32,27 @@ class Title extends Component {
 }
 
 const styles = StyleSheet.create({
+  medTitle: {
+    fontSize: Metrics.titleFontSize,
+    fontFamily: "sansBold",
+    color: "#d6d6d6"
+  },
+
   titleInput: {
     width: Metrics.formTitleinputBoxW,
     height: Metrics.formTitleinputBoxH,
     paddingLeft: 5,
-    backgroundColor: "#fff",
+    backgroundColor: "#d6d6d6",
     borderColor: "grey",
     borderRadius: 5,
     fontSize: Metrics.inputFontSize,
-    fontWeight: "bold",
+    fontFamily: "sansRegular",
     marginTop: 10,
     marginBottom: 10,
     shadowColor: "#303838",
     shadowOffset: { width: 0, height: 5 },
     shadowRadius: 10,
     shadowOpacity: 0.35
-  },
-  medTitle: {
-    fontSize: Metrics.titleFontSize,
-    fontWeight: "bold",
-    color: "#fff"
   }
 });
 

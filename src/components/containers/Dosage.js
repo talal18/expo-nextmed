@@ -33,11 +33,11 @@ const styles = StyleSheet.create({
     width: Metrics.formTitleinputBoxW,
     height: Metrics.formTitleinputBoxH,
     paddingLeft: 5,
-    backgroundColor: "#fff",
+    backgroundColor: "#d6d6d6",
     borderColor: "grey",
     borderRadius: 5,
     fontSize: Metrics.inputFontSize,
-    fontWeight: "bold",
+    fontFamily: "sansRegular",
     marginTop: 10,
     marginBottom: 10,
     shadowColor: "#303838",
@@ -47,8 +47,8 @@ const styles = StyleSheet.create({
   },
   medDosage: {
     fontSize: Metrics.titleFontSize,
-    fontWeight: "bold",
-    color: "#fff"
+    fontFamily: "sansBold",
+    color: "#d6d6d6"
   }
 });
 

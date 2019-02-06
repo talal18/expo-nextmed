@@ -55,10 +55,10 @@ class Type extends Component {
           <Dropdown
             allowFontScaling={false}
             fontSize={Metrics.dropDownFontSize}
-            fontWeight="bold"
+            fontFamily="sansBold"
             itemTextStyle={{
               fontSize: Metrics.dropDownFontSize,
-              fontWeight: "bold"
+              fontFamily: "sansBold"
             }}
             inputContainerStyle={{ borderBottomColor: "transparent" }}
             value={this.props.type}
@@ -83,15 +83,15 @@ class Type extends Component {
 const styles = StyleSheet.create({
   medTypeTitle: {
     fontSize: Metrics.titleFontSize,
-    fontWeight: "bold",
-    color: "#fff"
+    fontFamily: "sansBold",
+    color: "#d6d6d6"
   },
   textInputStyle: {
     justifyContent: "center",
     width: Metrics.formTitleinputBoxW,
     height: Metrics.formTitleinputBoxH,
     paddingLeft: 5,
-    backgroundColor: "#fff",
+    backgroundColor: "#d6d6d6",
     borderColor: "grey",
     borderRadius: 5,
     marginTop: 10,

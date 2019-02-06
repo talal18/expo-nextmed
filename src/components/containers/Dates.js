@@ -303,27 +303,28 @@ const styles = StyleSheet.create({
     justifyContent: "space-between"
   },
   addDatesListItemText: {
-    fontWeight: "bold",
+    fontFamily: "sansRegular",
     fontSize: Metrics.flatListItemFontSize,
-    color: "#fff",
+    color: "#d6d6d6",
     justifyContent: "flex-start"
   },
 
   addButton: {
-    height: 30,
-    width: 30,
+    height: Metrics.formSetAddDateButtonWidth,
+    width: Metrics.formSetAddDateButtonHeight,
     flexDirection: "column",
     justifyContent: "center"
   },
   addButtonImage: {
-    width: 40,
-    height: 40,
+    width: Metrics.formSetAddDateButtonImageWidth,
+    height: Metrics.formSetAddDateButtonImageHeight,
     borderRadius: 5
   },
+
   datesTitle: {
     fontSize: Metrics.titleFontSize,
-    fontWeight: "bold",
-    color: "#fff"
+    fontFamily: "sansBold",
+    color: "#d6d6d6"
   }
 });
 

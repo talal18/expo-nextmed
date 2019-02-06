@@ -111,17 +111,10 @@ class HomeScreen extends React.Component {
               keyExtractor={(item, index) => index.toString()}
             />
           ) : (
-            <View
-              style={{
-                flex: 1,
-                justifyContent: "space-around",
-                alignItems: "center",
-                backgroundColor: "red"
-              }}
-            >
+            <View style={styles.emptyFlatListContainer}>
               <Text style={styles.emptyFlatListText}>
-                You have not scheduled any medicine. Use the add button to
-                schedule a new medicine
+                You don't have any scheduled medicines. Please Add your
+                medications
               </Text>
             </View>
           )}
@@ -153,7 +146,7 @@ const styles = StyleSheet.create({
   },
 
   itemText: {
-    color: "#fff",
+    color: "#d6d6d6",
     fontSize: Metrics.flatListItemFontSize,
     fontFamily: "sansRegular"
   },
@@ -164,8 +157,8 @@ const styles = StyleSheet.create({
     marginRight: 5
   },
   MedImage: {
-    width: 50,
-    height: 50,
+    width: Metrics.homeMedImageWidth,
+    height: Metrics.homeMedImageHeight,
     borderRadius: 5
   },
 
@@ -175,30 +168,37 @@ const styles = StyleSheet.create({
     alignContent: "center"
   },
   deleteButtonImage: {
-    width: 50,
-    height: 50,
+    width: Metrics.homeDeleteButtonWidth,
+    height: Metrics.homeDeleteButtonHeight,
     borderRadius: 5
   },
 
-  addButton: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: "#009688",
-    position: "absolute",
-    bottom: 10,
-    right: 10,
-    alignItems: "center",
-    justifyContent: "center"
-  },
+  // addButton: {
+  //   width: 60,
+  //   height: 60,
+  //   borderRadius: 30,
+  //   backgroundColor: "#009688",
+  //   position: "absolute",
+  //   bottom: 10,
+  //   right: 10,
+  //   alignItems: "center",
+  //   justifyContent: "center"
+  // },
 
-  addButtonImage: {
-    width: 60,
-    height: 60
+  // addButtonImage: {
+  //   width: 60,
+  //   height: 60
+  // },
+
+  emptyFlatListContainer: {
+    flex: 1,
+    justifyContent: "space-around",
+    alignItems: "center"
   },
   emptyFlatListText: {
+    fontFamily: "sansItalic",
     color: "#d6d6d6",
-    fontSize: 20,
+    fontSize: Metrics.EmptyFlatListFontSize,
     textAlign: "center",
     flexWrap: "wrap"
   }

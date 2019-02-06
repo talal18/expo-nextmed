@@ -246,9 +246,9 @@ const styles = StyleSheet.create({
     marginTop: 10
   },
   updateButtonTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#fff"
+    fontSize: Metrics.titleFontSize,
+    fontFamily: "sansBold",
+    color: "#d6d6d6"
   },
   updateButton: {
     width: Metrics.formAddTimeButtonWidth,

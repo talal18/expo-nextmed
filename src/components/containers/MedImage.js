@@ -41,18 +41,24 @@ class MedImage extends Component {
             {this.props.uri.length > 0 ? "Edit Image" : "Add Image"}
           </Text>
         </TouchableHighlight>
+
         {this.props.uri !== undefined && this.props.uri.length > 0 && (
-          <View>
-            <Image
-              source={{ uri: this.props.uri }}
-              style={{ width: 200, height: 200 }}
-            />
-            <TouchableHighlight onPress={() => this.props.set_image_uri("")}>
+          <View style={styles.imageContainer}>
+            <View style={styles.imagebackgroundContainer}>
               <Image
-                source={require("../../assets/images/delete-icon2.png")}
-                style={{ width: 32, height: 32 }}
+                source={{ uri: this.props.uri }}
+                resizeMode="cover"
+                style={styles.image}
               />
-            </TouchableHighlight>
+            </View>
+            <View style={styles.deleteButtonContainer}>
+              <TouchableHighlight onPress={() => this.props.set_image_uri("")}>
+                <Image
+                  source={require("../../assets/images/delete-icon2.png")}
+                  style={styles.deleteButtonImage}
+                />
+              </TouchableHighlight>
+            </View>
           </View>
         )}
         <Modal
@@ -108,10 +114,11 @@ class MedImage extends Component {
 
 const styles = StyleSheet.create({
   modalContainer: {
-    marginTop: Metrics.modalMarginVertical,
-    flex: 1,
+    position: "absolute",
+    width: "100%",
+    bottom: 0,
     flexDirection: "column",
-    justifyContent: "flex-end",
+    justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#d6d6d6"
   },
@@ -136,8 +143,8 @@ const styles = StyleSheet.create({
 
   imageAddButtonText: {
     fontSize: Metrics.titleFontSize,
-    fontWeight: "bold",
-    color: "#fff"
+    fontFamily: "sansBold",
+    color: "#d6d6d6"
   },
 
   buttons: {
@@ -159,7 +166,36 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: Metrics.ModalButtonsFontSize,
+    fontFamily: "sansBold",
     color: "#d6d6d6"
+  },
+
+  imageContainer: {
+    flex: 1,
+    alignItems: "flex-end"
+  },
+
+  imagebackgroundContainer: {
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0
+  },
+
+  image: {
+    flex: 1,
+    flexDirection: "column",
+    width: 200,
+    height: 200
+  },
+
+  deleteButtonContainer: {
+    position: "absolute",
+    opacity: 0.5
+  },
+  deleteButtonImage: {
+    width: 32,
+    height: 32
   }
 });
 

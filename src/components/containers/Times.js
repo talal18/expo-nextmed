@@ -155,8 +155,8 @@ class Times extends Component {
 const styles = StyleSheet.create({
   medTimesTitle: {
     fontSize: Metrics.titleFontSize,
-    fontWeight: "bold",
-    color: "#fff"
+    fontFamily: "sansBold",
+    color: "#d6d6d6"
   },
   addTimesButton: {
     width: Metrics.formAddTimeButtonWidth,
@@ -196,19 +196,19 @@ const styles = StyleSheet.create({
   },
   addTimesListItemText: {
     fontSize: Metrics.flatListItemFontSize,
-    fontWeight: "bold",
-    color: "#fff",
+    fontFamily: "sansRegular",
+    color: "#d6d6d6",
     justifyContent: "flex-start"
   },
   deleteButton: {
-    height: 30,
-    width: 30,
+    height: Metrics.formAddTimeDeleteButtonHeight,
+    width: Metrics.formAddTimeDeleteButtonWidth,
     flexDirection: "column",
     justifyContent: "center"
   },
   deleteButtonImage: {
-    width: 40,
-    height: 40,
+    width: Metrics.formAddTimeDeleteButtonImageWidth,
+    height: Metrics.formAddTimeDeleteButtonImageHeight,
     borderRadius: 5
   }
 });

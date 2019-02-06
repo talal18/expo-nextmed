@@ -47,10 +47,10 @@ class Recurrence extends Component {
           <Dropdown
             allowFontScaling={false}
             fontSize={Metrics.dropDownFontSize}
-            fontWeight="bold"
+            fontFamily="sansBold"
             itemTextStyle={{
               fontSize: Metrics.dropDownFontSize,
-              fontWeight: "bold"
+              fontFamily: "sansBold"
             }}
             inputContainerStyle={{ borderBottomColor: "transparent" }}
             value={this.props.recurrence}
@@ -81,15 +81,16 @@ class Recurrence extends Component {
 const styles = StyleSheet.create({
   medRecTitle: {
     fontSize: Metrics.titleFontSize,
-    fontWeight: "bold",
-    color: "#fff"
+    fontFamily: "sansBold",
+    color: "#d6d6d6"
   },
   textInputStyle: {
     justifyContent: "center",
     width: Metrics.formTitleinputBoxW,
     height: Metrics.formTitleinputBoxH,
     paddingLeft: 5,
-    backgroundColor: "#fff",
+    backgroundColor: "#d6d6d6",
+
     borderColor: "grey",
     borderRadius: 5,
     marginTop: 10,
@@ -104,8 +105,8 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   frequencyNote: {
-    color: "#FFF",
-    fontStyle: "italic"
+    color: "#d6d6d6",
+    fontFamily: "sansItalic"
   }
 });
 

@@ -15,15 +15,14 @@ class SettingsScreen extends React.Component {
   componentDidMount() {}
 
   /*
-    Search Funcationality in Manage Notifications
-    Medicine Image (Delete Button Styling) in Add / Edit Medicine
-    Modal Styling (Padding Top and Bottom) --> Talal
-    HomeScreen Empty Text Styling --> Talal
-
-    Fonts --> Talal + Saleh
+    Search Funcationality in Manage Notifications --> Saleh  
+    
+    Modal Styling (Padding Top and Bottom) --> Talal       < Completed >
+    delete image button styling --> Talal                  < Completed > 
+    Fonts --> Talal + Saleh                                < Completed >
     settings -> choose language Saleh
     settings -> About Button
-    languages support Talal
+    languages support Talal         
   */
 
   render() {

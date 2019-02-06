@@ -16,6 +16,8 @@ import EditScreen from "./screens/EditScreen";
 
 import ManageNotifications from "./screens/ManageNotifications";
 
+import { Font } from "expo";
+
 const TabNavigator = createBottomTabNavigator(
   {
     Home: createStackNavigator({
@@ -120,7 +122,7 @@ const AppNavigator = createStackNavigator({
       headerTintColor: "#d6d6d6",
       headerTitleStyle: {
         fontSize: Metrics.navigationTitleFontSize,
-        fontWeight: "bold"
+        fontFamily: "sansItalic"
       }
     }
   },
@@ -133,8 +135,7 @@ const AppNavigator = createStackNavigator({
       },
       headerTintColor: "#d6d6d6",
       headerTitleStyle: {
-        fontSize: Metrics.navigationTitleFontSize,
-        fontWeight: "bold"
+        fontSize: Metrics.navigationTitleFontSize
       }
     }
   },

@@ -37,10 +37,12 @@ const styles = StyleSheet.create({
   },
 
   textArea: {
-    height: Metrics.textAreaHeight,
-    width: Metrics.textAreaWidth,
+    height: "100%",
+    width: "100%",
+    padding: 5,
     fontSize: Metrics.inputFontSize,
-    backgroundColor: "#fff",
+    fontFamily: "sansItalic",
+    backgroundColor: "#d6d6d6",
     color: "#262626",
     textAlignVertical: "top",
     justifyContent: "flex-start",

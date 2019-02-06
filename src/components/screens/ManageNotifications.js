@@ -244,9 +244,9 @@ const styles = StyleSheet.create({
   },
 
   itemText: {
-    color: "#fff",
+    color: "#d6d6d6",
     fontSize: Metrics.flatListItemFontSize,
-    fontWeight: "bold"
+    fontFamily: "sansRegular"
   },
 
   switchContainer: {
@@ -259,22 +259,6 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
 
-  addButton: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    backgroundColor: "#009688",
-    position: "absolute",
-    bottom: 10,
-    right: 10,
-    alignItems: "center",
-    justifyContent: "center"
-  },
-
-  addButtonImage: {
-    width: 60,
-    height: 60
-  },
   searchInput: {
     height: Metrics.searchInputBoxH,
     paddingLeft: 5,
@@ -282,7 +266,7 @@ const styles = StyleSheet.create({
     borderColor: "grey",
     borderRadius: 5,
     fontSize: Metrics.searchInputFontSize,
-    fontWeight: "bold",
+    fontFamily: "sansItalic",
     shadowColor: "#303838",
     shadowOffset: { width: 0, height: 5 },
     shadowRadius: 10,

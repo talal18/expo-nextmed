@@ -35,6 +35,10 @@ const metrics = {
   settingsTabLogoHeight: NormalizeSize.normalizeHeight(35),
   homeTabLogoWidth: NormalizeSize.normalizeWidth(35),
   homeTabLogoHeight: NormalizeSize.normalizeHeight(35),
+  homeMedImageWidth: NormalizeSize.normalizeWidth(50),
+  homeMedImageHeight: NormalizeSize.normalizeHeight(50),
+  homeDeleteButtonWidth: NormalizeSize.normalizeWidth(50),
+  homeDeleteButtonHeight: NormalizeSize.normalizeHeight(50),
   homeAddButtonWidth: 35,
   homeAddButtonHeight: 35,
   homeAddButtonMarginRight: NormalizeSize.normalizeWidth(10),
@@ -83,7 +87,7 @@ const metrics = {
   formAddImageButtonWidth: NormalizeSize.normalizeWidth(350),
   formAddImageButtonHeight: NormalizeSize.normalizeHeight(50),
   //Modal
-  modalMarginVertical: NormalizeSize.normalizeHeight(540),
+
   modalButtonWidth: NormalizeSize.normalizeWidth(350),
   modalButtonHeight: NormalizeSize.normalizeHeight(60),
 
@@ -94,6 +98,10 @@ const metrics = {
   formAddTimeButtonHeight: NormalizeSize.normalizeHeight(50),
   formAddTimeListHeight: NormalizeSize.normalizeHeight(60),
   formAddTimeListWidth: NormalizeSize.normalizeWidth(320),
+  formAddTimeDeleteButtonWidth: NormalizeSize.normalizeWidth(30),
+  formAddTimeDeleteButtonHeight: NormalizeSize.normalizeHeight(30),
+  formAddTimeDeleteButtonImageWidth: NormalizeSize.normalizeWidth(40),
+  formAddTimeDeleteButtonImageHeight: NormalizeSize.normalizeHeight(40),
 
   //Set Start and End Date
   formSetDateContainerWidth: NormalizeSize.normalizeWidth(330),
@@ -102,8 +110,12 @@ const metrics = {
   formStartDateContainerHeight: NormalizeSize.normalizeHeight(60),
   formEndDateContainerWidth: NormalizeSize.normalizeWidth(320),
   formEndDateContainerHeight: NormalizeSize.normalizeHeight(60),
-  formSetAddButtonHeight: NormalizeSize.normalizeHeight(50),
-  formSetAddButtonWidth: NormalizeSize.normalizeWidth(50),
+  // formSetAddButtonHeight: NormalizeSize.normalizeHeight(50),
+  // formSetAddButtonWidth: NormalizeSize.normalizeWidth(50),
+  formSetAddDateButtonWidth: NormalizeSize.normalizeWidth(30),
+  formSetAddDateButtonHeight: NormalizeSize.normalizeHeight(30),
+  formSetAddDateButtonImageWidth: NormalizeSize.normalizeWidth(40),
+  formSetAddDateButtonImageHeight: NormalizeSize.normalizeHeight(40),
 
   //Save button
   formSaveButtonWidth: NormalizeSize.normalizeWidth(350),
@@ -112,8 +124,6 @@ const metrics = {
   //text area
   textAreaContainerHeight: NormalizeSize.normalizeHeight(100),
   textAreaContainerWidth: NormalizeSize.normalizeWidth(350),
-  textAreaHeight: NormalizeSize.normalizeHeight(100),
-  textAreaWidth: NormalizeSize.normalizeWidth(340),
 
   //Manage Notifications FlatList search input box
   searchInputBoxW: NormalizeSize.normalizeWidth(350),
@@ -140,6 +150,10 @@ const metrics = {
     Platform.OS === "ios"
       ? NormalizeSize.normalizeHeight(26)
       : NormalizeSize.normalizeWidth(26),
+  EmptyFlatListFontSize:
+    Platform.OS === "ios"
+      ? NormalizeSize.normalizeHeight(20)
+      : NormalizeSize.normalizeWidth(20),
   navigationTitleFontSize: 18,
   ModalButtonsFontSize:
     Platform.OS === "ios"
