@@ -13,6 +13,7 @@ import {
 import { connect } from "react-redux";
 
 import { updateMedication } from "../../redux/actions/medications";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import {
   add_notification,
@@ -110,6 +111,12 @@ class EditScreen extends Component {
     if (this.props.data.intake_times.length <= 0) {
       errors.push(`You must have atleast 1 intake time\n`);
     }
+    if (
+      new Date(this.props.data.start_date).getTime() <
+      new Date(Date.now()).getTime()
+    ) {
+      errors.push(`Start date can't be before today's date\n`);
+    }
 
     if (errors.length > 0) {
       Alert.alert(
@@ -184,45 +191,56 @@ class EditScreen extends Component {
     }
   }
 
-  render() {
+  renderScrollView() {
     return (
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior="padding"
-        keyboardVerticalOffset={Platform.select({
-          ios: () => 0,
-          android: () => 80
-        })()}
-        enabled
-      >
-        <ScrollView style={styles.scrollViewContainer}>
-          <Title />
-          <MedImage />
-          <View style={styles.contentDivder} />
-          <Type />
-          <View style={styles.contentDivder} />
-          <Times />
-          <Dosage />
-          <View style={styles.contentDivder} />
-          <Recurrence />
-          <View style={styles.contentDivder} />
-          <Dates />
-          <TouchableOpacity
-            onPress={this.manageNotifications.bind(this)}
-            style={styles.updateButton}
-          >
-            <Text style={styles.updateButtonTitle}>Manage Notifications</Text>
-          </TouchableOpacity>
-          <Notes />
-          <TouchableOpacity
-            onPress={this.updateNotification.bind(this)}
-            style={styles.updateButton}
-          >
-            <Text style={styles.updateButtonTitle}>Update</Text>
-          </TouchableOpacity>
-        </ScrollView>
-      </KeyboardAvoidingView>
+      <ScrollView style={styles.scrollViewContainer}>
+        <Title />
+        <MedImage />
+        <View style={styles.contentDivder} />
+        <Type />
+        <View style={styles.contentDivder} />
+        <Times />
+        <Dosage />
+        <View style={styles.contentDivder} />
+        <Recurrence />
+        <View style={styles.contentDivder} />
+        <Dates />
+        <TouchableOpacity
+          onPress={this.manageNotifications.bind(this)}
+          style={styles.updateButton}
+        >
+          <Text style={styles.updateButtonTitle}>Manage Notifications</Text>
+        </TouchableOpacity>
+        <Notes />
+        <TouchableOpacity
+          onPress={this.updateNotification.bind(this)}
+          style={styles.updateButton}
+        >
+          <Text style={styles.updateButtonTitle}>Update</Text>
+        </TouchableOpacity>
+      </ScrollView>
     );
+  }
+
+  render() {
+    if (Platform.OS === "android") {
+      return (
+        <KeyboardAvoidingView
+          style={({ flex: 1 }, styles.container)}
+          behavior="padding"
+          keyboardVerticalOffset={80}
+          enabled
+        >
+          {this.renderScrollView()}
+        </KeyboardAvoidingView>
+      );
+    } else if (Platform.OS === "ios") {
+      return (
+        <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+          {this.renderScrollView()}
+        </KeyboardAwareScrollView>
+      );
+    }
   }
 }
 

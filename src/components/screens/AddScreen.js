@@ -28,6 +28,7 @@ import Title from "../containers/Title";
 import Dosage from "../containers/Dosage";
 import Notes from "../containers/Notes";
 import MedImage from "../containers/MedImage";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 class AddScreen extends Component {
   constructor(props) {
@@ -135,45 +136,55 @@ class AddScreen extends Component {
     }
   }
 
-  render() {
+  renderScrollView() {
     return (
-      <KeyboardAvoidingView
-        style={styles.container}
-        behavior="padding"
-        keyboardVerticalOffset={Platform.select({
-          ios: () => 0,
-          android: () => 80
-        })()}
-        enabled
-      >
-        <ScrollView style={styles.scrollViewContainer}>
-          <Title />
-          <MedImage />
-          <View style={styles.contentDivder} />
-          <Type />
-          <View style={styles.contentDivder} />
-          <Times />
-          <Dosage />
-          <View style={styles.contentDivder} />
-          <Recurrence />
-          <View style={styles.contentDivder} />
-          <Dates />
-          <Notes />
-          <TouchableOpacity
-            onPress={this.addNotification.bind(this)}
-            style={styles.addButton}
-          >
-            <Text style={styles.addButtonTitle}>Add Medicine</Text>
-          </TouchableOpacity>
-        </ScrollView>
-      </KeyboardAvoidingView>
+      <ScrollView style={styles.scrollViewContainer}>
+        <Title />
+        <MedImage />
+        <View style={styles.contentDivder} />
+        <Type />
+        <View style={styles.contentDivder} />
+        <Times />
+        <Dosage />
+        <View style={styles.contentDivder} />
+        <Recurrence />
+        <View style={styles.contentDivder} />
+        <Dates />
+        <Notes />
+        <TouchableOpacity
+          onPress={this.addNotification.bind(this)}
+          style={styles.addButton}
+        >
+          <Text style={styles.addButtonTitle}>Add Medicine</Text>
+        </TouchableOpacity>
+      </ScrollView>
     );
+  }
+
+  render() {
+    if (Platform.OS === "android") {
+      return (
+        <KeyboardAvoidingView
+          style={({ flex: 1 }, styles.container)}
+          behavior="padding"
+          keyboardVerticalOffset={80}
+          enabled
+        >
+          {this.renderScrollView()}
+        </KeyboardAvoidingView>
+      );
+    } else if (Platform.OS === "ios") {
+      return (
+        <KeyboardAwareScrollView contentContainerStyle={styles.container}>
+          {this.renderScrollView()}
+        </KeyboardAwareScrollView>
+      );
+    }
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     padding: 0,
     justifyContent: "center",
     alignItems: "center",

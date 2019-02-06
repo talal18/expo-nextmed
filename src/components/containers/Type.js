@@ -55,10 +55,10 @@ class Type extends Component {
           <Dropdown
             allowFontScaling={false}
             fontSize={Metrics.dropDownFontSize}
-            fontFamily="sansBold"
+            // fontFamily="sansBold"
             itemTextStyle={{
-              fontSize: Metrics.dropDownFontSize,
-              fontFamily: "sansBold"
+              fontSize: Metrics.dropDownFontSize
+              // fontFamily: "sansBold"
             }}
             inputContainerStyle={{ borderBottomColor: "transparent" }}
             value={this.props.type}
