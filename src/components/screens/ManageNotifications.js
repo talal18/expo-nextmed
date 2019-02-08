@@ -16,6 +16,127 @@ import {
   set_search_text
 } from "../../redux/actions/notifications";
 
+const renderCustomDate = date => {
+  var myDate = new Date(date);
+
+  var day = myDate.getDate();
+  var dayInWeek = myDate.getDay();
+  var monthInYear = myDate.getMonth() + 1;
+  var month = myDate.getMonth() + 1;
+  var year = myDate.getFullYear();
+
+  if (day < 10) {
+    day = "0" + day;
+  }
+
+  if (month < 10) {
+    month = "0" + month;
+  }
+
+  var minutes = myDate.getMinutes();
+  var hours = parseInt(myDate.getHours());
+
+  if (minutes < 10) {
+    minutes = "0" + minutes;
+  }
+
+  if (hours >= 12) {
+    hours -= 12;
+    if (hours === 0) {
+      hours = 12;
+    }
+    minutes += " PM";
+  } else {
+    if (hours === 0) {
+      hours = "12";
+    }
+
+    minutes += " AM";
+  }
+
+  var dayName = "";
+  var monthName = "";
+
+  switch (dayInWeek) {
+    case 0:
+      dayName = "Sun";
+      break;
+    case 1:
+      dayName = "Mon";
+      break;
+    case 2:
+      dayName = "Tue";
+      break;
+    case 3:
+      dayName = "Wed";
+      break;
+    case 4:
+      dayName = "Thu";
+      break;
+    case 5:
+      dayName = "Fri";
+      break;
+    case 6:
+      dayName = "Sat";
+      break;
+  }
+
+  switch (monthInYear) {
+    case 1:
+      monthName = "Jan";
+      break;
+    case 2:
+      monthName = "Feb";
+      break;
+    case 3:
+      monthName = "Mar";
+      break;
+    case 4:
+      monthName = "Apr";
+      break;
+    case 5:
+      monthName = "May";
+      break;
+    case 6:
+      monthName = "Jun";
+      break;
+    case 7:
+      monthName = "Jul";
+      break;
+    case 8:
+      monthName = "Aug";
+      break;
+    case 9:
+      monthName = "Sep";
+      break;
+    case 10:
+      monthName = "Oct";
+      break;
+    case 11:
+      monthName = "Nov";
+      break;
+    case 12:
+      monthName = "Dec";
+      break;
+  }
+
+  return {
+    date,
+    customText:
+      dayName +
+      " " +
+      monthName +
+      " " +
+      day +
+      " " +
+      year +
+      " " +
+      hours +
+      ":" +
+      minutes
+  };
+};
+
 class ManageNotifications extends React.Component {
   constructor(props) {
     super(props);
@@ -25,136 +146,13 @@ class ManageNotifications extends React.Component {
     };
   }
 
-  renderCustomDate(date) {
-    var myDate = new Date(date);
-
-    var day = myDate.getDate();
-    var dayInWeek = myDate.getDay();
-    var monthInYear = myDate.getMonth() + 1;
-    var month = myDate.getMonth() + 1;
-    var year = myDate.getFullYear();
-
-    if (day < 10) {
-      day = "0" + day;
-    }
-
-    if (month < 10) {
-      month = "0" + month;
-    }
-
-    var minutes = myDate.getMinutes();
-    var hours = parseInt(myDate.getHours());
-
-    if (minutes < 10) {
-      minutes = "0" + minutes;
-    }
-
-    if (hours >= 12) {
-      hours -= 12;
-      if (hours === 0) {
-        hours = 12;
-      }
-      minutes += " PM";
-    } else {
-      if (hours === 0) {
-        hours = "12";
-      }
-
-      minutes += " AM";
-    }
-
-    var dayName = "";
-    var monthName = "";
-
-    switch (dayInWeek) {
-      case 0:
-        dayName = "Sun";
-        break;
-      case 1:
-        dayName = "Mon";
-        break;
-      case 2:
-        dayName = "Tue";
-        break;
-      case 3:
-        dayName = "Wed";
-        break;
-      case 4:
-        dayName = "Thu";
-        break;
-      case 5:
-        dayName = "Fri";
-        break;
-      case 6:
-        dayName = "Sat";
-        break;
-    }
-
-    switch (monthInYear) {
-      case 1:
-        monthName = "Jan";
-        break;
-      case 2:
-        monthName = "Feb";
-        break;
-      case 3:
-        monthName = "Mar";
-        break;
-      case 4:
-        monthName = "Apr";
-        break;
-      case 5:
-        monthName = "May";
-        break;
-      case 6:
-        monthName = "Jun";
-        break;
-      case 7:
-        monthName = "Jul";
-        break;
-      case 8:
-        monthName = "Aug";
-        break;
-      case 9:
-        monthName = "Sep";
-        break;
-      case 10:
-        monthName = "Oct";
-        break;
-      case 11:
-        monthName = "Nov";
-        break;
-      case 12:
-        monthName = "Dec";
-        break;
-    }
-
-    return {
-      date,
-      customText:
-        dayName +
-        " " +
-        monthName +
-        " " +
-        day +
-        " " +
-        year +
-        " " +
-        hours +
-        ":" +
-        minutes
-    };
-  }
-
   renderItem = ({ item }) => {
     return (
       <View>
         <View style={styles.manageListItemContainer}>
           <View style={styles.ListItem}>
             <Text style={styles.itemText}>
-              {item && item.date
-                ? this.renderCustomDate(item.date).customText
-                : ""}
+              {item && item.date ? renderCustomDate(item.date).customText : ""}
             </Text>
           </View>
           <View style={styles.switchContainer}>
@@ -271,7 +269,10 @@ const mapStateToProps = state => {
   return {
     notifications: state.notificationsState.data,
     filteredItems: data.filter(
-      item => item.date.toUpperCase().indexOf(searchText.toUpperCase()) === 0
+      item =>
+        renderCustomDate(item.date)
+          .customText.toUpperCase()
+          .includes(searchText.toUpperCase()) === true
     )
   };
 };
