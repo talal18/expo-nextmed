@@ -15,6 +15,7 @@ import AddScreen from "./screens/AddScreen";
 import EditScreen from "./screens/EditScreen";
 
 import ManageNotifications from "./screens/ManageNotifications";
+import { localizedStrings } from "../common/languages";
 
 import { Font } from "expo";
 
@@ -24,14 +25,14 @@ const TabNavigator = createBottomTabNavigator(
       Home: {
         screen: HomeScreen,
         navigationOptions: ({ navigation }) => ({
-          headerTitle: "Medicine List",
+          headerTitle: localizedStrings["en"].medicineListLabel,
           headerStyle: {
             backgroundColor: "#595d63"
           },
           headerTintColor: "#d6d6d6",
           headerTitleStyle: {
             fontSize: Metrics.navigationTitleFontSize,
-            fontWeight: "bold"
+            fontFamily: "sansBold"
           },
           headerRight: (
             <TouchableOpacity onPress={() => navigation.navigate("Add")}>
@@ -59,7 +60,7 @@ const TabNavigator = createBottomTabNavigator(
           headerTintColor: "#d6d6d6",
           headerTitleStyle: {
             fontSize: Metrics.navigationTitleFontSize,
-            fontWeight: "bold"
+            fontFamily: "sansBold"
           }
         }
       }

@@ -16,6 +16,7 @@ import Metrics from "../../styling/Metrics";
 import { connect } from "react-redux";
 
 import { deleteMedication } from "../../redux/actions/medications";
+import { localizedStrings } from "../../common/languages";
 
 class HomeScreen extends React.Component {
   constructor() {
@@ -102,23 +103,20 @@ class HomeScreen extends React.Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
-        <View style={styles.container}>
-          {this.props.medications.length > 0 ? (
-            <FlatList
-              data={this.props.medications}
-              renderItem={this.renderItem}
-              keyExtractor={(item, index) => index.toString()}
-            />
-          ) : (
-            <View style={styles.emptyFlatListContainer}>
-              <Text style={styles.emptyFlatListText}>
-                You don't have any scheduled medicines. Please Add your
-                medications
-              </Text>
-            </View>
-          )}
-        </View>
+      <View style={styles.container}>
+        {this.props.medications.length > 0 ? (
+          <FlatList
+            data={this.props.medications}
+            renderItem={this.renderItem}
+            keyExtractor={(item, index) => index.toString()}
+          />
+        ) : (
+          <View style={styles.emptyFlatListContainer}>
+            <Text style={styles.emptyFlatListText}>
+              {localizedStrings[this.props.language].homeEmptyListLabel}
+            </Text>
+          </View>
+        )}
       </View>
     );
   }
@@ -206,7 +204,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    medications: state.medState.medications
+    medications: state.medState.medications,
+    language: state.settingsState.language
   };
 };
 

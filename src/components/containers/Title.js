@@ -15,7 +15,7 @@ class Title extends Component {
       <View>
         <View style={{ alignItems: "center", marginTop: 10 }}>
           <Text style={styles.medTitle}>
-            {localizedStrings["en"].medicineTitleLabel}
+            {localizedStrings[this.props.language].medicineTitleLabel}
           </Text>
         </View>
         <View>
@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    title: state.dataState.data.title
+    title: state.dataState.data.title,
+    language: state.settingsState.language
   };
 };
 

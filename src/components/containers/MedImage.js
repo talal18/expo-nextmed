@@ -15,6 +15,7 @@ import Metrics from "../../styling/Metrics";
 import { connect } from "react-redux";
 
 import { set_image_uri } from "../../redux/actions/data";
+import { localizedStrings } from "../../common/languages";
 
 class MedImage extends Component {
   constructor(props) {
@@ -38,7 +39,9 @@ class MedImage extends Component {
           }}
         >
           <Text style={styles.imageAddButtonText}>
-            {this.props.uri.length > 0 ? "Edit Image" : "Add Image"}
+            {this.props.uri !== undefined && this.props.uri.length > 0
+              ? localizedStrings[this.props.language].editImageLabel
+              : localizedStrings[this.props.language].addImageLabel}
           </Text>
         </TouchableHighlight>
 
@@ -62,6 +65,9 @@ class MedImage extends Component {
           </View>
         )}
         <Modal
+          onBackdropPress={() => {
+            this.setModalVisible(false);
+          }}
           animationType="slide"
           transparent={true}
           visible={this.state.modalVisible}
@@ -201,7 +207,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    uri: state.dataState.data.uri
+    uri: state.dataState.data.uri,
+    language: state.settingsState.language
   };
 };
 
