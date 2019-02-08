@@ -1,9 +1,19 @@
 import {
   ADD_NOTIFICATION,
   UPDATE_NOTIFICATION,
-  DELETE_NOTIFICATION
-} from '../types/notifications';
-import { Notifications } from 'expo';
+  DELETE_NOTIFICATION,
+  SEARCH_TEXT
+} from "../types/notifications";
+import { Notifications } from "expo";
+
+export const set_search_text = searchText => {
+  return dispatch => {
+    dispatch({
+      type: SEARCH_TEXT,
+      searchText
+    });
+  };
+};
 
 export const update_notification = (notification, status) => {
   return dispatch => {
@@ -17,11 +27,11 @@ export const update_notification = (notification, status) => {
         },
         // (optional) (object) — notification configuration specific to Android.
         android: {
-          channelId: 'nextmedNotifications',
+          channelId: "nextmedNotifications",
           sound: true, // (optional) (boolean) — if true, play a sound. Default: false.
           //icon (optional) (string) — URL of icon to display in notification drawer.
           //color (optional) (string) — color of the notification icon in notification drawer.
-          priority: 'high', // (optional) (min | low | high | max) — android may present notifications according to the priority, for example a high priority notification will likely to be shown as a heads-up notification.
+          priority: "high", // (optional) (min | low | high | max) — android may present notifications according to the priority, for example a high priority notification will likely to be shown as a heads-up notification.
           sticky: false, // (optional) (boolean) — if true, the notification will be sticky and not dismissable by user. The notification must be programmatically dismissed. Default: false.
           vibrate: true // (optional) (boolean or array) — if true, vibrate the device. An array can be supplied to specify the vibration pattern, e.g. - [ 0, 500 ].
           // link (optional) (string) — external link to open when notification is selected.
@@ -81,11 +91,11 @@ export const add_notification = (
       },
       // (optional) (object) — notification configuration specific to Android.
       android: {
-        channelId: 'nextmedNotifications',
+        channelId: "nextmedNotifications",
         sound: true, // (optional) (boolean) — if true, play a sound. Default: false.
         //icon (optional) (string) — URL of icon to display in notification drawer.
         //color (optional) (string) — color of the notification icon in notification drawer.
-        priority: 'high', // (optional) (min | low | high | max) — android may present notifications according to the priority, for example a high priority notification will likely to be shown as a heads-up notification.
+        priority: "high", // (optional) (min | low | high | max) — android may present notifications according to the priority, for example a high priority notification will likely to be shown as a heads-up notification.
         sticky: false, // (optional) (boolean) — if true, the notification will be sticky and not dismissable by user. The notification must be programmatically dismissed. Default: false.
         vibrate: true // (optional) (boolean or array) — if true, vibrate the device. An array can be supplied to specify the vibration pattern, e.g. - [ 0, 500 ].
         // link (optional) (string) — external link to open when notification is selected.
@@ -139,7 +149,7 @@ export const add_notification = (
     };
 
     if (end_date.length > 0) {
-      if (repeat === 'day') {
+      if (repeat === "day") {
         var days = Date.daysBetween(
           new Date(start_year, start_month, start_day, 0, 0, 0, 0),
           new Date(end_date)
@@ -175,7 +185,7 @@ export const add_notification = (
                 notification: {
                   id: id,
                   notifi_id:
-                    '_' +
+                    "_" +
                     Math.random()
                       .toString(36)
                       .substr(2, 9) +
@@ -194,7 +204,7 @@ export const add_notification = (
               notification: {
                 id: id,
                 notifi_id:
-                  '_' +
+                  "_" +
                   Math.random()
                     .toString(36)
                     .substr(2, 9) +
@@ -208,7 +218,7 @@ export const add_notification = (
             });
           }
         }
-      } else if (repeat === 'week') {
+      } else if (repeat === "week") {
         var days = Date.daysBetween(
           new Date(start_year, start_month, start_day, 0, 0, 0, 0),
           new Date(end_date)
@@ -245,7 +255,7 @@ export const add_notification = (
                 notification: {
                   id,
                   notifi_id:
-                    '_' +
+                    "_" +
                     Math.random()
                       .toString(36)
                       .substr(2, 9) +
@@ -264,7 +274,7 @@ export const add_notification = (
               notification: {
                 id,
                 notifi_id:
-                  '_' +
+                  "_" +
                   Math.random()
                     .toString(36)
                     .substr(2, 9) +
@@ -278,7 +288,7 @@ export const add_notification = (
             });
           }
         }
-      } else if (repeat === 'month') {
+      } else if (repeat === "month") {
         var months = 0;
         var endDate = new Date(end_date);
 
@@ -313,7 +323,7 @@ export const add_notification = (
                 notification: {
                   id,
                   notifi_id:
-                    '_' +
+                    "_" +
                     Math.random()
                       .toString(36)
                       .substr(2, 9) +
@@ -332,7 +342,7 @@ export const add_notification = (
               notification: {
                 id,
                 notifi_id:
-                  '_' +
+                  "_" +
                   Math.random()
                     .toString(36)
                     .substr(2, 9) +
@@ -346,7 +356,7 @@ export const add_notification = (
             });
           }
         }
-      } else if (repeat === 'year') {
+      } else if (repeat === "year") {
         var years = 0;
 
         var endDate = new Date(end_date);
@@ -381,7 +391,7 @@ export const add_notification = (
                 notification: {
                   id,
                   notifi_id:
-                    '_' +
+                    "_" +
                     Math.random()
                       .toString(36)
                       .substr(2, 9) +
@@ -400,7 +410,7 @@ export const add_notification = (
               notification: {
                 id,
                 notifi_id:
-                  '_' +
+                  "_" +
                   Math.random()
                     .toString(36)
                     .substr(2, 9) +
@@ -454,11 +464,11 @@ export const update_notifications = (
       },
       // (optional) (object) — notification configuration specific to Android.
       android: {
-        channelId: 'nextmedNotifications',
+        channelId: "nextmedNotifications",
         sound: true, // (optional) (boolean) — if true, play a sound. Default: false.
         //icon (optional) (string) — URL of icon to display in notification drawer.
         //color (optional) (string) — color of the notification icon in notification drawer.
-        priority: 'high', // (optional) (min | low | high | max) — android may present notifications according to the priority, for example a high priority notification will likely to be shown as a heads-up notification.
+        priority: "high", // (optional) (min | low | high | max) — android may present notifications according to the priority, for example a high priority notification will likely to be shown as a heads-up notification.
         sticky: false, // (optional) (boolean) — if true, the notification will be sticky and not dismissable by user. The notification must be programmatically dismissed. Default: false.
         vibrate: true // (optional) (boolean or array) — if true, vibrate the device. An array can be supplied to specify the vibration pattern, e.g. - [ 0, 500 ].
         // link (optional) (string) — external link to open when notification is selected.
@@ -512,7 +522,7 @@ export const update_notifications = (
     };
 
     if (end_date.length > 0) {
-      if (repeat === 'day') {
+      if (repeat === "day") {
         var days = Date.daysBetween(
           new Date(start_year, start_month, start_day, 0, 0, 0, 0),
           new Date(end_date)
@@ -553,7 +563,7 @@ export const update_notifications = (
                   notification: {
                     id: id,
                     notifi_id:
-                      '_' +
+                      "_" +
                       Math.random()
                         .toString(36)
                         .substr(2, 9) +
@@ -572,7 +582,7 @@ export const update_notifications = (
                 notification: {
                   id: result[0].id,
                   notifi_id:
-                    '_' +
+                    "_" +
                     Math.random()
                       .toString(36)
                       .substr(2, 9) +
@@ -599,7 +609,7 @@ export const update_notifications = (
                 notification: {
                   id: id,
                   notifi_id:
-                    '_' +
+                    "_" +
                     Math.random()
                       .toString(36)
                       .substr(2, 9) +
@@ -614,7 +624,7 @@ export const update_notifications = (
             });
           }
         }
-      } else if (repeat === 'week') {
+      } else if (repeat === "week") {
         var days = Date.daysBetween(
           new Date(start_year, start_month, start_day, 0, 0, 0, 0),
           new Date(end_date)
@@ -656,7 +666,7 @@ export const update_notifications = (
                   notification: {
                     id: id,
                     notifi_id:
-                      '_' +
+                      "_" +
                       Math.random()
                         .toString(36)
                         .substr(2, 9) +
@@ -675,7 +685,7 @@ export const update_notifications = (
                 notification: {
                   id: result[0].id,
                   notifi_id:
-                    '_' +
+                    "_" +
                     Math.random()
                       .toString(36)
                       .substr(2, 9) +
@@ -702,7 +712,7 @@ export const update_notifications = (
                 notification: {
                   id: id,
                   notifi_id:
-                    '_' +
+                    "_" +
                     Math.random()
                       .toString(36)
                       .substr(2, 9) +
@@ -717,7 +727,7 @@ export const update_notifications = (
             });
           }
         }
-      } else if (repeat === 'month') {
+      } else if (repeat === "month") {
         var months = 0;
         var endDate = new Date(end_date);
 
@@ -757,7 +767,7 @@ export const update_notifications = (
                   notification: {
                     id: id,
                     notifi_id:
-                      '_' +
+                      "_" +
                       Math.random()
                         .toString(36)
                         .substr(2, 9) +
@@ -776,7 +786,7 @@ export const update_notifications = (
                 notification: {
                   id: result[0].id,
                   notifi_id:
-                    '_' +
+                    "_" +
                     Math.random()
                       .toString(36)
                       .substr(2, 9) +
@@ -803,7 +813,7 @@ export const update_notifications = (
                 notification: {
                   id: id,
                   notifi_id:
-                    '_' +
+                    "_" +
                     Math.random()
                       .toString(36)
                       .substr(2, 9) +
@@ -818,7 +828,7 @@ export const update_notifications = (
             });
           }
         }
-      } else if (repeat === 'year') {
+      } else if (repeat === "year") {
         var years = 0;
 
         var endDate = new Date(end_date);
@@ -857,7 +867,7 @@ export const update_notifications = (
                   notification: {
                     id: id,
                     notifi_id:
-                      '_' +
+                      "_" +
                       Math.random()
                         .toString(36)
                         .substr(2, 9) +
@@ -876,7 +886,7 @@ export const update_notifications = (
                 notification: {
                   id: result[0].id,
                   notifi_id:
-                    '_' +
+                    "_" +
                     Math.random()
                       .toString(36)
                       .substr(2, 9) +
@@ -903,7 +913,7 @@ export const update_notifications = (
                 notification: {
                   id: id,
                   notifi_id:
-                    '_' +
+                    "_" +
                     Math.random()
                       .toString(36)
                       .substr(2, 9) +

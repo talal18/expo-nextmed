@@ -11,17 +11,18 @@ import {
 import { connect } from "react-redux";
 import Metrics from "../../styling/Metrics";
 
-import { update_notification } from "../../redux/actions/notifications";
+import {
+  update_notification,
+  set_search_text
+} from "../../redux/actions/notifications";
 
 class ManageNotifications extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      data: {}
+      searchText: ""
     };
-
-    this.arrayholder = [];
   }
 
   renderCustomDate(date) {
@@ -178,17 +179,9 @@ class ManageNotifications extends React.Component {
     );
   };
 
-  searchFilterFunction = text => {
-    const newData = this.arrayholder.filter(item => {
-      const itemData = item.customText.toUpperCase();
-      const textData = text.toUpperCase();
-
-      return itemData.indexOf(textData) > -1;
-    });
-    this.setState({
-      data: { ...this.state.data, notifications: newData }
-    });
-  };
+  searchFilterFunction(text) {
+    this.props.set_search_text(text);
+  }
 
   render() {
     return (
@@ -202,19 +195,17 @@ class ManageNotifications extends React.Component {
           />
         </View>
         <View style={styles.container}>
-          {this.state.data ? (
-            <FlatList
-              data={this.props.notifications
-                .filter(item => {
-                  return item.m_id === this.props.navigation.state.params.id;
-                })
-                .sort(function(a, b) {
-                  return new Date(a.date) - new Date(b.date);
-                })}
-              renderItem={this.renderItem}
-              keyExtractor={(item, index) => index.toString()}
-            />
-          ) : null}
+          <FlatList
+            data={this.props.filteredItems
+              .filter(item => {
+                return item.m_id === this.props.navigation.state.params.id;
+              })
+              .sort(function(a, b) {
+                return new Date(a.date) - new Date(b.date);
+              })}
+            renderItem={this.renderItem}
+            keyExtractor={(item, index) => index.toString()}
+          />
         </View>
       </View>
     );
@@ -275,14 +266,20 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
+  const { data, searchText } = state.notificationsState;
+
   return {
-    notifications: state.notificationsState.data
+    notifications: state.notificationsState.data,
+    filteredItems: data.filter(
+      item => item.date.toUpperCase().indexOf(searchText.toUpperCase()) === 0
+    )
   };
 };
 
 export default connect(
   mapStateToProps,
   {
+    set_search_text,
     update_notification
   }
 )(ManageNotifications);

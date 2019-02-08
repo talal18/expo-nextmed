@@ -2,15 +2,22 @@ import {
   ADD_NOTIFICATION,
   UPDATE_NOTIFICATION,
   DELETE_NOTIFICATION,
-  DELETE_NOTIFICATIONS
-} from '../types/notifications';
+  DELETE_NOTIFICATIONS,
+  SEARCH_TEXT
+} from "../types/notifications";
 
 const defaultState = {
-  data: []
+  data: [],
+  searchText: ""
 };
 
 export default function reducer(state = defaultState, action) {
   switch (action.type) {
+    case SEARCH_TEXT:
+      return {
+        ...state,
+        searchText: action.searchText
+      };
     case ADD_NOTIFICATION:
       return {
         ...state,

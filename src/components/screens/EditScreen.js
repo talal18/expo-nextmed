@@ -111,9 +111,20 @@ class EditScreen extends Component {
     if (this.props.data.intake_times.length <= 0) {
       errors.push(`You must have atleast 1 intake time\n`);
     }
+
+    var dateNow = new Date(Date.now());
+    var startDate = new Date(this.props.data.start_date);
+    var start_day = startDate.getDate();
+    var start_month = startDate.getMonth();
+    var start_year = startDate.getFullYear();
+
     if (
-      new Date(this.props.data.start_date).getTime() <
-      new Date(Date.now()).getTime()
+      start_year < dateNow.getFullYear() ||
+      (start_year === dateNow.getFullYear() &&
+        start_month < dateNow.getMonth()) ||
+      (start_year === dateNow.getFullYear() &&
+        start_month === dateNow.getMonth() &&
+        start_day < dateNow.getDate())
     ) {
       errors.push(`Start date can't be before today's date\n`);
     }
