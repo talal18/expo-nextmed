@@ -29,59 +29,59 @@ class Type extends Component {
         {
           label: "Capsules",
           value: "capsules",
-          image: require("../../assets/images/test.png")
+          image: require("../../assets/images/capsulesT.png")
         },
         {
           label: localizedStrings["en"].typeLabels.dropsLabel,
           value: "drops",
-          image: require("../../assets/images/test.png")
+          image: require("../../assets/images/dropsT.png")
         },
         {
           label: "Injection",
           value: "injection",
-          image: require("../../assets/images/test.png")
+          image: require("../../assets/images/injectionsT.png")
         },
         {
           label: "Liquid",
           value: "liquid",
-          image: require("../../assets/images/test.png")
+          image: require("../../assets/images/liquidT.png")
         },
         {
           label: "Ointment (Cream, Gel,...)",
           value: "ointment",
-          image: require("../../assets/images/test.png")
+          image: require("../../assets/images/ointmentT.png")
         },
         {
           label: "Pills",
           value: "pills",
-          image: require("../../assets/images/test.png")
+          image: require("../../assets/images/pillsT.png")
         },
         {
           label: "Powder",
           value: "powder",
-          image: require("../../assets/images/test.png")
+          image: require("../../assets/images/powderT.png")
         },
         {
           label: "Spray",
           value: "spray",
-          image: require("../../assets/images/test.png")
+          image: require("../../assets/images/sprayT.png")
         },
         {
           label: "Suppositories",
           value: "suppositories",
-          image: require("../../assets/images/test.png")
+          image: require("../../assets/images/suppositoriesT.png")
         },
         {
           label: "Troches",
           value: "troches",
-          image: require("../../assets/images/test.png")
+          image: require("../../assets/images/trochesT.png")
         }
       ]
     };
   }
 
   componentDidMount() {
-    //this.props.set_type("capsules");
+    // this.props.set_type("capsules");
   }
 
   render() {
@@ -93,7 +93,6 @@ class Type extends Component {
         <View style={styles.imagesContainer}>
           <ScrollView horizontal={true} style={styles.scrollViewStyle}>
             {this.state.type_picker.map((item, index) => {
-              console.log(item.image);
               return (
                 <View key={index} style={styles.imageTextViewContainer}>
                   <View
