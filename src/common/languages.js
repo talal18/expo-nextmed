@@ -7,6 +7,7 @@ export const localizedStrings = {
       "You don't have any scheduled medicines, Please add you medications.",
     //Settings Page
     languagesLabel: "Languages",
+    selectedLanguageLabel: "English",
 
     //Add-Edit screen
     medicineTitleLabel: "Title",
@@ -48,7 +49,7 @@ export const localizedStrings = {
       "Vous n'avez pas de médicaments prévus, veuillez ajouter vos médicaments.",
     //Settings Page
     languagesLabel: "Les langues",
-
+    selectedLanguageLabel: "francés",
     //Add-Edit screen
     medicineTitleLabel: "Titre",
     addImageLabel: "Ajouter une image",
@@ -90,6 +91,7 @@ export const localizedStrings = {
       "No tienes ningún medicamento programado, por favor agrega tus medicamentos.",
     //Settings Page
     languagesLabel: "Idiomas",
+    selectedLanguageLabel: "Español",
 
     //Add-Edit screen
     medicineTitleLabel: "Título",
@@ -131,6 +133,7 @@ export const localizedStrings = {
     homeEmptyListLabel: "ليس لديك أي أدوية مجدولة",
     //Settings Page
     languagesLabel: "اللغة",
+    selectedLanguageLabel: "العربية",
 
     //Add-Edit screen
     medicineTitleLabel: "اسم الدواء",

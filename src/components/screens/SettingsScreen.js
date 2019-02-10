@@ -37,19 +37,54 @@ class SettingsScreen extends React.Component {
       <View style={styles.settingsListItemContainer}>
         <View style={styles.settingsListItem}>
           <TouchableOpacity
+            style={styles.settingslanguageItem}
             onPress={() => {
               this.setModalVisible(true);
             }}
           >
-            <Text
-              style={
-                this.props.language === "ar"
-                  ? styles.itemTextArabic
-                  : styles.itemText
-              }
-            >
-              {localizedStrings[this.props.language].languagesLabel}
-            </Text>
+            {this.props.language === "ar" ? (
+              <View style={styles.settingsListItem}>
+                <Text
+                  style={
+                    this.props.language === "ar"
+                      ? styles.itemTextArabic
+                      : styles.itemText
+                  }
+                >
+                  {localizedStrings[this.props.language].selectedLanguageLabel}
+                </Text>
+                <Text
+                  style={
+                    this.props.language === "ar"
+                      ? styles.itemTextArabic
+                      : styles.itemText
+                  }
+                >
+                  {localizedStrings[this.props.language].languagesLabel}
+                </Text>
+              </View>
+            ) : (
+              <View style={styles.settingsListItem}>
+                <Text
+                  style={
+                    this.props.language === "ar"
+                      ? styles.itemTextArabic
+                      : styles.itemText
+                  }
+                >
+                  {localizedStrings[this.props.language].languagesLabel}
+                </Text>
+                <Text
+                  style={
+                    this.props.language === "ar"
+                      ? styles.itemTextArabic
+                      : styles.itemText
+                  }
+                >
+                  {localizedStrings[this.props.language].selectedLanguageLabel}
+                </Text>
+              </View>
+            )}
           </TouchableOpacity>
         </View>
       </View>
@@ -121,16 +156,25 @@ const styles = StyleSheet.create({
   settingsListItemContainer: {
     height: Metrics.homeListItemContainerHeight,
     flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "center",
     borderBottomWidth: 1,
     borderBottomColor: "#595d63",
     padding: 5
   },
   settingsListItem: {
     flex: 1,
-    flexDirection: "column",
-    justifyContent: "center"
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
   },
+
+  settingslanguageItem: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+
   itemText: {
     color: "#d6d6d6",
     fontSize: Metrics.flatListItemFontSize,

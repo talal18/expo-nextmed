@@ -26,23 +26,62 @@ class Type extends Component {
 
     this.state = {
       type_picker: [
-        { label: "Capsules", value: "capsules" },
-        { label: localizedStrings["en"].typeLabels.dropsLabel, value: "drops" },
-        { label: "Injection", value: "injection" },
-        { label: "Liquid", value: "liquid" },
-        { label: "Ointment (Cream, Gel,...)", value: "ointment" },
-        { label: "Pills", value: "pills" },
-        { label: "Powder", value: "powder" },
-        { label: "Spray", value: "spray" },
-        { label: "Suppositories", value: "suppositories" },
-        { label: "Troches", value: "troches" }
-      ],
-      type_label: "Capsules"
+        {
+          label: "Capsules",
+          value: "capsules",
+          image: require("../../assets/images/test.png")
+        },
+        {
+          label: localizedStrings["en"].typeLabels.dropsLabel,
+          value: "drops",
+          image: require("../../assets/images/test.png")
+        },
+        {
+          label: "Injection",
+          value: "injection",
+          image: require("../../assets/images/test.png")
+        },
+        {
+          label: "Liquid",
+          value: "liquid",
+          image: require("../../assets/images/test.png")
+        },
+        {
+          label: "Ointment (Cream, Gel,...)",
+          value: "ointment",
+          image: require("../../assets/images/test.png")
+        },
+        {
+          label: "Pills",
+          value: "pills",
+          image: require("../../assets/images/test.png")
+        },
+        {
+          label: "Powder",
+          value: "powder",
+          image: require("../../assets/images/test.png")
+        },
+        {
+          label: "Spray",
+          value: "spray",
+          image: require("../../assets/images/test.png")
+        },
+        {
+          label: "Suppositories",
+          value: "suppositories",
+          image: require("../../assets/images/test.png")
+        },
+        {
+          label: "Troches",
+          value: "troches",
+          image: require("../../assets/images/test.png")
+        }
+      ]
     };
   }
 
   componentDidMount() {
-    this.props.set_type("capsules");
+    //this.props.set_type("capsules");
   }
 
   render() {
@@ -51,29 +90,41 @@ class Type extends Component {
         <View style={{ alignItems: "center", marginTop: 10 }}>
           <Text style={styles.medTypeTitle}>Type</Text>
         </View>
-        <View>
-          <Dropdown
-            allowFontScaling={false}
-            fontSize={Metrics.dropDownFontSize}
-            // fontFamily="sansBold"
-            itemTextStyle={{
-              fontSize: Metrics.dropDownFontSize
-              // fontFamily: "sansBold"
-            }}
-            inputContainerStyle={{ borderBottomColor: "transparent" }}
-            value={this.props.type}
-            rippleOpacity={0}
-            dropdownOffset={{
-              top: 10,
-              left: 20
-            }}
-            itemPadding={20}
-            containerStyle={styles.textInputStyle}
-            data={this.state.type_picker}
-            onChangeText={(type, itemIndex, data) => {
-              this.props.set_type(type);
-            }}
-          />
+        <View style={styles.imagesContainer}>
+          <ScrollView horizontal={true} style={styles.scrollViewStyle}>
+            {this.state.type_picker.map((item, index) => {
+              console.log(item.image);
+              return (
+                <View key={index} style={styles.imageTextViewContainer}>
+                  <View
+                    style={{
+                      padding: 10,
+                      borderRadius: 170 / 2,
+                      borderWidth: 5,
+                      borderColor: "#d6d6d6",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      backgroundColor:
+                        this.props.type !== undefined &&
+                        this.props.type.length > 0 &&
+                        this.props.type === item.value
+                          ? "#009688"
+                          : "#595d63"
+                    }}
+                  >
+                    <TouchableOpacity
+                      onPress={() => this.props.set_type(item.value)}
+                    >
+                      <Image source={item.image} style={styles.typeImage} />
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.textContainer}>
+                    <Text style={styles.imageText}>{item.label}</Text>
+                  </View>
+                </View>
+              );
+            })}
+          </ScrollView>
         </View>
       </View>
     );
@@ -100,6 +151,47 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 5 },
     shadowRadius: 10,
     shadowOpacity: 0.35
+  },
+
+  scrollViewStyle: {},
+
+  imagesContainer: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 20
+  },
+  imageTextViewContainer: {
+    flex: 1,
+    flexDirection: "column",
+    alignItems: "center",
+    margin: 10
+  },
+
+  ImageStyling: {
+    padding: 10,
+    borderRadius: 170 / 2,
+    borderWidth: 5,
+    borderColor: "#d6d6d6",
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  typeImage: {
+    width: 70,
+    height: 70
+  },
+  textContainer: {
+    flex: 1,
+    justifyContent: "space-around",
+    alignItems: "center"
+  },
+  imageText: {
+    fontSize: 20,
+    fontFamily: "sansRegular",
+    color: "#d6d6d6",
+    marginTop: 5,
+    flexWrap: "wrap",
+    textAlign: "center"
   }
 });
 
