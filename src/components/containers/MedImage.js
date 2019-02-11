@@ -49,8 +49,7 @@ class MedImage extends Component {
             flex: 1,
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "blue",
-            width: 320
+            width: "100%"
           }}
         >
           {this.props.uri !== undefined && this.props.uri.length > 0 && (

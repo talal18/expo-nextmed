@@ -97,8 +97,11 @@ class Type extends Component {
                 <View key={index} style={styles.imageTextViewContainer}>
                   <View
                     style={{
-                      padding: 10,
-                      borderRadius: 170 / 2,
+                      paddingTop: Metrics.typeImagesPaddingH,
+                      paddingBottom: Metrics.typeImagesPaddingH,
+                      paddingLeft: Metrics.typeImagesPaddingW,
+                      paddingRight: Metrics.typeImagesPaddingW,
+                      borderRadius: 300,
                       borderWidth: 5,
                       borderColor: "#d6d6d6",
                       alignItems: "center",
@@ -158,30 +161,21 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     marginTop: 20
   },
   imageTextViewContainer: {
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
+    justifyContent: "center",
     margin: 10,
     width: Metrics.imageTextViewContainerW
   },
 
-  ImageStyling: {
-    paddingTop: Metrics.typeImagesPaddingH,
-    paddingBottom: Metrics.typeImagesPaddingH,
-    paddingLeft: Metrics.typeImagesPaddingW,
-    paddingRight: Metrics.typeImagesPaddingW,
-    borderRadius: 170 / 2,
-    borderWidth: 5,
-    borderColor: "#d6d6d6",
-    alignItems: "center",
-    justifyContent: "center"
-  },
   typeImage: {
-    width: Metrics.typeImageW,
-    height: Metrics.typeImageH
+    width: 70,
+    height: 70
   },
   textContainer: {
     flex: 1,

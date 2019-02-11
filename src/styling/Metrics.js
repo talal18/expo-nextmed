@@ -85,6 +85,7 @@ const metrics = {
 
   //Type images container
   imageTextViewContainerW: NormalizeSize.normalizeWidth(100),
+  imageTextViewContainerH: NormalizeSize.normalizeHeight(150),
   typeImageW: NormalizeSize.normalizeWidth(70),
   typeImageH: NormalizeSize.normalizeHeight(70),
   typeImagesPaddingW: NormalizeSize.normalizeWidth(10),
