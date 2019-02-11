@@ -164,11 +164,15 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
-    margin: 10
+    margin: 10,
+    width: Metrics.imageTextViewContainerW
   },
 
   ImageStyling: {
-    padding: 10,
+    paddingTop: Metrics.typeImagesPaddingH,
+    paddingBottom: Metrics.typeImagesPaddingH,
+    paddingLeft: Metrics.typeImagesPaddingW,
+    paddingRight: Metrics.typeImagesPaddingW,
     borderRadius: 170 / 2,
     borderWidth: 5,
     borderColor: "#d6d6d6",
@@ -176,16 +180,15 @@ const styles = StyleSheet.create({
     justifyContent: "center"
   },
   typeImage: {
-    width: 70,
-    height: 70
+    width: Metrics.typeImageW,
+    height: Metrics.typeImageH
   },
   textContainer: {
     flex: 1,
-    justifyContent: "space-around",
-    alignItems: "center"
+    flexDirection: "row"
   },
   imageText: {
-    fontSize: 20,
+    fontSize: Metrics.EmptyFlatListFontSize,
     fontFamily: "sansRegular",
     color: "#d6d6d6",
     marginTop: 5,

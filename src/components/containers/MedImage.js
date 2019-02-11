@@ -31,7 +31,7 @@ class MedImage extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <View>
         <TouchableHighlight
           style={styles.imageAddButton}
           onPress={() => {
@@ -44,53 +44,66 @@ class MedImage extends Component {
               : localizedStrings[this.props.language].addImageLabel}
           </Text>
         </TouchableHighlight>
-
-        {this.props.uri !== undefined && this.props.uri.length > 0 && (
-          <View style={styles.imageContainer}>
-            <View style={styles.imagebackgroundContainer}>
-              <Image
-                source={{ uri: this.props.uri }}
-                resizeMode="cover"
-                style={styles.image}
-              />
-            </View>
-            <View style={styles.deleteButtonContainer}>
-              <TouchableHighlight onPress={() => this.props.set_image_uri("")}>
-                <Image
-                  source={require("../../assets/images/delete-icon2.png")}
-                  style={styles.deleteButtonImage}
-                />
-              </TouchableHighlight>
-            </View>
-          </View>
-        )}
-        <Modal
-          onBackdropPress={() => {
-            this.setModalVisible(false);
-          }}
-          animationType="slide"
-          transparent={true}
-          visible={this.state.modalVisible}
-          onRequestClose={() => {
-            this.setModalVisible(false);
+        <View
+          style={{
+            flex: 1,
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "blue",
+            width: 320
           }}
         >
-          <View style={styles.modalContainer}>
-            <TouchableHighlight
-              style={styles.buttons}
-              onPress={this._pickImageCamera}
-            >
-              <Text style={styles.buttonText}>Take a picture from camera</Text>
-            </TouchableHighlight>
+          {this.props.uri !== undefined && this.props.uri.length > 0 && (
+            <View style={styles.imageContainer}>
+              <View style={styles.imagebackgroundContainer}>
+                <Image
+                  source={{ uri: this.props.uri }}
+                  resizeMode="cover"
+                  style={styles.image}
+                />
+              </View>
+              <View style={styles.deleteButtonContainer}>
+                <TouchableHighlight
+                  onPress={() => this.props.set_image_uri("")}
+                >
+                  <Image
+                    source={require("../../assets/images/delete-icon2.png")}
+                    style={styles.deleteButtonImage}
+                  />
+                </TouchableHighlight>
+              </View>
+            </View>
+          )}
+          <Modal
+            onBackdropPress={() => {
+              this.setModalVisible(false);
+            }}
+            animationType="slide"
+            transparent={true}
+            visible={this.state.modalVisible}
+            onRequestClose={() => {
+              this.setModalVisible(false);
+            }}
+          >
+            <View style={styles.modalContainer}>
+              <TouchableHighlight
+                style={styles.buttons}
+                onPress={this._pickImageCamera}
+              >
+                <Text style={styles.buttonText}>
+                  Take a picture from camera
+                </Text>
+              </TouchableHighlight>
 
-            <TouchableHighlight
-              style={styles.buttons}
-              onPress={this._pickImageLibrary}
-            >
-              <Text style={styles.buttonText}>Pick an image from device</Text>
-            </TouchableHighlight>
-          </View>
-        </Modal>
+              <TouchableHighlight
+                style={styles.buttons}
+                onPress={this._pickImageLibrary}
+              >
+                <Text style={styles.buttonText}>Pick an image from device</Text>
+              </TouchableHighlight>
+            </View>
+          </Modal>
+        </View>
       </View>
     );
   }
@@ -178,14 +191,16 @@ const styles = StyleSheet.create({
 
   imageContainer: {
     flex: 1,
-    alignItems: "flex-end"
+    alignItems: "flex-end",
+    backgroundColor: "green"
   },
 
   imagebackgroundContainer: {
     top: 0,
     bottom: 0,
     left: 0,
-    right: 0
+    right: 0,
+    backgroundColor: "yellow"
   },
 
   image: {

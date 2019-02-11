@@ -83,6 +83,13 @@ const metrics = {
   formTypeDropMenuArrowW: NormalizeSize.normalizeWidth(15),
   formTypeDropMenuArrowH: NormalizeSize.normalizeHeight(15),
 
+  //Type images container
+  imageTextViewContainerW: NormalizeSize.normalizeWidth(100),
+  typeImageW: NormalizeSize.normalizeWidth(70),
+  typeImageH: NormalizeSize.normalizeHeight(70),
+  typeImagesPaddingW: NormalizeSize.normalizeWidth(10),
+  typeImagesPaddingH: NormalizeSize.normalizeHeight(10),
+
   //Add Image
   formAddImageButtonWidth: NormalizeSize.normalizeWidth(350),
   formAddImageButtonHeight: NormalizeSize.normalizeHeight(50),
