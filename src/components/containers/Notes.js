@@ -7,6 +7,8 @@ import { set_notes } from "../../redux/actions/data";
 
 import { connect } from "react-redux";
 
+import { localizedStrings } from "../../common/languages";
+
 class Notes extends Component {
   render() {
     return (
@@ -18,7 +20,7 @@ class Notes extends Component {
             style={styles.textArea}
             multiline={true}
             onChangeText={text => this.props.set_notes(text)}
-            placeholder="Notes"
+            placeholder={localizedStrings[this.props.language].notesLabel}
           />
         </View>
       </View>
@@ -52,7 +54,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    notes: state.dataState.data.notes
+    notes: state.dataState.data.notes,
+    language: state.settingsState.language
   };
 };
 

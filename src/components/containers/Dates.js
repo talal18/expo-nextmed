@@ -15,6 +15,8 @@ import Metrics from "../../styling/Metrics";
 import { connect } from "react-redux";
 import { set_start_date, set_end_date } from "../../redux/actions/data";
 
+import { localizedStrings } from "../../common/languages";
+
 class Dates extends Component {
   constructor(props) {
     super(props);
@@ -56,7 +58,7 @@ class Dates extends Component {
             <Text style={styles.addDatesListItemText}>
               {this.props.start_date
                 ? this.renderLabel(this.props.start_date)
-                : "Set a start date"}
+                : localizedStrings[this.props.language].setStartDateLabel}
             </Text>
 
             <TouchableOpacity
@@ -83,7 +85,7 @@ class Dates extends Component {
               <Text style={styles.addDatesListItemText}>
                 {this.props.end_date
                   ? this.renderLabel(this.props.end_date)
-                  : "Set an end date"}
+                  : localizedStrings[this.props.language].setEndDateLabel}
               </Text>
 
               <TouchableOpacity
@@ -272,7 +274,9 @@ class Dates extends Component {
     return (
       <View>
         <View style={{ alignItems: "center", marginTop: 10 }}>
-          <Text style={styles.datesTitle}>Start & End Date</Text>
+          <Text style={styles.datesTitle}>
+            {localizedStrings[this.props.language].startEndDateLabel}
+          </Text>
         </View>
         {this.renderDates()}
         {this.renderDateDialog()}
@@ -331,7 +335,8 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     start_date: state.dataState.data.start_date,
-    end_date: state.dataState.data.end_date
+    end_date: state.dataState.data.end_date,
+    language: state.settingsState.language
   };
 };
 

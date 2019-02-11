@@ -90,7 +90,7 @@ class MedImage extends Component {
                 onPress={this._pickImageCamera}
               >
                 <Text style={styles.buttonText}>
-                  Take a picture from camera
+                  {localizedStrings[this.props.language].cameraTextImageLabel}
                 </Text>
               </TouchableHighlight>
 
@@ -98,7 +98,9 @@ class MedImage extends Component {
                 style={styles.buttons}
                 onPress={this._pickImageLibrary}
               >
-                <Text style={styles.buttonText}>Pick an image from device</Text>
+                <Text style={styles.buttonText}>
+                  {localizedStrings[this.props.language].deviceTextImageLabel}
+                </Text>
               </TouchableHighlight>
             </View>
           </Modal>

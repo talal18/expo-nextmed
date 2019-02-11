@@ -15,6 +15,8 @@ import { connect } from "react-redux";
 import { updateMedication } from "../../redux/actions/medications";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
+import { localizedStrings } from "../../common/languages";
+
 import {
   add_notification,
   update_notifications,
@@ -94,22 +96,22 @@ class EditScreen extends Component {
     var errors = [];
 
     if (this.props.data.title.length <= 0) {
-      errors.push(`You must provide a title\n`);
+      errors.push(localizedStrings[this.props.language].errorNoTitle);
     }
     if (this.props.data.dosage.length <= 0) {
-      errors.push(`You must provide a dosage amount\n`);
+      errors.push(localizedStrings[this.props.language].errorNoDosage);
     }
     if (this.props.data.dosage && parseInt(this.props.data.dosage) <= 0) {
-      errors.push(`Dosage can't be less than or equal to 0\n`);
+      errors.push(localizedStrings[this.props.language].errorDosageAmount);
     }
     if (this.props.data.start_date.length <= 0) {
-      errors.push(`You must provide a start date\n`);
+      errors.push(localizedStrings[this.props.language].errorNoStartDate);
     }
     if (this.props.data.end_date.length <= 0) {
-      errors.push(`You must provide an end date\n`);
+      errors.push(localizedStrings[this.props.language].errorNoEndDate);
     }
     if (this.props.data.intake_times.length <= 0) {
-      errors.push(`You must have atleast 1 intake time\n`);
+      errors.push(localizedStrings[this.props.language].errorNoIntakeTimes);
     }
 
     var dateNow = new Date(Date.now());
@@ -126,7 +128,11 @@ class EditScreen extends Component {
         start_month === dateNow.getMonth() &&
         start_day < dateNow.getDate())
     ) {
-      errors.push(`Start date can't be before today's date\n`);
+      errors.push(
+        "Start " +
+          localizedStrings[this.props.language].errorDateBeforeTodayDateLabel +
+          `\n`
+      );
     }
 
     if (errors.length > 0) {
@@ -220,14 +226,18 @@ class EditScreen extends Component {
           onPress={this.manageNotifications.bind(this)}
           style={styles.updateButton}
         >
-          <Text style={styles.updateButtonTitle}>Manage Notifications</Text>
+          <Text style={styles.updateButtonTitle}>
+            {localizedStrings[this.props.language].manageNotificationsLabel}
+          </Text>
         </TouchableOpacity>
         <Notes />
         <TouchableOpacity
           onPress={this.updateNotification.bind(this)}
           style={styles.updateButton}
         >
-          <Text style={styles.updateButtonTitle}>Update</Text>
+          <Text style={styles.updateButtonTitle}>
+            {localizedStrings[this.props.language].updateLabel}
+          </Text>
         </TouchableOpacity>
       </ScrollView>
     );
@@ -302,7 +312,8 @@ const mapStateToProps = state => {
   return {
     data: state.dataState.data,
     medications: state.medState.medications,
-    notifications: state.notificationsState.data
+    notifications: state.notificationsState.data,
+    language: state.settingsState.language
   };
 };
 

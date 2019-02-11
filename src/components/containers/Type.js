@@ -12,8 +12,6 @@ import {
 
 import { localizedStrings } from "../../common/languages";
 
-import { Dropdown } from "react-native-material-dropdown";
-
 import Metrics from "../../styling/Metrics";
 
 import { connect } from "react-redux";
@@ -27,52 +25,54 @@ class Type extends Component {
     this.state = {
       type_picker: [
         {
-          label: "Capsules",
+          label: localizedStrings[this.props.language].typeLabels.capsulesLabel,
           value: "capsules",
           image: require("../../assets/images/capsulesT.png")
         },
         {
-          label: localizedStrings["en"].typeLabels.dropsLabel,
+          label: localizedStrings[this.props.language].typeLabels.dropsLabel,
           value: "drops",
           image: require("../../assets/images/dropsT.png")
         },
         {
-          label: "Injection",
+          label:
+            localizedStrings[this.props.language].typeLabels.injectionsLabel,
           value: "injection",
           image: require("../../assets/images/injectionsT.png")
         },
         {
-          label: "Liquid",
+          label: localizedStrings[this.props.language].typeLabels.liquidLabel,
           value: "liquid",
           image: require("../../assets/images/liquidT.png")
         },
         {
-          label: "Ointment (Cream, Gel,...)",
+          label: localizedStrings[this.props.language].typeLabels.ointmentLabel,
           value: "ointment",
           image: require("../../assets/images/ointmentT.png")
         },
         {
-          label: "Pills",
+          label: localizedStrings[this.props.language].typeLabels.pillsLabel,
           value: "pills",
           image: require("../../assets/images/pillsT.png")
         },
         {
-          label: "Powder",
+          label: localizedStrings[this.props.language].typeLabels.powderLabel,
           value: "powder",
           image: require("../../assets/images/powderT.png")
         },
         {
-          label: "Spray",
+          label: localizedStrings[this.props.language].typeLabels.sprayLabel,
           value: "spray",
           image: require("../../assets/images/sprayT.png")
         },
         {
-          label: "Suppositories",
+          label:
+            localizedStrings[this.props.language].typeLabels.suppositoriesLabel,
           value: "suppositories",
           image: require("../../assets/images/suppositoriesT.png")
         },
         {
-          label: "Troches",
+          label: localizedStrings[this.props.language].typeLabels.trochesLabel,
           value: "troches",
           image: require("../../assets/images/trochesT.png")
         }
@@ -88,7 +88,9 @@ class Type extends Component {
     return (
       <View>
         <View style={{ alignItems: "center", marginTop: 10 }}>
-          <Text style={styles.medTypeTitle}>Type</Text>
+          <Text style={styles.medTypeTitle}>
+            {localizedStrings[this.props.language].typeTitleLabel}
+          </Text>
         </View>
         <View style={styles.imagesContainer}>
           <ScrollView horizontal={true} style={styles.scrollViewStyle}>
@@ -193,7 +195,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    type: state.dataState.data.type
+    type: state.dataState.data.type,
+    language: state.settingsState.language
   };
 };
 

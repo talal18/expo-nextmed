@@ -18,16 +18,38 @@ import { connect } from "react-redux";
 
 import { set_recurrence } from "../../redux/actions/data";
 
+import { localizedStrings } from "../../common/languages";
+
 class Recurrence extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       recurrences: [
-        { label: "Daily", value: "day" },
-        { label: "Weekly", value: "week" },
-        { label: "Monthly", value: "month" },
-        { label: "Yearly", value: "year" }
+        {
+          label:
+            localizedStrings[this.props.language].frequencyMenuLabels
+              .dailyLabel,
+          value: "day"
+        },
+        {
+          label:
+            localizedStrings[this.props.language].frequencyMenuLabels
+              .weeklyLabel,
+          value: "week"
+        },
+        {
+          label:
+            localizedStrings[this.props.language].frequencyMenuLabels
+              .monthlyLabel,
+          value: "month"
+        },
+        {
+          label:
+            localizedStrings[this.props.language].frequencyMenuLabels
+              .yearlyLabel,
+          value: "year"
+        }
       ],
       message: ""
     };
@@ -41,7 +63,9 @@ class Recurrence extends Component {
     return (
       <View>
         <View style={{ alignItems: "center", marginTop: 10 }}>
-          <Text style={styles.medRecTitle}>Frequency</Text>
+          <Text style={styles.medRecTitle}>
+            {localizedStrings[this.props.language].frequencyLabel}
+          </Text>
         </View>
         <View>
           <Dropdown
@@ -69,7 +93,7 @@ class Recurrence extends Component {
         {this.props.recurrence === "day" || this.props.recurrence === "week" ? (
           <View style={styles.frequencyNoteContainer}>
             <Text style={styles.frequencyNote}>
-              Note: Notifications will be set for 1 year only.
+              {localizedStrings[this.props.language].notificationNoteLabel}
             </Text>
           </View>
         ) : null}
@@ -112,7 +136,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    recurrence: state.dataState.data.recurrence
+    recurrence: state.dataState.data.recurrence,
+    language: state.settingsState.language
   };
 };
 

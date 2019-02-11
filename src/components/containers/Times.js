@@ -15,8 +15,9 @@ import { connect } from "react-redux";
 
 import { add_time, delete_time } from "../../redux/actions/data";
 
+import { localizedStrings } from "../../common/languages";
+
 import Metrics from "../../styling/Metrics";
-import { ScrollView } from "react-native-gesture-handler";
 
 class Times extends Component {
   constructor(props) {
@@ -59,7 +60,9 @@ class Times extends Component {
           onPress={this._showTimeDialog.bind(this)}
           style={styles.addTimesButton}
         >
-          <Text style={styles.medTimesTitle}>Add Times</Text>
+          <Text style={styles.medTimesTitle}>
+            {localizedStrings[this.props.language].addTimesLabel}
+          </Text>
         </TouchableOpacity>
         {this.props.intake_times.length > 0 && (
           <FlatList
@@ -215,7 +218,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    intake_times: state.dataState.data.intake_times
+    intake_times: state.dataState.data.intake_times,
+    language: state.settingsState.language
   };
 };
 

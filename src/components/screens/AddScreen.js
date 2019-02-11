@@ -20,6 +20,8 @@ import { add_m_id, add_notification } from "../../redux/actions/notifications";
 
 import Metrics from "../../styling/Metrics";
 
+import { localizedStrings } from "../../common/languages";
+
 import Dates from "../containers/Dates";
 import Recurrence from "../containers/Recurrence";
 import Times from "../containers/Times";
@@ -58,31 +60,31 @@ class AddScreen extends Component {
     var errors = [];
 
     if (this.props.data.title.length <= 0) {
-      errors.push(`You must provide a title\n`);
+      errors.push(localizedStrings[this.props.language].errorNoTitle);
     }
     if (this.props.data.dosage.length <= 0) {
-      errors.push(`You must provide a dosage amount\n`);
+      errors.push(localizedStrings[this.props.language].errorNoDosage);
     }
     if (this.props.data.dosage && parseInt(this.props.data.dosage) <= 0) {
-      errors.push(`Dosage can't be less than or equal to 0\n`);
+      errors.push(localizedStrings[this.props.language].errorDosageAmount);
     }
     if (this.props.data.start_date.length <= 0) {
-      errors.push(`You must provide a start date\n`);
+      errors.push(localizedStrings[this.props.language].errorNoStartDate);
     }
     if (this.props.data.end_date.length <= 0) {
-      errors.push(`You must provide an end date\n`);
+      errors.push(localizedStrings[this.props.language].errorNoEndDate);
     }
     if (this.props.data.intake_times.length <= 0) {
-      errors.push(`You must have atleast 1 intake time\n`);
+      errors.push(localizedStrings[this.props.language].errorNoIntakeTimes);
     }
 
     if (errors.length > 0) {
       Alert.alert(
-        "Error",
+        localizedStrings[this.props.language].errorLabel,
         errors.join("").toString(),
         [
           {
-            text: "OK",
+            text: localizedStrings[this.props.language].okLabel,
             onPress: () => {}
           }
         ],
@@ -110,9 +112,9 @@ class AddScreen extends Component {
           this.state.m_id,
           this.props.data.title,
           this.props.data.title +
-            ` is now due. You should take ${this.props.data.dosage} ${
-              this.props.data.type
-            }`,
+            ` ${localizedStrings[this.props.language].notificationDueLabel} ${
+              this.props.data.dosage
+            } ${this.props.data.type}`,
           this.props.data.recurrence,
           date,
           this.props.data.end_date,
@@ -155,7 +157,9 @@ class AddScreen extends Component {
           onPress={this.addNotification.bind(this)}
           style={styles.addButton}
         >
-          <Text style={styles.addButtonTitle}>Add Medicine</Text>
+          <Text style={styles.addButtonTitle}>
+            {localizedStrings[this.props.language].addLabel}
+          </Text>
         </TouchableOpacity>
       </ScrollView>
     );
@@ -227,7 +231,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    data: state.dataState.data
+    data: state.dataState.data,
+    language: state.settingsState.language
   };
 };
 

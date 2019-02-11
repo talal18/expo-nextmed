@@ -7,12 +7,16 @@ import { set_dosage } from "../../redux/actions/data";
 
 import { connect } from "react-redux";
 
+import { localizedStrings } from "../../common/languages";
+
 class Dosage extends Component {
   render() {
     return (
       <View>
         <View style={{ alignItems: "center", marginTop: 10 }}>
-          <Text style={styles.medDosage}>Dosage</Text>
+          <Text style={styles.medDosage}>
+            {localizedStrings[this.props.language].dosageLabel}
+          </Text>
         </View>
         <View>
           <TextInput
@@ -54,7 +58,8 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    dosage: state.dataState.data.dosage
+    dosage: state.dataState.data.dosage,
+    language: state.settingsState.language
   };
 };
 
