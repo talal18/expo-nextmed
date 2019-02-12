@@ -111,6 +111,12 @@ const metrics = {
   formAddTimeDeleteButtonImageWidth: NormalizeSize.normalizeWidth(40),
   formAddTimeDeleteButtonImageHeight: NormalizeSize.normalizeHeight(40),
 
+  //Reccurence
+  medRecEachImageContainerW: NormalizeSize.normalizeWidth(90),
+  medRecEachImageContainerH: NormalizeSize.normalizeHeight(150),
+  medRecImageWidth: NormalizeSize.normalizeWidth(50),
+  medRecImageHeight: NormalizeSize.normalizeHeight(50),
+
   //Set Start and End Date
   formSetDateContainerWidth: NormalizeSize.normalizeWidth(330),
   formSetDateContainerHeight: NormalizeSize.normalizeHeight(120),
@@ -166,7 +172,11 @@ const metrics = {
   ModalButtonsFontSize:
     Platform.OS === "ios"
       ? NormalizeSize.normalizeHeight(22)
-      : NormalizeSize.normalizeWidth(22)
+      : NormalizeSize.normalizeWidth(22),
+  TypeRecFontSize:
+    Platform.OS === "ios"
+      ? NormalizeSize.normalizeHeight(16)
+      : NormalizeSize.normalizeWidth(16)
 };
 
 export default metrics;

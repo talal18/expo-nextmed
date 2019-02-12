@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   imageText: {
-    fontSize: Metrics.EmptyFlatListFontSize,
+    fontSize: Metrics.TypeRecFontSize,
     fontFamily: "sansRegular",
     color: "#d6d6d6",
     marginTop: 5,
