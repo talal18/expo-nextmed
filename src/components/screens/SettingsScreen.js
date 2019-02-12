@@ -233,12 +233,15 @@ export default connect(
 )(SettingsScreen);
 
 /*
-    Search Funcationality in Manage Notifications --> Saleh  
-    
-    Modal Styling (Padding Top and Bottom) --> Talal       < Completed >
-    delete image button styling --> Talal                  < Completed > 
-    Fonts --> Talal + Saleh                                < Completed >
-    settings -> choose language Saleh
-    settings -> About Button
-    languages support Talal         
-  */
+ * Delete medicine should delete local notifications belong's to that medicine
+ * Language Modal should show corresponding language
+ * Delete image in Add and Edit screens should delete the image not just the url to it
+ * AutoScroll to previously selected type in Edit Screen
+ * Language support for alert dialogs
+ ** Dosage with different layout
+ * Review and Test Start and End dates on Add/Edit screens
+ * Add Turn off All notifications to Settings
+ * Add about page and button in settings
+ * Test and fix KeyboardAvoidingView on iOS on multiple devices
+ ** Add ability to backup and restore notifications on Google Drive
+ */
