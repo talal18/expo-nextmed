@@ -9,7 +9,7 @@ import {
   StyleSheet
 } from "react-native";
 
-import { Permissions } from "expo";
+import { Permissions, Notifications } from "expo";
 
 import Metrics from "../../styling/Metrics";
 
@@ -17,6 +17,7 @@ import { connect } from "react-redux";
 
 import { deleteMedication } from "../../redux/actions/medications";
 import { localizedStrings } from "../../common/languages";
+import { set_status } from "../../redux/actions/notifications";
 
 class HomeScreen extends React.Component {
   constructor() {
@@ -155,8 +156,8 @@ const styles = StyleSheet.create({
     marginRight: 5
   },
   MedImage: {
-    width: Metrics.homeMedImageWidth,
-    height: Metrics.homeMedImageHeight,
+    width: 50,
+    height: 50,
     borderRadius: 5
   },
 
@@ -166,8 +167,8 @@ const styles = StyleSheet.create({
     alignContent: "center"
   },
   deleteButtonImage: {
-    width: Metrics.homeDeleteButtonWidth,
-    height: Metrics.homeDeleteButtonHeight,
+    width: 50,
+    height: 50,
     borderRadius: 5
   },
 
@@ -205,13 +206,15 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     medications: state.medState.medications,
-    language: state.settingsState.language
+    language: state.settingsState.language,
+    notifications: state.notificationsState.data
   };
 };
 
 export default connect(
   mapStateToProps,
   {
-    deleteMedication
+    deleteMedication,
+    set_status
   }
 )(HomeScreen);

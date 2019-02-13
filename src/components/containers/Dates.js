@@ -135,11 +135,11 @@ class Dates extends Component {
       if (myDate.getTime() < new Date(this.props.start_date).getTime()) {
         if (Platform.OS === "ios")
           return Alert.alert(
-            "Error",
-            "End Date can't be before Start Date",
+            localizedStrings[this.props.language].errorLabel,
+            localizedStrings[this.props.language].errorEndBeforeStartDateLabel,
             [
               {
-                text: "OK",
+                text: localizedStrings[this.props.language].okLabel,
                 onPress: () => {
                   this.props.set_end_date("");
                 }
@@ -149,11 +149,11 @@ class Dates extends Component {
           );
 
         Alert.alert(
-          "Error",
-          "End Date can't be before Start Date",
+          localizedStrings[this.props.language].errorLabel,
+          localizedStrings[this.props.language].errorEndBeforeStartDateLabel,
           [
             {
-              text: "OK",
+              text: localizedStrings[this.props.language].okLabel,
               onPress: () => {
                 this.props.set_end_date("");
               }
@@ -168,11 +168,11 @@ class Dates extends Component {
       if (myDate.getTime() > new Date(this.props.end_date).getTime()) {
         if (Platform.OS === "ios")
           return Alert.alert(
-            "Error",
-            "Start Date can't be after End Date",
+            localizedStrings[this.props.language].errorLabel,
+            localizedStrings[this.props.language].errorStartAfterEndDateLabel,
             [
               {
-                text: "OK",
+                text: localizedStrings[this.props.language].okLabel,
                 onPress: () => {
                   this.props.set_start_date("");
                 }
@@ -182,11 +182,11 @@ class Dates extends Component {
           );
 
         Alert.alert(
-          "Error",
-          "Start Date can't be after End Date",
+          localizedStrings[this.props.language].errorLabel,
+          localizedStrings[this.props.language].errorStartAfterEndDateLabel,
           [
             {
-              text: "OK",
+              text: localizedStrings[this.props.language].okLabel,
               onPress: () => {
                 this.props.set_start_date("");
               }
@@ -198,29 +198,36 @@ class Dates extends Component {
     }
 
     if (
-      myDate.getDate() < today.getDate() &&
-      myDate.getMonth() < today.getMonth() &&
-      myDate.getFullYear() < today.getFullYear()
+      myDate.getFullYear() < today.getFullYear() ||
+      (myDate.getFullYear() === today.getFullYear() &&
+        myDate.getMonth() < today.getMonth()) ||
+      (myDate.getFullYear() === today.getFullYear() &&
+        myDate.getMonth() === today.getMonth() &&
+        myDate.getDate() < today.getDate())
     ) {
       if (Platform.OS === "ios")
         return Alert.alert(
-          "Error",
-          "Date can't be before today's date",
+          localizedStrings[this.props.language].errorLabel,
+          localizedStrings[this.props.language].errorDateBeforeTodayDateLabel,
           [
             {
-              text: "OK",
-              onPress: () => {}
+              text: localizedStrings[this.props.language].okLabel,
+              onPress: () => {
+                this.props.set_start_date("");
+              }
             }
           ],
           { cancelable: false }
         );
       Alert.alert(
-        "Error",
-        "Date can't be before today's date",
+        localizedStrings[this.props.language].errorLabel,
+        localizedStrings[this.props.language].errorDateBeforeTodayDateLabel,
         [
           {
-            text: "OK",
-            onPress: () => {}
+            text: localizedStrings[this.props.language].okLabel,
+            onPress: () => {
+              this.props.set_start_date("");
+            }
           }
         ],
         { cancelable: false }
@@ -270,6 +277,12 @@ class Dates extends Component {
     this._showDateDialog();
   }
 
+  /*
+      if(start_date < today) {
+        start_date = today
+      }
+  */
+
   render() {
     return (
       <View>
@@ -314,13 +327,13 @@ const styles = StyleSheet.create({
   },
 
   addButton: {
-    height: Metrics.formSetAddDateButtonWidth,
+    height: Metrics.formSetAddDateButtonHeight,
     width: Metrics.formSetAddDateButtonHeight,
     flexDirection: "column",
     justifyContent: "center"
   },
   addButtonImage: {
-    width: Metrics.formSetAddDateButtonImageWidth,
+    width: Metrics.formSetAddDateButtonImageHeight,
     height: Metrics.formSetAddDateButtonImageHeight,
     borderRadius: 5
   },

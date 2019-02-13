@@ -126,10 +126,10 @@ const metrics = {
   formEndDateContainerHeight: NormalizeSize.normalizeHeight(60),
   // formSetAddButtonHeight: NormalizeSize.normalizeHeight(50),
   // formSetAddButtonWidth: NormalizeSize.normalizeWidth(50),
-  formSetAddDateButtonWidth: NormalizeSize.normalizeWidth(30),
-  formSetAddDateButtonHeight: NormalizeSize.normalizeHeight(30),
-  formSetAddDateButtonImageWidth: NormalizeSize.normalizeWidth(40),
-  formSetAddDateButtonImageHeight: NormalizeSize.normalizeHeight(40),
+  formSetAddDateButtonWidth: NormalizeSize.normalizeWidth(35),
+  formSetAddDateButtonHeight: NormalizeSize.normalizeHeight(35),
+  formSetAddDateButtonImageWidth: NormalizeSize.normalizeWidth(45),
+  formSetAddDateButtonImageHeight: NormalizeSize.normalizeHeight(45),
 
   //Save button
   formSaveButtonWidth: NormalizeSize.normalizeWidth(350),
@@ -164,6 +164,10 @@ const metrics = {
     Platform.OS === "ios"
       ? NormalizeSize.normalizeHeight(26)
       : NormalizeSize.normalizeWidth(26),
+  flatListSelectedItemFontSize:
+    Platform.OS === "ios"
+      ? NormalizeSize.normalizeHeight(20)
+      : NormalizeSize.normalizeWidth(20),
   EmptyFlatListFontSize:
     Platform.OS === "ios"
       ? NormalizeSize.normalizeHeight(20)

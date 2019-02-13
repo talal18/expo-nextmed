@@ -2,8 +2,8 @@
   "expoServerPort": null,
   "packagerPort": null,
   "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerNgrokUrl": "https://b9-s32.yass0016.expo-nextmed.exp.direct",
+  "packagerNgrokUrl": "https://packager.b9-s32.yass0016.expo-nextmed.exp.direct",
+  "ngrokPid": 5084,
   "devToolsPort": 19002
 }

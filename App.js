@@ -48,6 +48,7 @@ export default class App extends React.Component {
 
     this.setState({ fontLoad: true });
   }
+
   render() {
     return (
       <Provider store={store}>

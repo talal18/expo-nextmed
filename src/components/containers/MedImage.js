@@ -8,7 +8,7 @@ import {
   TouchableHighlight,
   Text
 } from "react-native";
-import { ImagePicker, MediaLibrary } from "expo";
+import { ImagePicker, FileSystem } from "expo";
 
 import Metrics from "../../styling/Metrics";
 
@@ -63,7 +63,12 @@ class MedImage extends Component {
               </View>
               <View style={styles.deleteButtonContainer}>
                 <TouchableHighlight
-                  onPress={() => this.props.set_image_uri("")}
+                  onPress={() => {
+                    FileSystem.getInfoAsync(this.props.uri).then(result => {
+                      if (result.exists) FileSystem.deleteAsync(this.props.uri);
+                      this.props.set_image_uri("");
+                    });
+                  }}
                 >
                   <Image
                     source={require("../../assets/images/delete-icon2.png")}

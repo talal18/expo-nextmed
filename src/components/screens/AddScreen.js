@@ -112,9 +112,10 @@ class AddScreen extends Component {
           this.state.m_id,
           this.props.data.title,
           this.props.data.title +
-            ` ${localizedStrings[this.props.language].notificationDueLabel} ${
-              this.props.data.dosage
-            } ${this.props.data.type}`,
+            ": " +
+            this.props.data.dosage +
+            " " +
+            this.props.data.type,
           this.props.data.recurrence,
           date,
           this.props.data.end_date,

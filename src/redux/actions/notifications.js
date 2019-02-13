@@ -6,6 +6,17 @@ import {
 } from "../types/notifications";
 import { Notifications } from "expo";
 
+export const set_status = (notification, status) => {
+  return dispatch => {
+    dispatch({
+      type: UPDATE_NOTIFICATION,
+      notification,
+      status,
+      newId: notification.id
+    });
+  };
+};
+
 export const set_search_text = searchText => {
   return dispatch => {
     dispatch({

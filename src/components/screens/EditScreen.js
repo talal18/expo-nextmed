@@ -129,19 +129,18 @@ class EditScreen extends Component {
         start_day < dateNow.getDate())
     ) {
       errors.push(
-        "Start " +
-          localizedStrings[this.props.language].errorDateBeforeTodayDateLabel +
-          `\n`
+        localizedStrings[this.props.language]
+          .errorStartDateBeforeTodayDateLabel + `\n`
       );
     }
 
     if (errors.length > 0) {
       Alert.alert(
-        "Error",
+        localizedStrings[this.props.language].errorLabel,
         errors.join("").toString(),
         [
           {
-            text: "OK",
+            text: localizedStrings[this.props.language].okLabel,
             onPress: () => {}
           }
         ],
@@ -181,9 +180,10 @@ class EditScreen extends Component {
           this.props.data.m_id,
           this.props.data.title,
           this.props.data.title +
-            ` is now due. You should take ${this.props.data.dosage} ${
-              this.props.data.type
-            }`,
+            ": " +
+            this.props.data.dosage +
+            " " +
+            this.props.data.type,
           this.props.data.recurrence,
           date,
           this.props.data.end_date,
@@ -267,12 +267,10 @@ class EditScreen extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: "column",
-    backgroundColor: "#262626",
+    padding: 0,
     justifyContent: "center",
-    alignItems: "center"
-    //paddingTop: Metrics.formContainerPaddingTop
+    alignItems: "center",
+    backgroundColor: "#242424"
   },
   scrollViewContainer: {
     paddingLeft: Metrics.scrollViewContainerPaddingHorizontal,

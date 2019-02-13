@@ -4,9 +4,9 @@ import {
   View,
   TouchableHighlight,
   StyleSheet,
-  FlatList,
   Modal,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from "react-native";
 
 import { connect } from "react-redux";
@@ -34,57 +34,53 @@ class SettingsScreen extends React.Component {
 
   renderItems() {
     return (
-      <View style={styles.settingsListItemContainer}>
-        <View style={styles.settingsListItem}>
+      <View>
+        <View style={styles.settingsListItemContainer}>
           <TouchableOpacity
             style={styles.settingslanguageItem}
             onPress={() => {
               this.setModalVisible(true);
             }}
           >
-            {this.props.language === "ar" ? (
-              <View style={styles.settingsListItem}>
-                <Text
-                  style={
-                    this.props.language === "ar"
-                      ? styles.itemTextArabic
-                      : styles.itemText
-                  }
-                >
-                  {localizedStrings[this.props.language].selectedLanguageLabel}
-                </Text>
-                <Text
-                  style={
-                    this.props.language === "ar"
-                      ? styles.itemTextArabic
-                      : styles.itemText
-                  }
-                >
-                  {localizedStrings[this.props.language].languagesLabel}
-                </Text>
-              </View>
-            ) : (
-              <View style={styles.settingsListItem}>
-                <Text
-                  style={
-                    this.props.language === "ar"
-                      ? styles.itemTextArabic
-                      : styles.itemText
-                  }
-                >
-                  {localizedStrings[this.props.language].languagesLabel}
-                </Text>
-                <Text
-                  style={
-                    this.props.language === "ar"
-                      ? styles.itemTextArabic
-                      : styles.itemText
-                  }
-                >
-                  {localizedStrings[this.props.language].selectedLanguageLabel}
-                </Text>
-              </View>
-            )}
+            <View
+              style={
+                this.props.language === "ar"
+                  ? styles.settingsListItemArabic
+                  : styles.settingsListItem
+              }
+            >
+              <Text style={styles.itemText}>
+                {localizedStrings[this.props.language].languagesLabel}
+              </Text>
+              <Text style={styles.selectedItemText}>
+                {localizedStrings[this.props.language].selectedLanguageLabel}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.settingsListItemContainer}>
+          <TouchableOpacity
+            style={styles.settingslanguageItem}
+            onPress={() => {
+              var aboutText =
+                "Developers:\n" +
+                "Saleh Yassin (yass0016@gmail.com)\n" +
+                "Talal Qasem (talal_kasem@hotmail.com)";
+              Alert.alert("TASA Development", aboutText);
+            }}
+          >
+            <View
+              style={
+                this.props.language === "ar"
+                  ? styles.settingsListItemArabic
+                  : styles.settingsListItem
+              }
+            >
+              <Text style={styles.itemText}>
+                {localizedStrings[this.props.language].aboutUsLabel}
+              </Text>
+            </View>
           </TouchableOpacity>
         </View>
       </View>
@@ -116,28 +112,36 @@ class SettingsScreen extends React.Component {
               style={styles.buttons}
               onPress={this.set_language.bind(this, "en")}
             >
-              <Text style={styles.buttonText}>English</Text>
+              <Text style={styles.buttonText}>
+                {localizedStrings[this.props.language].languageEnglishLabel}
+              </Text>
             </TouchableHighlight>
 
             <TouchableHighlight
               style={styles.buttons}
               onPress={this.set_language.bind(this, "fr")}
             >
-              <Text style={styles.buttonText}>French</Text>
+              <Text style={styles.buttonText}>
+                {localizedStrings[this.props.language].languageFrenchLabel}
+              </Text>
             </TouchableHighlight>
 
             <TouchableHighlight
               style={styles.buttons}
               onPress={this.set_language.bind(this, "es")}
             >
-              <Text style={styles.buttonText}>Spanish</Text>
+              <Text style={styles.buttonText}>
+                {localizedStrings[this.props.language].languageSpanishLabel}
+              </Text>
             </TouchableHighlight>
 
             <TouchableHighlight
               style={styles.buttons}
               onPress={this.set_language.bind(this, "ar")}
             >
-              <Text style={styles.buttonText}>Arabic</Text>
+              <Text style={styles.buttonText}>
+                {localizedStrings[this.props.language].languageArabicLabel}
+              </Text>
             </TouchableHighlight>
           </View>
         </Modal>
@@ -163,11 +167,16 @@ const styles = StyleSheet.create({
   },
   settingsListItem: {
     flex: 1,
-    flexDirection: "row",
+    flexDirection: "column",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "flex-start"
   },
-
+  settingsListItemArabic: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-between",
+    alignItems: "flex-end"
+  },
   settingslanguageItem: {
     flex: 1,
     flexDirection: "row",
@@ -178,7 +187,20 @@ const styles = StyleSheet.create({
   itemText: {
     color: "#d6d6d6",
     fontSize: Metrics.flatListItemFontSize,
+    fontFamily: "sansRegular",
+    marginBottom: 5
+  },
+
+  selectedItemText: {
+    color: "#d6d6d6",
+    fontSize: Metrics.flatListSelectedItemFontSize,
     fontFamily: "sansRegular"
+  },
+  selectedItemTextArabic: {
+    color: "#d6d6d6",
+    fontSize: Metrics.flatListSelectedItemFontSize,
+    fontFamily: "sansRegular",
+    textAlign: "right"
   },
   itemTextArabic: {
     color: "#d6d6d6",
@@ -233,15 +255,11 @@ export default connect(
 )(SettingsScreen);
 
 /*
- * Delete medicine should delete local notifications belong's to that medicine
- * Language Modal should show corresponding language
- * Delete image in Add and Edit screens should delete the image not just the url to it
- * AutoScroll to previously selected type in Edit Screen
- * Language support for alert dialogs
- ** Dosage with different layout
- * Review and Test Start and End dates on Add/Edit screens
- * Add Turn off All notifications to Settings
- * Add about page and button in settings
- * Test and fix KeyboardAvoidingView on iOS on multiple devices
- ** Add ability to backup and restore notifications on Google Drive
+ * About Us Text - Talal, Saleh
+ * Review Languages, French and Spanish
+ * Review Styling - Talal
+ ** Dosage with different layout - Talal
+ * Fix languages in header if possible - Saleh
+ * Review and Test Start and End dates on Add/Edit screens *** - Saleh
+ ** Add ability to backup and restore notifications on Google Drive - Saleh
  */

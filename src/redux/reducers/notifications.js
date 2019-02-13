@@ -1,3 +1,5 @@
+import { Notifications } from "expo";
+
 import {
   ADD_NOTIFICATION,
   UPDATE_NOTIFICATION,
@@ -38,6 +40,12 @@ export default function reducer(state = defaultState, action) {
         })
       };
     case DELETE_NOTIFICATION:
+      state.data.map(item => {
+        if (item.m_id === action.m_id) {
+          Notifications.cancelScheduledNotificationAsync(item.id);
+        }
+      });
+
       return {
         ...state,
         data: state.data.filter(item => {
@@ -45,6 +53,8 @@ export default function reducer(state = defaultState, action) {
         })
       };
     case DELETE_NOTIFICATIONS:
+      Notifications.cancelAllScheduledNotificationsAsync();
+
       return {
         ...state,
         data: []

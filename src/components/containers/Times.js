@@ -136,6 +136,8 @@ class Times extends Component {
   renderTimeDialog() {
     return (
       <DateTimePicker
+        confirmTextStyle={{ color: "#009688" }}
+        cancelTextStyle={{ color: "#009688" }}
         is24Hour={false}
         mode={"time"}
         isVisible={this.state.time_dialog_visible}
@@ -204,14 +206,14 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start"
   },
   deleteButton: {
-    height: Metrics.formAddTimeDeleteButtonHeight,
-    width: Metrics.formAddTimeDeleteButtonWidth,
+    height: 35,
+    width: 35,
     flexDirection: "column",
     justifyContent: "center"
   },
   deleteButtonImage: {
-    width: Metrics.formAddTimeDeleteButtonImageWidth,
-    height: Metrics.formAddTimeDeleteButtonImageHeight,
+    width: 45,
+    height: 45,
     borderRadius: 5
   }
 });
