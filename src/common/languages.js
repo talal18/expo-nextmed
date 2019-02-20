@@ -1,6 +1,14 @@
 export const localizedStrings = {
   //********************* English *************************************************
   en: {
+    //Page Titles
+    homeTitle: "Medicine List",
+    addTitle: "Add",
+    editTitle: "Edit",
+    settingsTitle: "Settings",
+    backupTitle: "Backup",
+    manageNotificationsTitle: "Manage Notifications",
+
     //Home page
     medicineListLabel: "Medicine List",
     homeEmptyListLabel:
@@ -72,6 +80,14 @@ export const localizedStrings = {
 
   //********************* French *************************************************
   fr: {
+    //Page Titles
+    homeTitle: "Liste de médecine",
+    addTitle: "Ajouter",
+    editTitle: "modifier",
+    settingsTitle: "Réglages",
+    backupTitle: "Des sauvegardes",
+    manageNotificationsTitle: "Gérer les notifications",
+
     //Home page
     medicineListLabel: "Liste de médecine",
     homeEmptyListLabel:
@@ -149,6 +165,14 @@ export const localizedStrings = {
 
   //********************* Spanish *************************************************
   es: {
+    //Page Titles
+    homeTitle: "Lista de medicamentos",
+    addTitle: "Añadir",
+    editTitle: "Editar",
+    settingsTitle: "Ajustes",
+    backupTitle: "Copias de seguridad",
+    manageNotificationsTitle: "Gestionar notificaciones",
+
     //Home page
     medicineListLabel: "Lista de medicamentos",
     homeEmptyListLabel:
@@ -226,6 +250,14 @@ export const localizedStrings = {
 
   //********************* Arabic *************************************************
   ar: {
+    //Page Titles
+    homeTitle: "قائمة الأدوية",
+    addTitle: "إضافة",
+    editTitle: "تعديل",
+    settingsTitle: "الإعدادات",
+    backupTitle: "النسخ الاحتياطي",
+    manageNotificationsTitle: "إدارة الاشعارات",
+
     //Home page
     medicineListLabel: "قائمة الأدوية",
     homeEmptyListLabel: "ليس لديك أي أدوية مجدولة",
