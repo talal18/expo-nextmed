@@ -22,7 +22,7 @@ const defaultState = {
     m_id: "",
     title: "",
     type: "",
-    dosage: "",
+    dosage: 1,
     recurrence: "",
     notes: "",
     intake_times: [],
