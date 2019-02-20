@@ -13,6 +13,7 @@ import SettingsScreen from "./screens/SettingsScreen";
 
 import AddScreen from "./screens/AddScreen";
 import EditScreen from "./screens/EditScreen";
+import BackupScreen from "./screens/BackupScreen";
 
 import ManageNotifications from "./screens/ManageNotifications";
 import { localizedStrings } from "../common/languages";
@@ -158,6 +159,20 @@ const AppNavigator = createStackNavigator({
     screen: ManageNotifications,
     navigationOptions: {
       title: "Manage Notifications",
+      headerStyle: {
+        backgroundColor: "#595d63"
+      },
+      headerTintColor: "#d6d6d6",
+      headerTitleStyle: {
+        fontSize: Metrics.navigationTitleFontSize,
+        fontWeight: "bold"
+      }
+    }
+  },
+  Backup: {
+    screen: BackupScreen,
+    navigationOptions: {
+      title: "Backup",
       headerStyle: {
         backgroundColor: "#595d63"
       },

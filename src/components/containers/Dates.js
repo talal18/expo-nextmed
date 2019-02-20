@@ -123,116 +123,109 @@ class Dates extends Component {
     );
   }
 
-  _showDateDialog = () => this.setState({ date_dialog_visible: true });
-
-  _hideDateDialog = () => this.setState({ date_dialog_visible: false });
-
-  _handleDatePicked = date => {
+  dateBeforeToday(date) {
     var myDate = new Date(date);
     var today = new Date(Date.now());
 
-    if (this.state.isEndDate && this.props.start_date) {
-      if (myDate.getTime() < new Date(this.props.start_date).getTime()) {
-        if (Platform.OS === "ios")
-          return Alert.alert(
-            localizedStrings[this.props.language].errorLabel,
-            localizedStrings[this.props.language].errorEndBeforeStartDateLabel,
-            [
-              {
-                text: localizedStrings[this.props.language].okLabel,
-                onPress: () => {
-                  this.props.set_end_date("");
-                }
-              }
-            ],
-            { cancelable: false }
-          );
-
-        Alert.alert(
-          localizedStrings[this.props.language].errorLabel,
-          localizedStrings[this.props.language].errorEndBeforeStartDateLabel,
-          [
-            {
-              text: localizedStrings[this.props.language].okLabel,
-              onPress: () => {
-                this.props.set_end_date("");
-              }
-            }
-          ],
-          { cancelable: false }
-        );
-      }
-    }
-
-    if (this.state.isStartDate && this.props.end_date) {
-      if (myDate.getTime() > new Date(this.props.end_date).getTime()) {
-        if (Platform.OS === "ios")
-          return Alert.alert(
-            localizedStrings[this.props.language].errorLabel,
-            localizedStrings[this.props.language].errorStartAfterEndDateLabel,
-            [
-              {
-                text: localizedStrings[this.props.language].okLabel,
-                onPress: () => {
-                  this.props.set_start_date("");
-                }
-              }
-            ],
-            { cancelable: false }
-          );
-
-        Alert.alert(
-          localizedStrings[this.props.language].errorLabel,
-          localizedStrings[this.props.language].errorStartAfterEndDateLabel,
-          [
-            {
-              text: localizedStrings[this.props.language].okLabel,
-              onPress: () => {
-                this.props.set_start_date("");
-              }
-            }
-          ],
-          { cancelable: false }
-        );
-      }
-    }
-
-    if (
+    return (
       myDate.getFullYear() < today.getFullYear() ||
       (myDate.getFullYear() === today.getFullYear() &&
         myDate.getMonth() < today.getMonth()) ||
       (myDate.getFullYear() === today.getFullYear() &&
         myDate.getMonth() === today.getMonth() &&
         myDate.getDate() < today.getDate())
-    ) {
-      if (Platform.OS === "ios")
-        return Alert.alert(
-          localizedStrings[this.props.language].errorLabel,
-          localizedStrings[this.props.language].errorDateBeforeTodayDateLabel,
-          [
-            {
-              text: localizedStrings[this.props.language].okLabel,
-              onPress: () => {
-                this.props.set_start_date("");
-              }
-            }
-          ],
-          { cancelable: false }
+    );
+  }
+
+  dateAfterDate(dateOne, dateTwo) {
+    var one = new Date(dateOne);
+    var two = new Date(dateTwo);
+
+    return (
+      one.getFullYear() > two.getFullYear() ||
+      (one.getFullYear() === two.getFullYear() &&
+        one.getMonth() > two.getMonth()) ||
+      (one.getFullYear() === two.getFullYear() &&
+        one.getMonth() === two.getMonth() &&
+        one.getDate() > two.getDate())
+    );
+  }
+
+  dateBeforeDate(dateOne, dateTwo) {
+    var one = new Date(dateOne);
+    var two = new Date(dateTwo);
+
+    return (
+      one.getFullYear() < two.getFullYear() ||
+      (one.getFullYear() === two.getFullYear() &&
+        one.getMonth() < two.getMonth()) ||
+      (one.getFullYear() === two.getFullYear() &&
+        one.getMonth() === two.getMonth() &&
+        one.getDate() < two.getDate())
+    );
+  }
+
+  _showDateDialog = () => this.setState({ date_dialog_visible: true });
+
+  _hideDateDialog = () =>
+    this.setState({
+      isStartDate: false,
+      isEndDate: false,
+      date_dialog_visible: false
+    });
+
+  _handleDatePicked = date => {
+    var errors = [];
+
+    if (this.dateBeforeToday(date)) {
+      if (this.state.isStartDate) {
+        errors.push(
+          localizedStrings[this.props.language].errorStartBeforeTodayLabel
         );
+      } else if (this.state.isEndDate) {
+        errors.push(
+          localizedStrings[this.props.language].errorEndBeforeTodayLabel
+        );
+      }
+    }
+
+    if (this.state.isStartDate) {
+      if (this.props.end_date.length > 0) {
+        if (this.dateAfterDate(date, this.props.end_date)) {
+          errors.push(
+            localizedStrings[this.props.language].errorStartAfterEndDateLabel
+          );
+        }
+      }
+    }
+
+    if (this.state.isEndDate) {
+      if (this.props.start_date.length > 0) {
+        if (this.dateBeforeDate(date, this.props.start_date)) {
+          errors.push(
+            localizedStrings[this.props.language].errorEndBeforeStartDateLabel
+          );
+        }
+      }
+    }
+
+    if (errors.length > 0) {
       Alert.alert(
         localizedStrings[this.props.language].errorLabel,
-        localizedStrings[this.props.language].errorDateBeforeTodayDateLabel,
+        errors.join("").toString(),
         [
           {
             text: localizedStrings[this.props.language].okLabel,
             onPress: () => {
-              this.props.set_start_date("");
+              this._hideDateDialog();
             }
           }
         ],
-        { cancelable: false }
+        { cancelable: true }
       );
     } else {
+      var myDate = new Date(date);
+
       var day = myDate.getDate();
       var month = myDate.getMonth() + 1;
       var year = myDate.getFullYear();
@@ -262,9 +255,9 @@ class Dates extends Component {
           end_date_label: pickedDate
         });
       }
-    }
 
-    this._hideDateDialog();
+      this._hideDateDialog();
+    }
   };
 
   handleSetStartDate() {

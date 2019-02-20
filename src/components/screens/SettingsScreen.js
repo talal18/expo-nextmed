@@ -62,6 +62,25 @@ class SettingsScreen extends React.Component {
         <View style={styles.settingsListItemContainer}>
           <TouchableOpacity
             style={styles.settingslanguageItem}
+            onPress={() => this.props.navigation.navigate("Backup")}
+          >
+            <View
+              style={
+                this.props.language === "ar"
+                  ? styles.settingsListItemArabic
+                  : styles.settingsListItem
+              }
+            >
+              <Text style={styles.itemText}>
+                {localizedStrings[this.props.language].backupLabel}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.settingsListItemContainer}>
+          <TouchableOpacity
+            style={styles.settingslanguageItem}
             onPress={() => {
               var aboutText =
                 "Developers:\n" +
@@ -256,10 +275,8 @@ export default connect(
 
 /*
  * About Us Text - Talal, Saleh
- * Review Languages, French and Spanish
+ * Review Languages, French and Spanish (In Progress)
  * Review Styling - Talal
- ** Dosage with different layout - Talal
  * Fix languages in header if possible - Saleh
- * Review and Test Start and End dates on Add/Edit screens *** - Saleh
- ** Add ability to backup and restore notifications on Google Drive - Saleh
+ * Add ability to backup and restore notifications on Google Drive - Saleh (In Progress)
  */

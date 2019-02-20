@@ -14,6 +14,7 @@ export const localizedStrings = {
     languageArabicLabel: "Arabic",
     aboutUsLabel: "About Us",
     notificationsOffLabel: "Turn Off all Notifications",
+    backupLabel: "Backups",
 
     //Add-Edit screen
     medicineTitleLabel: "Title",
@@ -51,9 +52,11 @@ export const localizedStrings = {
     addLabel: "Add",
     manageNotificationsLabel: "Manage Notifications",
     updateLabel: "Update",
-    errorEndBeforeStartDateLabel: "End Date can't be before Start Date",
-    errorStartAfterEndDateLabel: "Start Date can't be after End Date",
-    errorDateBeforeTodayDateLabel: "Date can't be before today's date",
+    errorEndBeforeStartDateLabel: "End Date can't be before Start Date\n",
+    errorStartAfterEndDateLabel: "Start Date can't be after End Date\n",
+    errorStartBeforeTodayLabel: "Start Date can't be before today's date\n",
+    errorEndBeforeTodayLabel: "End Date can't be before today's date\n",
+    errorDateBeforeTodayDateLabel: "Date can't be before today's date\n",
     errorNoTitle: "You must provide a title\n",
     errorNoDosage: "You must provide a dosage amount\n",
     errorDosageAmount: "Dosage can't be less than or equal to 0\n",
@@ -63,7 +66,7 @@ export const localizedStrings = {
     errorLabel: "Error",
     okLabel: "Ok",
     errorStartDateBeforeTodayDateLabel:
-      "Start date can't be before today's date",
+      "Start date can't be before today's date\n",
     notificationDueLabel: "is now due. You should take"
   },
 
@@ -82,6 +85,7 @@ export const localizedStrings = {
     languageArabicLabel: "arabe",
     aboutUsLabel: "À propos de nous",
     notificationsOffLabel: "Désactiver toutes les notifications",
+    backupLabel: "Des sauvegardes",
 
     //Add-Edit screen
     medicineTitleLabel: "Titre",
@@ -121,11 +125,15 @@ export const localizedStrings = {
     addLabel: "Ajouter",
     manageNotificationsLabel: "Gérer les notifications",
     errorEndBeforeStartDateLabel:
-      "La date de fin ne peut pas être antérieure à la date de début",
+      "La date de fin ne peut pas être antérieure à la date de début\n",
     errorStartAfterEndDateLabel:
-      "La date de début ne peut pas être postérieure à la date de fin",
+      "La date de début ne peut pas être postérieure à la date de fin\n",
+    errorStartBeforeTodayLabel:
+      "La date de début ne peut pas être antérieure à la date du jour\n",
+    errorEndBeforeTodayLabel:
+      "La date de fin ne peut pas être antérieure à la date du jour\n",
     errorDateBeforeTodayDateLabel:
-      "La date ne peut pas être antérieure à la date du jour",
+      "La date ne peut pas être antérieure à la date du jour\n",
     errorNoTitle: "Vous devez fournir un titre\n",
     errorNoDosage: "Vous devez fournir une quantité de dosage\n",
     errorDosageAmount: "La posologie ne peut être inférieure ou égale à 0\n",
@@ -135,7 +143,7 @@ export const localizedStrings = {
     errorLabel: "Erreur",
     okLabel: "D'accord",
     errorStartDateBeforeTodayDateLabel:
-      "La date de début ne peut pas être antérieure à la date du jour",
+      "La date de début ne peut pas être antérieure à la date du jour\n",
     notificationDueLabel: "est maintenant due. Tu devrais prendre"
   },
 
@@ -154,6 +162,7 @@ export const localizedStrings = {
     languageArabicLabel: "Arábica",
     aboutUsLabel: "Sobre nosotros",
     notificationsOffLabel: "Desactivar todas las notificaciones",
+    backupLabel: "Copias de seguridad",
 
     //Add-Edit screen
     medicineTitleLabel: "Título",
@@ -193,11 +202,15 @@ export const localizedStrings = {
     addLabel: "Añadir",
     manageNotificationsLabel: "Gestionar notificaciones",
     errorEndBeforeStartDateLabel:
-      "La fecha de finalización no puede ser anterior a la fecha de inicio",
+      "La fecha de finalización no puede ser anterior a la fecha de inicio\n",
     errorStartAfterEndDateLabel:
-      "La fecha de inicio no puede ser posterior a la fecha de finalización",
+      "La fecha de inicio no puede ser posterior a la fecha de finalización\n",
+    errorStartBeforeTodayLabel:
+      "La fecha de inicio no puede ser anterior a la fecha de hoy.\n",
+    errorEndBeforeTodayLabel:
+      "La fecha de finalización no puede ser anterior a la fecha de hoy\n",
     errorDateBeforeTodayDateLabel:
-      "La fecha no puede ser anterior a la fecha de hoy",
+      "La fecha no puede ser anterior a la fecha de hoy\n",
     errorNoTitle: "Debes proporcionar un título\n",
     errorNoDosage: "Debe proporcionar una dosis\n",
     errorDosageAmount: "La dosis no puede ser menor o igual a 0\n",
@@ -207,7 +220,7 @@ export const localizedStrings = {
     errorLabel: "Error",
     okLabel: "De acuerdo",
     errorStartDateBeforeTodayDateLabel:
-      "La fecha de inicio no puede ser anterior a la fecha de hoy",
+      "La fecha de inicio no puede ser anterior a la fecha de hoy\n",
     notificationDueLabel: "ahora se debe Deberías tomar"
   },
 
@@ -225,6 +238,7 @@ export const localizedStrings = {
     languageArabicLabel: "عربى",
     aboutUsLabel: "من نحن",
     notificationsOffLabel: "قم بإيقاف تشغيل كافة الاشعارات",
+    backupLabel: "النسخ الاحتياطي",
 
     //Add-Edit screen
     medicineTitleLabel: "اسم الدواء",
@@ -263,10 +277,13 @@ export const localizedStrings = {
     addLabel: "إضافة الدواء",
     manageNotificationsLabel: "التحكم بالاشعارات",
     errorEndBeforeStartDateLabel:
-      "لا يمكن أن يكون تاريخ الانتهاء قبل تاريخ البدء",
+      "لا يمكن أن يكون تاريخ الانتهاء قبل تاريخ البدء\n",
     errorStartAfterEndDateLabel:
-      "لا يمكن أن يكون تاريخ البدء بعد تاريخ الانتهاء",
-    errorDateBeforeTodayDateLabel: "لا يمكن أن يكون التاريخ قبل تاريخ اليوم",
+      "لا يمكن أن يكون تاريخ البدء بعد تاريخ الانتهاء\n",
+    errorStartBeforeTodayLabel: "لا يمكن أن يكون تاريخ البدء قبل تاريخ اليوم\n",
+    errorEndBeforeTodayLabel:
+      "لا يمكن أن يكون تاريخ الانتهاء قبل تاريخ اليوم\n",
+    errorDateBeforeTodayDateLabel: "لا يمكن أن يكون التاريخ قبل تاريخ اليوم\n",
     errorNoTitle: "اكتب العنوان\n",
     errorNoDosage: "يجب عليك ادخال كمية الجرعة\n",
     errorDosageAmount: "لا يمكن أن تكون الجرعة أقل من أو تساوي 0\n",
@@ -276,7 +293,7 @@ export const localizedStrings = {
     errorLabel: "خطأ",
     okLabel: "تم",
     errorStartDateBeforeTodayDateLabel:
-      "لا يمكن أن يكون تاريخ البدء قبل تاريخ اليوم",
+      "لا يمكن أن يكون تاريخ البدء قبل تاريخ اليوم\n",
     notificationDueLabel: "هو الآن وقته. يجب عليك ان تاخذ"
   }
 };

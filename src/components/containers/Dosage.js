@@ -21,8 +21,34 @@ class Dosage extends Component {
     super(props);
 
     this.state = {
-      incrementValue: 1.0
+      incrementValue: 1.0,
+      increments: [
+        {
+          label: "0.10",
+          value: 0.1,
+          image: require("../../assets/images/daily.png")
+        },
+        {
+          label: "0.25",
+          value: 0.25,
+          image: require("../../assets/images/daily.png")
+        },
+        {
+          label: "0.50",
+          value: 0.5,
+          image: require("../../assets/images/daily.png")
+        },
+        {
+          label: "1.00",
+          value: 1.0,
+          image: require("../../assets/images/daily.png")
+        }
+      ]
     };
+  }
+
+  componentDidMount() {
+    console.log(this.props.dosage);
   }
 
   render() {
@@ -79,7 +105,8 @@ class Dosage extends Component {
               height: 100,
               backgroundColor: "#d6d6d6",
               textAlign: "center",
-              borderRadius: 20
+              borderRadius: 20,
+              fontSize: Metrics.inputFontSize
             }}
           />
           <TouchableHighlight
@@ -121,125 +148,43 @@ class Dosage extends Component {
             alignItems: "center"
           }}
         >
-          <TouchableHighlight
-            onPress={() => this.setState({ incrementValue: 0.1 })}
-            style={{
-              width: 60,
-              height: 60,
-              backgroundColor: "#009688",
-              justifyContent: "center",
-              borderColor: "#d6d6d6",
-              borderWidth: 3,
-              borderRadius: 200
-            }}
-          >
-            <Text
-              style={{
-                color: "#d6d6d6",
-                fontSize: 16,
-                fontFamily: "sansBold",
-                alignItems: "center",
-                justifyContent: "center",
-                textAlign: "center"
-              }}
-            >
-              0.10
-            </Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={() => this.setState({ incrementValue: 0.25 })}
-            style={{
-              width: 60,
-              height: 60,
-              backgroundColor: "#009688",
-              justifyContent: "center",
-              borderColor: "#d6d6d6",
-              borderWidth: 3,
-              borderRadius: 200
-            }}
-          >
-            <Text
-              style={{
-                color: "#d6d6d6",
-                fontSize: 16,
-                fontFamily: "sansBold",
-                alignItems: "center",
-                justifyContent: "center",
-                textAlign: "center"
-              }}
-            >
-              0.25
-            </Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={() => this.setState({ incrementValue: 0.5 })}
-            style={{
-              width: 60,
-              height: 60,
-              backgroundColor: "#009688",
-              justifyContent: "center",
-              borderColor: "#d6d6d6",
-              borderWidth: 3,
-              borderRadius: 200
-            }}
-          >
-            <Text
-              style={{
-                color: "#d6d6d6",
-                fontSize: 16,
-                fontFamily: "sansBold",
-                alignItems: "center",
-                justifyContent: "center",
-                textAlign: "center"
-              }}
-            >
-              0.50
-            </Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={() => this.setState({ incrementValue: 1 })}
-            style={{
-              width: 60,
-              height: 60,
-              backgroundColor: "#009688",
-              justifyContent: "center",
-              borderColor: "#d6d6d6",
-              borderWidth: 3,
-              borderRadius: 200
-            }}
-          >
-            <Text
-              style={{
-                color: "#d6d6d6",
-                fontSize: 16,
-                fontFamily: "sansBold",
-                alignItems: "center",
-                justifyContent: "center",
-                textAlign: "center"
-              }}
-            >
-              1.00
-            </Text>
-          </TouchableHighlight>
+          {this.state.increments.map(increment => {
+            return (
+              <TouchableHighlight
+                onPress={() =>
+                  this.setState({ incrementValue: increment.value })
+                }
+                style={{
+                  width: 60,
+                  height: 60,
+                  backgroundColor:
+                    this.state.incrementValue !== undefined &&
+                    this.state.incrementValue === increment.value
+                      ? "#009688"
+                      : "#595d63",
+                  justifyContent: "center",
+                  borderColor: "#d6d6d6",
+                  borderWidth: 3,
+                  borderRadius: 200
+                }}
+              >
+                <Text
+                  style={{
+                    color: "#d6d6d6",
+                    fontSize: 16,
+                    fontFamily: "sansBold",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    textAlign: "center"
+                  }}
+                >
+                  {increment.label}
+                </Text>
+              </TouchableHighlight>
+            );
+          })}
         </View>
       </View>
-
-      // <View>
-      //   <View style={{ alignItems: "center", marginTop: 10 }}>
-      //     <Text style={styles.medDosage}>
-      //       {localizedStrings[this.props.language].dosageLabel}
-      //     </Text>
-      //   </View>
-      //   <View>
-      //     <TextInput
-      //       allowFontScaling={false}
-      //       value={this.props.dosage}
-      //       onChangeText={text => this.props.set_dosage(text)}
-      //       keyboardType="number-pad"
-      //       style={styles.dosageInput}
-      //     />
-      //   </View>
-      // </View>
     );
   }
 }
@@ -269,6 +214,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
+  console.log(state.dataState.data);
   return {
     dosage: state.dataState.data.dosage,
     language: state.settingsState.language
