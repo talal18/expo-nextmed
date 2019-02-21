@@ -156,8 +156,8 @@ const styles = StyleSheet.create({
     marginRight: 5
   },
   MedImage: {
-    width: 50,
-    height: 50,
+    width: Metrics.homeMedImageWH,
+    height: Metrics.homeMedImageWH,
     borderRadius: 5
   },
 
@@ -167,8 +167,8 @@ const styles = StyleSheet.create({
     alignContent: "center"
   },
   deleteButtonImage: {
-    width: 50,
-    height: 50,
+    width: Metrics.homeDeleteButtonWH,
+    height: Metrics.homeDeleteButtonWH,
     borderRadius: 5
   },
 

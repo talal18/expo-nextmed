@@ -53,22 +53,13 @@ class Dosage extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={styles.container}>
         <View style={{ alignItems: "center", marginTop: 10, marginBottom: 20 }}>
           <Text style={styles.medDosage}>
             {localizedStrings[this.props.language].dosageLabel}
           </Text>
         </View>
-        <View
-          style={{
-            flex: 2,
-            flexDirection: "row",
-            justifyContent: "space-around",
-            alignItems: "center",
-            marginBottom: 15,
-            textAlign: "center"
-          }}
-        >
+        <View style={styles.dosageAddSubImageContainer}>
           <TouchableHighlight
             onPress={() => {
               var dosage = 0;
@@ -83,31 +74,16 @@ class Dosage extends Component {
 
               this.props.set_dosage(result);
             }}
-            style={{
-              width: 80,
-              height: 80,
-              backgroundColor: "#009688",
-              justifyContent: "center",
-              borderColor: "#d6d6d6",
-              borderWidth: 5,
-              borderRadius: 200
-            }}
+            style={styles.dosageAddSubButton}
           >
             <Image
-              style={{ width: 70, height: 70 }}
+              style={styles.dosageAddSubImage}
               source={require("../../assets/images/subtract.png")}
             />
           </TouchableHighlight>
           <TextInput
             value={this.props.dosage.toString()}
-            style={{
-              width: 100,
-              height: 100,
-              backgroundColor: "#d6d6d6",
-              textAlign: "center",
-              borderRadius: 20,
-              fontSize: Metrics.inputFontSize
-            }}
+            style={styles.dosageInput}
           />
           <TouchableHighlight
             onPress={() => {
@@ -123,31 +99,15 @@ class Dosage extends Component {
 
               this.props.set_dosage(result);
             }}
-            style={{
-              width: 80,
-              height: 80,
-              backgroundColor: "#009688",
-              justifyContent: "center",
-              alignItems: "center",
-              borderColor: "#d6d6d6",
-              borderWidth: 5,
-              borderRadius: 200
-            }}
+            style={styles.dosageAddSubButton}
           >
             <Image
               source={require("../../assets/images/add.png")}
-              style={{ width: 70, height: 70 }}
+              style={styles.dosageAddSubImage}
             />
           </TouchableHighlight>
         </View>
-        <View
-          style={{
-            flex: 2,
-            flexDirection: "row",
-            justifyContent: "space-around",
-            alignItems: "center"
-          }}
-        >
+        <View style={styles.dosageIncrContainer}>
           {this.state.increments.map(increment => {
             return (
               <TouchableHighlight
@@ -155,8 +115,8 @@ class Dosage extends Component {
                   this.setState({ incrementValue: increment.value })
                 }
                 style={{
-                  width: 60,
-                  height: 60,
+                  width: Metrics.dosageIncrButtonWH,
+                  height: Metrics.dosageIncrButtonWH,
                   backgroundColor:
                     this.state.incrementValue !== undefined &&
                     this.state.incrementValue === increment.value
@@ -171,7 +131,7 @@ class Dosage extends Component {
                 <Text
                   style={{
                     color: "#d6d6d6",
-                    fontSize: 16,
+                    fontSize: Metrics.TypeRecFontSize,
                     fontFamily: "sansBold",
                     alignItems: "center",
                     justifyContent: "center",
@@ -190,26 +150,53 @@ class Dosage extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+
   dosageInput: {
-    width: Metrics.formTitleinputBoxW,
-    height: Metrics.formTitleinputBoxH,
-    paddingLeft: 5,
+    width: Metrics.dosageInputBoxWH,
+    height: Metrics.dosageInputBoxWH,
     backgroundColor: "#d6d6d6",
-    borderColor: "grey",
-    borderRadius: 5,
-    fontSize: Metrics.inputFontSize,
-    fontFamily: "sansRegular",
-    marginTop: 10,
-    marginBottom: 10,
-    shadowColor: "#303838",
-    shadowOffset: { width: 0, height: 5 },
-    shadowRadius: 10,
-    shadowOpacity: 0.35
+    textAlign: "center",
+    borderRadius: 20,
+    fontSize: Metrics.inputFontSize
   },
   medDosage: {
     fontSize: Metrics.titleFontSize,
     fontFamily: "sansBold",
     color: "#d6d6d6"
+  },
+
+  dosageAddSubImageContainer: {
+    flex: 2,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
+    marginBottom: 15,
+    textAlign: "center"
+  },
+
+  dosageAddSubButton: {
+    width: Metrics.dosageAddSubButtonWH,
+    height: Metrics.dosageAddSubButtonWH,
+    backgroundColor: "#009688",
+    justifyContent: "center",
+    borderColor: "#d6d6d6",
+    borderWidth: 3,
+    borderRadius: 200
+  },
+
+  dosageAddSubImage: {
+    width: Metrics.dosageAddSubImageWH,
+    height: Metrics.dosageAddSubImageWH
+  },
+
+  dosageIncrContainer: {
+    flex: 2,
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center"
   }
 });
 

@@ -78,8 +78,8 @@ const AppNavigator = createStackNavigator({
           horizontal: true,
           showIcon: true,
           showLabel: false,
-          activeBackgroundColor: "#595d63",
-          inactiveBackgroundColor: "#009688",
+          activeBackgroundColor: "#009688",
+          inactiveBackgroundColor: "#595d63",
 
           tabStyle: {
             flexDirection: "row",

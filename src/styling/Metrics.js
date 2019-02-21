@@ -35,10 +35,10 @@ const metrics = {
   settingsTabLogoHeight: NormalizeSize.normalizeHeight(35),
   homeTabLogoWidth: NormalizeSize.normalizeWidth(35),
   homeTabLogoHeight: NormalizeSize.normalizeHeight(35),
-  homeMedImageWidth: NormalizeSize.normalizeWidth(50),
-  homeMedImageHeight: NormalizeSize.normalizeHeight(50),
-  homeDeleteButtonWidth: NormalizeSize.normalizeWidth(50),
-  homeDeleteButtonHeight: NormalizeSize.normalizeHeight(50),
+
+  homeMedImageWH: NormalizeSize.normalizeHeight(50),
+
+  homeDeleteButtonWH: NormalizeSize.normalizeHeight(50),
   homeAddButtonWidth: 35,
   homeAddButtonHeight: 35,
   homeAddButtonMarginRight: NormalizeSize.normalizeWidth(10),
@@ -91,9 +91,16 @@ const metrics = {
   typeImagesPaddingW: NormalizeSize.normalizeWidth(10),
   typeImagesPaddingH: NormalizeSize.normalizeHeight(10),
 
+  //Dosage
+  dosageInputBoxWH: NormalizeSize.normalizeHeight(100),
+  dosageAddSubButtonWH: NormalizeSize.normalizeHeight(80),
+  dosageAddSubImageWH: NormalizeSize.normalizeHeight(70),
+  dosageIncrButtonWH: NormalizeSize.normalizeHeight(60),
+
   //Add Image
   formAddImageButtonWidth: NormalizeSize.normalizeWidth(350),
   formAddImageButtonHeight: NormalizeSize.normalizeHeight(50),
+
   //Modal
 
   modalButtonWidth: NormalizeSize.normalizeWidth(350),
@@ -106,16 +113,13 @@ const metrics = {
   formAddTimeButtonHeight: NormalizeSize.normalizeHeight(50),
   formAddTimeListHeight: NormalizeSize.normalizeHeight(60),
   formAddTimeListWidth: NormalizeSize.normalizeWidth(320),
-  formAddTimeDeleteButtonWidth: NormalizeSize.normalizeWidth(30),
-  formAddTimeDeleteButtonHeight: NormalizeSize.normalizeHeight(30),
-  formAddTimeDeleteButtonImageWidth: NormalizeSize.normalizeWidth(40),
-  formAddTimeDeleteButtonImageHeight: NormalizeSize.normalizeHeight(40),
+  formAddTimeDeleteButtonWH: NormalizeSize.normalizeHeight(35),
+  formAddTimeDeleteButtonImageWH: NormalizeSize.normalizeHeight(45),
 
   //Reccurence
   medRecEachImageContainerW: NormalizeSize.normalizeWidth(90),
   medRecEachImageContainerH: NormalizeSize.normalizeHeight(150),
-  medRecImageWidth: NormalizeSize.normalizeWidth(50),
-  medRecImageHeight: NormalizeSize.normalizeHeight(50),
+  medRecImageWH: NormalizeSize.normalizeHeight(55),
 
   //Set Start and End Date
   formSetDateContainerWidth: NormalizeSize.normalizeWidth(330),

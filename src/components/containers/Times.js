@@ -206,14 +206,14 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start"
   },
   deleteButton: {
-    height: 35,
-    width: 35,
+    height: Metrics.formAddTimeDeleteButtonWH,
+    width: Metrics.formAddTimeDeleteButtonWH,
     flexDirection: "column",
     justifyContent: "center"
   },
   deleteButtonImage: {
-    width: 45,
-    height: 45,
+    width: Metrics.formAddTimeDeleteButtonImageWH,
+    height: Metrics.formAddTimeDeleteButtonImageWH,
     borderRadius: 5
   }
 });

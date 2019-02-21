@@ -99,10 +99,7 @@ class Type extends Component {
                 <View key={index} style={styles.imageTextViewContainer}>
                   <View
                     style={{
-                      paddingTop: Metrics.typeImagesPaddingH,
-                      paddingBottom: Metrics.typeImagesPaddingH,
-                      paddingLeft: Metrics.typeImagesPaddingW,
-                      paddingRight: Metrics.typeImagesPaddingW,
+                      padding: Metrics.typeImagesPaddingH,
                       borderRadius: 300,
                       borderWidth: 5,
                       borderColor: "#d6d6d6",
@@ -176,8 +173,8 @@ const styles = StyleSheet.create({
   },
 
   typeImage: {
-    width: 70,
-    height: 70
+    width: Metrics.typeImageH,
+    height: Metrics.typeImageH
   },
   textContainer: {
     flex: 1,

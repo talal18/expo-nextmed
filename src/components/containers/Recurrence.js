@@ -142,8 +142,8 @@ const styles = StyleSheet.create({
   },
 
   medRecImage: {
-    width: 50,
-    height: 50
+    width: Metrics.medRecImageWH,
+    height: Metrics.medRecImageWH
   },
 
   medRecText: {
