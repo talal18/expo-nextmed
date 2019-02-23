@@ -1,16 +1,5 @@
 import React, { Component } from "react";
-import {
-  View,
-  ScrollView,
-  StyleSheet,
-  Platform,
-  TouchableOpacity,
-  Text,
-  Picker,
-  Image
-} from "react-native";
-
-import { Dropdown } from "react-native-material-dropdown";
+import { View, StyleSheet, TouchableOpacity, Text, Image } from "react-native";
 
 import Metrics from "../../styling/Metrics";
 
@@ -59,10 +48,6 @@ class Recurrence extends Component {
     };
   }
 
-  componentDidMount() {
-    // this.props.set_recurrence("day");
-  }
-
   render() {
     return (
       <View style={styles.container}>
@@ -80,7 +65,7 @@ class Recurrence extends Component {
                     borderWidth: 3,
                     borderRadius: 200,
                     borderColor: "#d6d6d6",
-                    padding: 10,
+                    padding: 5,
                     margin: 10,
                     backgroundColor:
                       this.props.recurrence !== undefined &&
@@ -109,13 +94,14 @@ class Recurrence extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 3,
     justifyContent: "center",
     alignItems: "center"
   },
   medRecTitleContainer: {
+    flex: 1,
     alignItems: "center",
-    marginTop: 10
+    marginTop: 5
   },
 
   medRecTitle: {
@@ -125,7 +111,7 @@ const styles = StyleSheet.create({
   },
 
   medRecImagesContainer: {
-    flex: 1,
+    flex: 2,
     flexDirection: "row",
     justifyContent: "center",
     marginTop: 5,
@@ -174,53 +160,3 @@ export default connect(
   mapStateToProps,
   { set_recurrence }
 )(Recurrence);
-
-{
-  /* <View>
-          <Dropdown
-            allowFontScaling={false}
-            fontSize={Metrics.dropDownFontSize}
-            // fontFamily="sansBold"
-            itemTextStyle={{
-              fontSize: Metrics.dropDownFontSize
-              // fontFamily: "sansBold"
-            }}
-            inputContainerStyle={{ borderBottomColor: "transparent" }}
-            value={this.props.recurrence}
-            rippleOpacity={0}
-            dropdownOffset={{
-              top: 10,
-              left: 0
-            }}
-            containerStyle={styles.textInputStyle}
-            data={this.state.recurrences}
-            onChangeText={(recurrence, itemIndex, data) => {
-              this.props.set_recurrence(recurrence);
-            }}
-          />
-        </View>
-        {this.props.recurrence === "day" || this.props.recurrence === "week" ? (
-          <View style={styles.frequencyNoteContainer}>
-            <Text style={styles.frequencyNote}>
-              {localizedStrings[this.props.language].notificationNoteLabel}
-            </Text>
-          </View>
-        ) : null} */
-}
-
-// textInputStyle: {
-//   justifyContent: "center",
-//   width: Metrics.formTitleinputBoxW,
-//   height: Metrics.formTitleinputBoxH,
-//   paddingLeft: 5,
-//   backgroundColor: "#d6d6d6",
-
-//   borderColor: "grey",
-//   borderRadius: 5,
-//   marginTop: 10,
-//   marginBottom: 10,
-//   shadowColor: "#303838",
-//   shadowOffset: { width: 0, height: 5 },
-//   shadowRadius: 10,
-//   shadowOpacity: 0.35
-// },

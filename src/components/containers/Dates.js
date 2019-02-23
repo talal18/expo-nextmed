@@ -3,7 +3,6 @@ import {
   Alert,
   View,
   StyleSheet,
-  Platform,
   TouchableOpacity,
   Text,
   Image
@@ -269,12 +268,6 @@ class Dates extends Component {
     this.setState({ isEndDate: true });
     this._showDateDialog();
   }
-
-  /*
-      if(start_date < today) {
-        start_date = today
-      }
-  */
 
   render() {
     return (

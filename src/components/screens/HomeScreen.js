@@ -171,24 +171,6 @@ const styles = StyleSheet.create({
     height: Metrics.homeDeleteButtonWH,
     borderRadius: 5
   },
-
-  // addButton: {
-  //   width: 60,
-  //   height: 60,
-  //   borderRadius: 30,
-  //   backgroundColor: "#009688",
-  //   position: "absolute",
-  //   bottom: 10,
-  //   right: 10,
-  //   alignItems: "center",
-  //   justifyContent: "center"
-  // },
-
-  // addButtonImage: {
-  //   width: 60,
-  //   height: 60
-  // },
-
   emptyFlatListContainer: {
     flex: 1,
     justifyContent: "space-around",

@@ -276,6 +276,5 @@ export default connect(
 /*
  * About Us Text - Talal, Saleh
  * Review Languages, French and Spanish (In Progress)
- * Review Styling - Talal
  * Add ability to backup and restore notifications on Google Drive - Saleh (In Progress)
  */

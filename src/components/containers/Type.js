@@ -3,10 +3,8 @@ import {
   View,
   ScrollView,
   StyleSheet,
-  Platform,
   TouchableOpacity,
   Text,
-  Picker,
   Image
 } from "react-native";
 
@@ -80,13 +78,9 @@ class Type extends Component {
     };
   }
 
-  componentDidMount() {
-    // this.props.set_type("capsules");
-  }
-
   render() {
     return (
-      <View>
+      <View style={{ flex: 1 }}>
         <View style={{ alignItems: "center", marginTop: 10 }}>
           <Text style={styles.medTypeTitle}>
             {localizedStrings[this.props.language].typeTitleLabel}
@@ -138,21 +132,6 @@ const styles = StyleSheet.create({
     fontFamily: "sansBold",
     color: "#d6d6d6"
   },
-  textInputStyle: {
-    justifyContent: "center",
-    width: Metrics.formTitleinputBoxW,
-    height: Metrics.formTitleinputBoxH,
-    paddingLeft: 5,
-    backgroundColor: "#d6d6d6",
-    borderColor: "grey",
-    borderRadius: 5,
-    marginTop: 10,
-    marginBottom: 10,
-    shadowColor: "#303838",
-    shadowOffset: { width: 0, height: 5 },
-    shadowRadius: 10,
-    shadowOpacity: 0.35
-  },
 
   scrollViewStyle: {},
 
@@ -160,8 +139,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "center",
-    marginTop: 20
+    justifyContent: "center"
   },
   imageTextViewContainer: {
     flex: 1,
@@ -173,11 +151,10 @@ const styles = StyleSheet.create({
   },
 
   typeImage: {
-    width: Metrics.typeImageH,
-    height: Metrics.typeImageH
+    width: Metrics.typeImageWH,
+    height: Metrics.typeImageWH
   },
   textContainer: {
-    flex: 1,
     flexDirection: "row"
   },
   imageText: {

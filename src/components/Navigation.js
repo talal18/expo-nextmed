@@ -99,14 +99,14 @@ const AppNavigator = createStackNavigator({
             if (routeName === "Home") {
               return (
                 <Image
-                  style={styles.homeTabLogo}
-                  source={require("../assets/images/home-tab4.png")}
+                  style={{ width: 35, height: 35 }}
+                  source={require("../assets/images/home-tab.png")}
                 />
               );
             } else if (routeName === "Settings") {
               return (
                 <Image
-                  style={styles.settingTabLogo}
+                  style={{ width: 35, height: 35 }}
                   source={require("../assets/images/settings-tab.png")}
                 />
               );

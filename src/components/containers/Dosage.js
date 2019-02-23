@@ -47,10 +47,6 @@ class Dosage extends Component {
     };
   }
 
-  componentDidMount() {
-    console.log(this.props.dosage);
-  }
-
   render() {
     return (
       <View style={styles.container}>
@@ -67,12 +63,13 @@ class Dosage extends Component {
               var result = 0;
 
               dosage = this.props.dosage;
+
               incrementValue = this.state.incrementValue;
               result = dosage - incrementValue;
 
               result = parseFloat(result.toFixed(2));
 
-              this.props.set_dosage(result);
+              if (result >= 0) this.props.set_dosage(result);
             }}
             style={styles.dosageAddSubButton}
           >
@@ -82,6 +79,7 @@ class Dosage extends Component {
             />
           </TouchableHighlight>
           <TextInput
+            editable={false}
             value={this.props.dosage.toString()}
             style={styles.dosageInput}
           />
@@ -108,9 +106,10 @@ class Dosage extends Component {
           </TouchableHighlight>
         </View>
         <View style={styles.dosageIncrContainer}>
-          {this.state.increments.map(increment => {
+          {this.state.increments.map((increment, index) => {
             return (
               <TouchableHighlight
+                key={index}
                 onPress={() =>
                   this.setState({ incrementValue: increment.value })
                 }
@@ -202,7 +201,6 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  console.log(state.dataState.data);
   return {
     dosage: state.dataState.data.dosage,
     language: state.settingsState.language

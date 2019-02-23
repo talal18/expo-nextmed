@@ -86,8 +86,11 @@ const metrics = {
   //Type images container
   imageTextViewContainerW: NormalizeSize.normalizeWidth(100),
   imageTextViewContainerH: NormalizeSize.normalizeHeight(150),
-  typeImageW: NormalizeSize.normalizeWidth(70),
-  typeImageH: NormalizeSize.normalizeHeight(70),
+
+  typeImageWH:
+    Platform.OS === "ios"
+      ? NormalizeSize.normalizeHeight(60)
+      : NormalizeSize.normalizeHeight(75),
   typeImagesPaddingW: NormalizeSize.normalizeWidth(10),
   typeImagesPaddingH: NormalizeSize.normalizeHeight(10),
 
@@ -118,8 +121,8 @@ const metrics = {
 
   //Reccurence
   medRecEachImageContainerW: NormalizeSize.normalizeWidth(90),
-  medRecEachImageContainerH: NormalizeSize.normalizeHeight(150),
-  medRecImageWH: NormalizeSize.normalizeHeight(55),
+  medRecEachImageContainerH: NormalizeSize.normalizeHeight(120),
+  medRecImageWH: NormalizeSize.normalizeHeight(50),
 
   //Set Start and End Date
   formSetDateContainerWidth: NormalizeSize.normalizeWidth(330),
