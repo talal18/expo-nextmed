@@ -182,6 +182,7 @@ const styles = StyleSheet.create({
     height: Metrics.dosageAddSubButtonWH,
     backgroundColor: "#009688",
     justifyContent: "center",
+    alignItems: "center",
     borderColor: "#d6d6d6",
     borderWidth: 3,
     borderRadius: 200
