@@ -274,6 +274,15 @@ export default connect(
 )(SettingsScreen);
 
 /*
+
+ * Restore the note text that shows notifications will be set for 1 year max for daily and weekly
+ * Add backup and restore
+ * Add translation for Search label in Manage Notifications
+ * increase font size a little bit for daily weekly monthly yearly labels under the pictures
+ * Increase font size for increment values if possible. I see them small for my vision
+ * Increase font size for type labels if needed
+ * Check French / Spanish translations
+ * modify about text
  * About Us Text - Talal, Saleh
  * Review Languages, French and Spanish (In Progress)
  * Add ability to backup and restore notifications on Google Drive - Saleh (In Progress)

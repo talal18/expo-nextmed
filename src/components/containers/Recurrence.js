@@ -81,8 +81,9 @@ class Recurrence extends Component {
                     <Image style={styles.medRecImage} source={item.image} />
                   </TouchableOpacity>
                 </View>
-
-                <Text style={styles.medRecText}>{item.label}</Text>
+                <View style={styles.medRecTextContainer}>
+                  <Text style={styles.medRecText}>{item.label}</Text>
+                </View>
               </View>
             );
           })}
@@ -94,7 +95,7 @@ class Recurrence extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 3,
+    flex: 1,
     justifyContent: "center",
     alignItems: "center"
   },
@@ -111,7 +112,7 @@ const styles = StyleSheet.create({
   },
 
   medRecImagesContainer: {
-    flex: 2,
+    flex: 1,
     flexDirection: "row",
     justifyContent: "center",
     marginTop: 5,
@@ -119,9 +120,10 @@ const styles = StyleSheet.create({
   },
 
   medRecEachImageContainer: {
-    width: Metrics.medRecEachImageContainerW,
-    height: Metrics.medRecEachImageContainerH,
-    justifyContent: "center",
+    flex: 1,
+    // width: Metrics.medRecEachImageContainerW,
+    // height: Metrics.medRecEachImageContainerH,
+    justifyContent: "flex-start",
     alignItems: "center",
     paddingTop: 5,
     paddingBottom: 5
@@ -132,10 +134,14 @@ const styles = StyleSheet.create({
     height: Metrics.medRecImageWH
   },
 
+  medRecTextContainer: {
+    flex: 1
+  },
+
   medRecText: {
     marginTop: 5,
     fontFamily: "sansRegular",
-    fontSize: Metrics.TypeRecFontSize,
+    fontSize: Metrics.RecFontSize,
     color: "#d6d6d6"
   },
 

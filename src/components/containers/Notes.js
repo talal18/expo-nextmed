@@ -12,7 +12,7 @@ import { localizedStrings } from "../../common/languages";
 class Notes extends Component {
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <View style={styles.textAreaContainer}>
           <TextInput
             allowFontScaling={false}
@@ -29,12 +29,16 @@ class Notes extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+
   textAreaContainer: {
     height: Metrics.textAreaContainerHeight,
     width: Metrics.textAreaContainerWidth,
     marginTop: 5,
-    backgroundColor: "#fff",
-    borderRadius: 5,
     alignItems: "center"
   },
 
@@ -42,6 +46,7 @@ const styles = StyleSheet.create({
     height: "100%",
     width: "100%",
     padding: 5,
+    borderRadius: 10,
     fontSize: Metrics.inputFontSize,
     fontFamily: "sansItalic",
     backgroundColor: "#d6d6d6",

@@ -30,7 +30,7 @@ class MedImage extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <TouchableHighlight
           style={styles.imageAddButton}
           onPress={() => {
@@ -137,6 +137,12 @@ class MedImage extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+
   modalContainer: {
     position: "absolute",
     width: "100%",

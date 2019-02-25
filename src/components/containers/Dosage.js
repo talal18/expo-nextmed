@@ -127,16 +127,7 @@ class Dosage extends Component {
                   borderRadius: 200
                 }}
               >
-                <Text
-                  style={{
-                    color: "#d6d6d6",
-                    fontSize: Metrics.TypeRecFontSize,
-                    fontFamily: "sansBold",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    textAlign: "center"
-                  }}
-                >
+                <Text style={styles.dosageIncrButtonsText}>
                   {increment.label}
                 </Text>
               </TouchableHighlight>
@@ -150,7 +141,13 @@ class Dosage extends Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1
+    flex: 1,
+    paddingBottom: 10
+  },
+  medDosage: {
+    fontSize: Metrics.titleFontSize,
+    fontFamily: "sansBold",
+    color: "#d6d6d6"
   },
 
   dosageInput: {
@@ -159,12 +156,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#d6d6d6",
     textAlign: "center",
     borderRadius: 20,
+    fontWeight: "bold",
     fontSize: Metrics.inputFontSize
-  },
-  medDosage: {
-    fontSize: Metrics.titleFontSize,
-    fontFamily: "sansBold",
-    color: "#d6d6d6"
   },
 
   dosageAddSubImageContainer: {
@@ -197,6 +190,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center"
+  },
+
+  dosageIncrButtonsText: {
+    color: "#d6d6d6",
+    fontSize: Metrics.DosageIncrFontSize,
+    fontFamily: "sansBold",
+    alignItems: "center",
+    justifyContent: "center",
+    textAlign: "center"
   }
 });
 

@@ -154,14 +154,16 @@ class AddScreen extends Component {
         <View style={styles.contentDivder} />
         <Dates />
         <Notes />
-        <TouchableOpacity
-          onPress={this.addNotification.bind(this)}
-          style={styles.addButton}
-        >
-          <Text style={styles.addButtonTitle}>
-            {localizedStrings[this.props.language].addLabel}
-          </Text>
-        </TouchableOpacity>
+        <View style={styles.AddButtoncontainer}>
+          <TouchableOpacity
+            onPress={this.addNotification.bind(this)}
+            style={styles.addButton}
+          >
+            <Text style={styles.addButtonTitle}>
+              {localizedStrings[this.props.language].addLabel}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     );
   }
@@ -201,11 +203,17 @@ const styles = StyleSheet.create({
     paddingRight: Metrics.scrollViewContainerPaddingHorizontal
   },
   contentDivder: {
-    width: Metrics.formContentDivider,
+    width: "100%",
     borderTopColor: "#595d63",
     borderTopWidth: 3,
     marginTop: 10
   },
+  AddButtoncontainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+
   addButtonTitle: {
     fontSize: Metrics.titleFontSize,
     fontFamily: "sansBold",

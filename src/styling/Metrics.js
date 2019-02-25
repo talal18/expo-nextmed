@@ -122,7 +122,7 @@ const metrics = {
   //Reccurence
   medRecEachImageContainerW: NormalizeSize.normalizeWidth(90),
   medRecEachImageContainerH: NormalizeSize.normalizeHeight(120),
-  medRecImageWH: NormalizeSize.normalizeHeight(50),
+  medRecImageWH: NormalizeSize.normalizeHeight(60),
 
   //Set Start and End Date
   formSetDateContainerWidth: NormalizeSize.normalizeWidth(330),
@@ -169,8 +169,8 @@ const metrics = {
       : NormalizeSize.normalizeWidth(18),
   flatListItemFontSize:
     Platform.OS === "ios"
-      ? NormalizeSize.normalizeHeight(26)
-      : NormalizeSize.normalizeWidth(26),
+      ? NormalizeSize.normalizeHeight(23)
+      : NormalizeSize.normalizeWidth(23),
   flatListSelectedItemFontSize:
     Platform.OS === "ios"
       ? NormalizeSize.normalizeHeight(20)
@@ -184,7 +184,17 @@ const metrics = {
     Platform.OS === "ios"
       ? NormalizeSize.normalizeHeight(22)
       : NormalizeSize.normalizeWidth(22),
-  TypeRecFontSize:
+
+  DosageIncrFontSize:
+    Platform.OS === "ios"
+      ? NormalizeSize.normalizeHeight(20)
+      : NormalizeSize.normalizeWidth(20),
+  TypeFontSize:
+    Platform.OS === "ios"
+      ? NormalizeSize.normalizeHeight(16)
+      : NormalizeSize.normalizeWidth(16),
+
+  RecFontSize:
     Platform.OS === "ios"
       ? NormalizeSize.normalizeHeight(16)
       : NormalizeSize.normalizeWidth(16)

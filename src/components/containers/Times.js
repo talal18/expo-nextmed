@@ -55,7 +55,7 @@ class Times extends Component {
 
   renderTime() {
     return (
-      <View>
+      <View style={styles.container}>
         <TouchableOpacity
           onPress={this._showTimeDialog.bind(this)}
           style={styles.addTimesButton}
@@ -158,6 +158,12 @@ class Times extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+
   medTimesTitle: {
     fontSize: Metrics.titleFontSize,
     fontFamily: "sansBold",
@@ -166,6 +172,8 @@ const styles = StyleSheet.create({
   addTimesButton: {
     width: Metrics.formAddTimeButtonWidth,
     height: Metrics.formAddTimeButtonHeight,
+    paddingLeft: 5,
+    paddingRight: 5,
     backgroundColor: "#009688",
     flexDirection: "column",
     justifyContent: "center",

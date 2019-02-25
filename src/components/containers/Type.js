@@ -80,7 +80,7 @@ class Type extends Component {
 
   render() {
     return (
-      <View style={{ flex: 1 }}>
+      <View style={styles.container}>
         <View style={{ alignItems: "center", marginTop: 10 }}>
           <Text style={styles.medTypeTitle}>
             {localizedStrings[this.props.language].typeTitleLabel}
@@ -127,6 +127,12 @@ class Type extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+
   medTypeTitle: {
     fontSize: Metrics.titleFontSize,
     fontFamily: "sansBold",
@@ -145,7 +151,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     margin: 10,
     width: Metrics.imageTextViewContainerW
   },
@@ -158,7 +164,7 @@ const styles = StyleSheet.create({
     flexDirection: "row"
   },
   imageText: {
-    fontSize: Metrics.TypeRecFontSize,
+    fontSize: Metrics.TypeFontSize,
     fontFamily: "sansRegular",
     color: "#d6d6d6",
     marginTop: 5,

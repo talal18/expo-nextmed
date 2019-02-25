@@ -271,7 +271,7 @@ class Dates extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <View style={{ alignItems: "center", marginTop: 10 }}>
           <Text style={styles.datesTitle}>
             {localizedStrings[this.props.language].startEndDateLabel}
@@ -285,6 +285,12 @@ class Dates extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "space-between",
+    alignItems: "center"
+  },
+
   addDateListItemContainer: {
     height: Metrics.formAddTimeListContainerHeight,
     width: Metrics.formAddTimeListContainerWidth,
@@ -299,12 +305,11 @@ const styles = StyleSheet.create({
   addDateListItem: {
     height: Metrics.formAddTimeListHeight,
     width: Metrics.formAddTimeListWidth,
-    flex: 1,
-
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between"
   },
+
   addDatesListItemText: {
     fontFamily: "sansRegular",
     fontSize: Metrics.flatListItemFontSize,

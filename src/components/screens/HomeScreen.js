@@ -113,9 +113,11 @@ class HomeScreen extends React.Component {
           />
         ) : (
           <View style={styles.emptyFlatListContainer}>
-            <Text style={styles.emptyFlatListText}>
-              {localizedStrings[this.props.language].homeEmptyListLabel}
-            </Text>
+            <View style={styles.emptyTextContainer}>
+              <Text style={styles.emptyFlatListText}>
+                {localizedStrings[this.props.language].homeEmptyListLabel}
+              </Text>
+            </View>
           </View>
         )}
       </View>
@@ -176,6 +178,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center"
   },
+
+  emptyTextContainer: {
+    padding: 5
+  },
+
   emptyFlatListText: {
     fontFamily: "sansItalic",
     color: "#d6d6d6",

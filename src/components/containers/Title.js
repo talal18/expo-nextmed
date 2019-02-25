@@ -12,7 +12,7 @@ import { localizedStrings } from "../../common/languages";
 class Title extends Component {
   render() {
     return (
-      <View>
+      <View style={styles.container}>
         <View style={{ alignItems: "center", marginTop: 10 }}>
           <Text style={styles.medTitle}>
             {localizedStrings[this.props.language].medicineTitleLabel}
@@ -32,6 +32,12 @@ class Title extends Component {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+
   medTitle: {
     fontSize: Metrics.titleFontSize,
     fontFamily: "sansBold",

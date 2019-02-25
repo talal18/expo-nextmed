@@ -36,7 +36,7 @@ export const localizedStrings = {
       dropsLabel: "Drops",
       injectionsLabel: "Injections",
       liquidLabel: "Liquid",
-      ointmentLabel: "Ointment(Cream, Gel,...)",
+      ointmentLabel: "Ointment",
       pillsLabel: "Pills",
       powderLabel: "Powder",
       sprayLabel: "Spray",
@@ -113,21 +113,21 @@ export const localizedStrings = {
     typeLabels: {
       capsulesLabel: "Capsules",
       dropsLabel: "Gouttes",
-      injectionsLabel: "Les injections",
+      injectionsLabel: "Injections",
       liquidLabel: "Liquide",
-      ointmentLabel: "Pommade (crème, gel, ...)",
-      pillsLabel: " des pilules",
+      ointmentLabel: "Pommade",
+      pillsLabel: " Pilules",
       powderLabel: "Poudre",
       sprayLabel: "Vaporisateur",
-      suppositoriesLabel: "le suppositoire",
-      trochesLabel: "les troncs"
+      suppositoriesLabel: "Suppositoire",
+      trochesLabel: "Troncs"
     },
     addTimesLabel: "ajouter des temps",
     dosageLabel: "dosage",
-    frequencyLabel: "la fréquence",
+    frequencyLabel: "Fréquence",
     frequencyMenuLabels: {
-      dailyLabel: "du quotidien",
-      weeklyLabel: "hebdomadaire",
+      dailyLabel: "Quotidien",
+      weeklyLabel: "hebdo",
       monthlyLabel: "mensuel",
       yearlyLabel: "Annuel"
     },
@@ -200,7 +200,7 @@ export const localizedStrings = {
       dropsLabel: "Gotas",
       injectionsLabel: "Inyecciones",
       liquidLabel: "Líquido",
-      ointmentLabel: "Ungüento (Crema, Gel, ...)",
+      ointmentLabel: "Ungüento",
       pillsLabel: "pastillas",
       powderLabel: "Polvo",
       sprayLabel: "Rociar",
@@ -219,8 +219,8 @@ export const localizedStrings = {
     notificationNoteLabel:
       "Las notificaciones se establecerán sólo durante 1 año.",
     startEndDateLabel: "fecha de inicio y finalización",
-    setStartDateLabel: "Establecer una fecha de inicio",
-    setEndDateLabel: "Establecer una fecha de finalización",
+    setStartDateLabel: "fecha de inicio",
+    setEndDateLabel: "Fecha final",
     notesLabel: "notas",
     updateLabel: "actualizar",
     addLabel: "Añadir",
@@ -260,7 +260,7 @@ export const localizedStrings = {
 
     //Home page
     medicineListLabel: "قائمة الأدوية",
-    homeEmptyListLabel: "ليس لديك أي أدوية مجدولة",
+    homeEmptyListLabel: "  ليس لديك أي أدوية مجدولة",
     //Settings Page
     languagesLabel: "اللغة",
     selectedLanguageLabel: "العربية",
@@ -284,7 +284,7 @@ export const localizedStrings = {
       dropsLabel: "قطرات  ",
       injectionsLabel: "الحقن",
       liquidLabel: "سائل",
-      ointmentLabel: "مرهم (كريم ، جل ، ...)",
+      ointmentLabel: "مرهم",
       pillsLabel: "حبوب ",
       powderLabel: "مسحوق",
       sprayLabel: "بخاخ",
