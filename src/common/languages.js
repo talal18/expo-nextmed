@@ -9,6 +9,8 @@ export const localizedStrings = {
     backupTitle: "Backup",
     manageNotificationsTitle: "Manage Notifications",
 
+    //Manage Notifications Page
+    searchLabel: "Search...",
     //Home page
     medicineListLabel: "Medicine List",
     homeEmptyListLabel:
@@ -87,6 +89,9 @@ export const localizedStrings = {
     settingsTitle: "Réglages",
     backupTitle: "Des sauvegardes",
     manageNotificationsTitle: "Gérer les notifications",
+
+    //Manage Notifications Page
+    searchLabel: "Chercher...",
 
     //Home page
     medicineListLabel: "Liste de médecine",
@@ -173,6 +178,9 @@ export const localizedStrings = {
     backupTitle: "Copias de seguridad",
     manageNotificationsTitle: "Gestionar notificaciones",
 
+    //Manage Notifications Page
+    searchLabel: "Buscar...",
+
     //Home page
     medicineListLabel: "Lista de medicamentos",
     homeEmptyListLabel:
@@ -257,6 +265,9 @@ export const localizedStrings = {
     settingsTitle: "الإعدادات",
     backupTitle: "النسخ الاحتياطي",
     manageNotificationsTitle: "إدارة الاشعارات",
+
+    //Manage Notifications Page
+    searchLabel: "بحث...",
 
     //Home page
     medicineListLabel: "قائمة الأدوية",

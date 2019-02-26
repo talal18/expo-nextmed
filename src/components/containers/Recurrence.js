@@ -88,6 +88,14 @@ class Recurrence extends Component {
             );
           })}
         </View>
+        {(this.props.recurrence === "day" ||
+          this.props.recurrence === "week") && (
+          <View style={styles.frequencyNoteContainer}>
+            <Text style={styles.frequencyNote}>
+              {localizedStrings[this.props.language].notificationNoteLabel}
+            </Text>
+          </View>
+        )}
       </View>
     );
   }

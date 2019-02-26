@@ -303,13 +303,13 @@ export const add_notification = (
         var months = 0;
         var endDate = new Date(end_date);
 
-        if (date.getMonth() === endDate.getMonth()) {
-          if (endDate.getFullYear() > date.getFullYear()) {
-            var years = endDate.getFullYear() - date.getFullYear();
-            months += 12 * years;
-          }
+        if (endDate.getFullYear() > date.getFullYear()) {
+          var years = endDate.getFullYear() - date.getFullYear();
+          months += 12 * years;
+          if (date.getDate() > endDate.getDate()) months -= 1;
         } else {
           months = endDate.getMonth() - date.getMonth();
+          if (date.getDate() > endDate.getDate()) months -= 1;
         }
 
         for (var i = isBeforeNow ? 1 : 0; i <= months; i++) {
@@ -742,13 +742,13 @@ export const update_notifications = (
         var months = 0;
         var endDate = new Date(end_date);
 
-        if (date.getMonth() === endDate.getMonth()) {
-          if (endDate.getFullYear() > date.getFullYear()) {
-            var years = endDate.getFullYear() - date.getFullYear();
-            months += 12 * years;
-          }
+        if (endDate.getFullYear() > date.getFullYear()) {
+          var years = endDate.getFullYear() - date.getFullYear();
+          months += 12 * years;
+          if (date.getDate() > endDate.getDate()) months -= 1;
         } else {
           months = endDate.getMonth() - date.getMonth();
+          if (date.getDate() > endDate.getDate()) months -= 1;
         }
 
         for (var i = isBeforeNow ? 1 : 0; i <= months; i++) {

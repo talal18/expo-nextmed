@@ -10,6 +10,7 @@ import {
 
 import { connect } from "react-redux";
 import Metrics from "../../styling/Metrics";
+import { localizedStrings } from "../../common/languages";
 
 import {
   update_notification,
@@ -182,12 +183,13 @@ class ManageNotifications extends React.Component {
   }
 
   render() {
+    console.log(this.props.notifications);
     return (
       <View style={{ flex: 1 }}>
         <View>
           <TextInput
             style={styles.searchInput}
-            placeholder="Search..."
+            placeholder={localizedStrings[this.props.language].searchLabel}
             onChangeText={text => this.searchFilterFunction(text)}
             autoCorrect={false}
           />
@@ -267,6 +269,7 @@ const mapStateToProps = state => {
   const { data, searchText } = state.notificationsState;
 
   return {
+    language: state.settingsState.language,
     notifications: state.notificationsState.data,
     filteredItems: data.filter(
       item =>
