@@ -1,5 +1,5 @@
 {
-  "expoServerPort": 19000,
+  "expoServerPort": null,
   "packagerPort": 19001,
   "packagerPid": 10044,
   "expoServerNgrokUrl": "https://b9-s32.yass0016.expo-nextmed.exp.direct",

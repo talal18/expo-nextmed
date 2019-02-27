@@ -65,7 +65,7 @@ class Recurrence extends Component {
                     borderWidth: 3,
                     borderRadius: 200,
                     borderColor: "#d6d6d6",
-                    padding: 5,
+                    padding: 10,
                     margin: 10,
                     backgroundColor:
                       this.props.recurrence !== undefined &&
