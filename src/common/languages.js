@@ -54,7 +54,7 @@ export const localizedStrings = {
       monthlyLabel: "Monthly",
       yearlyLabel: "Yearly"
     },
-    notificationNoteLabel: "Notifications will be set dor 1 year only",
+    notificationNoteLabel: "Notifications will be set for 1 year only",
     startEndDateLabel: "Start & End Date",
     setStartDateLabel: "Set a start date",
     setEndDateLabel: "Set an end date",
@@ -225,7 +225,7 @@ export const localizedStrings = {
       yearlyLabel: "Anual"
     },
     notificationNoteLabel:
-      "Las notificaciones se establecerán sólo durante 1 año.",
+      "Las notificaciones se establecerán por 1 año solamente",
     startEndDateLabel: "fecha de inicio y finalización",
     setStartDateLabel: "fecha de inicio",
     setEndDateLabel: "Fecha final",

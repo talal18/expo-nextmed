@@ -122,7 +122,7 @@ const metrics = {
   //Reccurence
   medRecEachImageContainerW: NormalizeSize.normalizeWidth(90),
   medRecEachImageContainerH: NormalizeSize.normalizeHeight(120),
-  medRecImageWH: NormalizeSize.normalizeHeight(60),
+  medRecImageWH: NormalizeSize.normalizeHeight(50),
 
   //Set Start and End Date
   formSetDateContainerWidth: NormalizeSize.normalizeWidth(330),
@@ -179,7 +179,7 @@ const metrics = {
     Platform.OS === "ios"
       ? NormalizeSize.normalizeHeight(20)
       : NormalizeSize.normalizeWidth(20),
-  navigationTitleFontSize: 18,
+  navigationTitleFontSize: 24,
   ModalButtonsFontSize:
     Platform.OS === "ios"
       ? NormalizeSize.normalizeHeight(22)
@@ -187,8 +187,8 @@ const metrics = {
 
   DosageIncrFontSize:
     Platform.OS === "ios"
-      ? NormalizeSize.normalizeHeight(20)
-      : NormalizeSize.normalizeWidth(20),
+      ? NormalizeSize.normalizeHeight(18)
+      : NormalizeSize.normalizeHeight(18),
   TypeFontSize:
     Platform.OS === "ios"
       ? NormalizeSize.normalizeHeight(16)

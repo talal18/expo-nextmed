@@ -222,23 +222,27 @@ class EditScreen extends Component {
         <Recurrence />
         <View style={styles.contentDivder} />
         <Dates />
-        <TouchableOpacity
-          onPress={this.manageNotifications.bind(this)}
-          style={styles.updateButton}
-        >
-          <Text style={styles.updateButtonTitle}>
-            {localizedStrings[this.props.language].manageNotificationsLabel}
-          </Text>
-        </TouchableOpacity>
+        <View style={styles.manageNotificationsButtonContainer}>
+          <TouchableOpacity
+            onPress={this.manageNotifications.bind(this)}
+            style={styles.updateButton}
+          >
+            <Text style={styles.updateButtonTitle}>
+              {localizedStrings[this.props.language].manageNotificationsLabel}
+            </Text>
+          </TouchableOpacity>
+        </View>
         <Notes />
-        <TouchableOpacity
-          onPress={this.updateNotification.bind(this)}
-          style={styles.updateButton}
-        >
-          <Text style={styles.updateButtonTitle}>
-            {localizedStrings[this.props.language].updateLabel}
-          </Text>
-        </TouchableOpacity>
+        <View style={styles.updateButtonContainer}>
+          <TouchableOpacity
+            onPress={this.updateNotification.bind(this)}
+            style={styles.updateButton}
+          >
+            <Text style={styles.updateButtonTitle}>
+              {localizedStrings[this.props.language].updateLabel}
+            </Text>
+          </TouchableOpacity>
+        </View>
       </ScrollView>
     );
   }
@@ -277,11 +281,22 @@ const styles = StyleSheet.create({
     paddingRight: Metrics.scrollViewContainerPaddingHorizontal
   },
   contentDivder: {
-    width: Metrics.formContentDivider,
+    width: "100%",
     borderTopColor: "#595d63",
     borderTopWidth: 3,
     marginTop: 10
   },
+  manageNotificationsButtonContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+  updateButtonContainer: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center"
+  },
+
   updateButtonTitle: {
     fontSize: Metrics.titleFontSize,
     fontFamily: "sansBold",
