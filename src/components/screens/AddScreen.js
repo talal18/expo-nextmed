@@ -148,6 +148,7 @@ class AddScreen extends Component {
         <Type />
         <View style={styles.contentDivder} />
         <Times />
+        <View style={styles.contentDivder} />
         <Dosage />
         <View style={styles.contentDivder} />
         <Recurrence />

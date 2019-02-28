@@ -45,6 +45,7 @@ export const localizedStrings = {
       suppositoriesLabel: "Suppostories",
       trochesLabel: "Troches"
     },
+    timesLabel: "Intake Times",
     addTimesLabel: "Add Times",
     dosageLabel: "Dosage",
     frequencyLabel: "Frequency",
@@ -127,6 +128,7 @@ export const localizedStrings = {
       suppositoriesLabel: "Suppositoire",
       trochesLabel: "Troncs"
     },
+    timesLabel: "Temps d'admission",
     addTimesLabel: "ajouter des temps",
     dosageLabel: "dosage",
     frequencyLabel: "Fréquence",
@@ -215,6 +217,7 @@ export const localizedStrings = {
       suppositoriesLabel: "supositorios",
       trochesLabel: "trocillos"
     },
+    timesLabel: "Tiempos de ingesta",
     addTimesLabel: "agregar tiempos",
     dosageLabel: "dosificación",
     frequencyLabel: "frecuencia",
@@ -302,7 +305,8 @@ export const localizedStrings = {
       suppositoriesLabel: "تحاميل",
       trochesLabel: "قرص"
     },
-    addTimesLabel: "إضافة مواعيد",
+    timesLabel: "اوقات الدواء",
+    addTimesLabel: "إضافة وقت",
     dosageLabel: "الجرعة",
     frequencyLabel: "التكرار",
     frequencyMenuLabels: {

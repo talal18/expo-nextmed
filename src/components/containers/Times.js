@@ -150,6 +150,11 @@ class Times extends Component {
   render() {
     return (
       <View>
+        <View style={{ alignItems: "center", marginTop: 10 }}>
+          <Text style={styles.timesTitle}>
+            {localizedStrings[this.props.language].timesLabel}
+          </Text>
+        </View>
         {this.renderTime()}
         {this.renderTimeDialog()}
       </View>
@@ -162,6 +167,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
+  },
+
+  timesTitle: {
+    fontSize: Metrics.titleFontSize,
+    fontFamily: "sansBold",
+    color: "#d6d6d6"
   },
 
   medTimesTitle: {

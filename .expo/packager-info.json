@@ -1,9 +1,9 @@
 {
-  "expoServerPort": null,
-  "packagerPort": null,
-  "packagerPid": null,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null,
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 2919,
+  "expoServerNgrokUrl": "https://b9-s32.talal18.expo-nextmed.exp.direct",
+  "packagerNgrokUrl": "https://packager.b9-s32.talal18.expo-nextmed.exp.direct",
+  "ngrokPid": 2934,
   "devToolsPort": 19002
 }
