@@ -12,11 +12,6 @@ import { connect } from "react-redux";
 import Metrics from "../../styling/Metrics";
 import { localizedStrings } from "../../common/languages";
 
-import {
-  update_notification,
-  set_search_text
-} from "../../redux/actions/notifications";
-
 const renderCustomDate = date => {
   var myDate = new Date(date);
 
@@ -266,24 +261,12 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => {
-  const { data, searchText } = state.notificationsState;
-
   return {
-    language: state.settingsState.language,
-    notifications: state.notificationsState.data,
-    filteredItems: data.filter(
-      item =>
-        renderCustomDate(item.date)
-          .customText.toUpperCase()
-          .includes(searchText.toUpperCase()) === true
-    )
+    language: state.settingsState.language
   };
 };
 
 export default connect(
   mapStateToProps,
-  {
-    set_search_text,
-    update_notification
-  }
+  {}
 )(ManageNotifications);

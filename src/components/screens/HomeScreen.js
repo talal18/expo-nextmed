@@ -9,15 +9,18 @@ import {
   StyleSheet
 } from "react-native";
 
-import { Permissions, Notifications } from "expo";
+import { Permissions } from "expo";
 
 import Metrics from "../../styling/Metrics";
 
 import { connect } from "react-redux";
 
-import { deleteMedication } from "../../redux/actions/medications";
 import { localizedStrings } from "../../common/languages";
-import { set_status } from "../../redux/actions/notifications";
+import {
+  getMedications,
+  deleteMedicationById
+} from "../../common/SQLiteHelper";
+import { reset_data } from "../../redux/actions/data";
 
 class HomeScreen extends React.Component {
   constructor() {
@@ -33,9 +36,26 @@ class HomeScreen extends React.Component {
       Permissions.CAMERA,
       Permissions.CAMERA_ROLL
     );
+
+    getMedications().then(result => {
+      this.setState({ data: result });
+    });
+
+    this.didFocusSubscription = this.props.navigation.addListener(
+      "willFocus",
+      payload => {
+        getMedications().then(result => {
+          this.setState({ data: result });
+        });
+      }
+    );
+
+    this.props.reset_data();
   }
 
-  componentWillMount() {}
+  componentWillUnmount() {
+    this.didFocusSubscription.remove();
+  }
 
   renderItem = ({ item }) => {
     return (
@@ -44,7 +64,7 @@ class HomeScreen extends React.Component {
           <TouchableOpacity
             style={styles.MedImageContainer}
             onPress={() => {
-              this.props.navigation.navigate("Edit", { id: item.m_id });
+              this.props.navigation.navigate("Edit", { id: item.id });
             }}
           >
             {item.uri ? (
@@ -60,7 +80,7 @@ class HomeScreen extends React.Component {
           <View style={styles.homeListItem}>
             <TouchableOpacity
               onPress={() => {
-                this.props.navigation.navigate("Edit", { id: item.m_id });
+                this.props.navigation.navigate("Edit", { id: item.id });
               }}
             >
               <Text style={styles.itemText}>
@@ -83,7 +103,11 @@ class HomeScreen extends React.Component {
                     {
                       text: "YES",
                       onPress: () => {
-                        this.props.deleteMedication(item);
+                        deleteMedicationById(item.id).then(result => {
+                          getMedications().then(result => {
+                            this.setState({ data: result });
+                          });
+                        });
                       }
                     }
                   ],
@@ -105,9 +129,9 @@ class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        {this.props.medications.length > 0 ? (
+        {this.state.data.length > 0 ? (
           <FlatList
-            data={this.props.medications}
+            data={this.state.data}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => index.toString()}
           />
@@ -194,16 +218,13 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    medications: state.medState.medications,
-    language: state.settingsState.language,
-    notifications: state.notificationsState.data
+    language: state.settingsState.language
   };
 };
 
 export default connect(
   mapStateToProps,
   {
-    deleteMedication,
-    set_status
+    reset_data
   }
 )(HomeScreen);

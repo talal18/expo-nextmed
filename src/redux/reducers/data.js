@@ -68,7 +68,7 @@ export default function reducer(state = defaultState, action) {
         data: {
           ...state.data,
           intake_times: state.data.intake_times.filter(item => {
-            if (item.time !== action.time.time) {
+            if (item !== action.time) {
               return item;
             }
           })

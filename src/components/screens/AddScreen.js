@@ -10,13 +10,13 @@ import {
   Platform
 } from "react-native";
 
-import { connect } from "react-redux";
+import { FileSystem } from "expo";
 
-import { addMedication } from "../../redux/actions/medications";
+import { connect } from "react-redux";
 
 import { reset_data } from "../../redux/actions/data";
 
-import { add_m_id, add_notification } from "../../redux/actions/notifications";
+import { addMedication } from "../../common/SQLiteHelper";
 
 import Metrics from "../../styling/Metrics";
 
@@ -35,25 +35,13 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 class AddScreen extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      m_id: ""
-    };
   }
 
-  componentWillMount() {
-    this.props.reset_data();
-  }
-
-  componentDidMount() {
-    this.setState({
-      m_id:
-        "_" +
-        Math.random()
-          .toString(36)
-          .substr(2, 9) +
-        Date.now()
-    });
+  componentWillUnmount() {
+    if (this.props.data.uri)
+      FileSystem.getInfoAsync(this.props.data.uri).then(
+        result => result.exists && FileSystem.deleteAsync(this.props.data.uri)
+      );
   }
 
   addNotification() {
@@ -91,40 +79,39 @@ class AddScreen extends Component {
         { cancelable: false }
       );
     } else {
-      var start_date = new Date(this.props.data.start_date);
+      // var start_date = new Date(this.props.data.start_date);
 
-      this.props.data.intake_times.map(item => {
-        var myDate = new Date(item.time);
-        var minutes = myDate.getMinutes();
-        var hours = myDate.getHours();
+      // this.props.data.intake_times.map(item => {
+      //   var myDate = new Date(item.time);
+      //   var minutes = myDate.getMinutes();
+      //   var hours = myDate.getHours();
 
-        var date = new Date(
-          start_date.getFullYear(),
-          start_date.getMonth(),
-          start_date.getDate(),
-          hours,
-          minutes,
-          "0",
-          "0"
-        );
+      //   var date = new Date(
+      //     start_date.getFullYear(),
+      //     start_date.getMonth(),
+      //     start_date.getDate(),
+      //     hours,
+      //     minutes,
+      //     "0",
+      //     "0"
+      //   );
 
-        this.props.add_notification(
-          this.state.m_id,
-          this.props.data.title,
-          this.props.data.title +
-            ": " +
-            this.props.data.dosage +
-            " " +
-            this.props.data.type,
-          this.props.data.recurrence,
-          date,
-          this.props.data.end_date,
-          true
-        );
-      });
+      //   this.props.add_notification(
+      //     this.state.m_id,
+      //     this.props.data.title,
+      //     this.props.data.title +
+      //       ": " +
+      //       this.props.data.dosage +
+      //       " " +
+      //       this.props.data.type,
+      //     this.props.data.recurrence,
+      //     date,
+      //     this.props.data.end_date,
+      //     true
+      //   );
+      // });
 
-      this.props.addMedication({
-        m_id: this.state.m_id,
+      addMedication({
         title: this.props.data.title,
         type: this.props.data.type,
         start_date: this.props.data.start_date,
@@ -249,9 +236,6 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    addMedication,
-    reset_data,
-    add_m_id,
-    add_notification
+    reset_data
   }
 )(AddScreen);

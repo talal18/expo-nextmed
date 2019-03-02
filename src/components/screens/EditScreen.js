@@ -12,16 +12,9 @@ import {
 
 import { connect } from "react-redux";
 
-import { updateMedication } from "../../redux/actions/medications";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 import { localizedStrings } from "../../common/languages";
-
-import {
-  add_notification,
-  update_notifications,
-  delete_notifications
-} from "../../redux/actions/notifications";
 
 import {
   set_image_uri,
@@ -48,14 +41,11 @@ import Title from "../containers/Title";
 import Dosage from "../containers/Dosage";
 import Notes from "../containers/Notes";
 import MedImage from "../containers/MedImage";
+import { getMedicationById, updateMedication } from "../../common/SQLiteHelper";
 
 class EditScreen extends Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      m_id: ""
-    };
   }
 
   componentWillMount() {
@@ -63,22 +53,20 @@ class EditScreen extends Component {
   }
 
   getMedication(id) {
-    this.props.medications.map(item => {
-      if (item.m_id === id) {
-        this.props.set_m_id(item.m_id);
-        this.props.set_title(item.title);
-        this.props.set_dosage(item.dosage);
-        this.props.set_notes(item.notes);
-        this.props.set_recurrence(item.recurrence);
-        this.props.set_start_date(item.start_date);
-        this.props.set_end_date(item.end_date);
-        this.props.set_type(item.type);
-        this.props.set_image_uri(item.uri);
+    getMedicationById(id).then(result => {
+      this.props.set_title(result.title);
+      this.props.set_dosage(parseFloat(result.dosage));
+      this.props.set_notes(result.notes);
+      this.props.set_recurrence(result.recurrence);
+      this.props.set_start_date(result.start_date);
+      this.props.set_end_date(result.end_date);
+      this.props.set_type(result.type);
+      this.props.set_image_uri(result.uri);
 
-        item.intake_times.map(time => {
-          this.props.add_time(time);
-        });
-      }
+      var intake_times = result.intake_times.split(",");
+      intake_times.map(time => {
+        this.props.add_time(parseInt(time));
+      });
     });
   }
 
@@ -155,45 +143,44 @@ class EditScreen extends Component {
       //   this.props.notifications
       // );
 
-      var orig_notifications = this.props.notifications.slice();
+      // var orig_notifications = this.props.notifications.slice();
 
-      this.props.delete_notifications(orig_notifications, this.props.data.m_id);
+      // this.props.delete_notifications(orig_notifications, this.props.data.m_id);
 
-      var start_date = new Date(this.props.data.start_date);
+      // var start_date = new Date(this.props.data.start_date);
 
-      this.props.data.intake_times.map(item => {
-        var myDate = new Date(item.time);
-        var minutes = myDate.getMinutes();
-        var hours = myDate.getHours();
+      // this.props.data.intake_times.map(item => {
+      //   var myDate = new Date(item.time);
+      //   var minutes = myDate.getMinutes();
+      //   var hours = myDate.getHours();
 
-        var date = new Date(
-          start_date.getFullYear(),
-          start_date.getMonth(),
-          start_date.getDate(),
-          hours,
-          minutes,
-          "0",
-          "0"
-        );
+      //   var date = new Date(
+      //     start_date.getFullYear(),
+      //     start_date.getMonth(),
+      //     start_date.getDate(),
+      //     hours,
+      //     minutes,
+      //     "0",
+      //     "0"
+      //   );
 
-        this.props.update_notifications(
-          this.props.data.m_id,
-          this.props.data.title,
-          this.props.data.title +
-            ": " +
-            this.props.data.dosage +
-            " " +
-            this.props.data.type,
-          this.props.data.recurrence,
-          date,
-          this.props.data.end_date,
-          true,
-          orig_notifications
-        );
-      });
+      //   this.props.update_notifications(
+      //     this.props.data.m_id,
+      //     this.props.data.title,
+      //     this.props.data.title +
+      //       ": " +
+      //       this.props.data.dosage +
+      //       " " +
+      //       this.props.data.type,
+      //     this.props.data.recurrence,
+      //     date,
+      //     this.props.data.end_date,
+      //     true,
+      //     orig_notifications
+      //   );
+      // });
 
-      this.props.updateMedication({
-        m_id: this.props.data.m_id,
+      updateMedication(this.props.navigation.state.params.id, {
         title: this.props.data.title,
         type: this.props.data.type,
         start_date: this.props.data.start_date,
@@ -325,8 +312,6 @@ const styles = StyleSheet.create({
 const mapStateToProps = state => {
   return {
     data: state.dataState.data,
-    medications: state.medState.medications,
-    notifications: state.notificationsState.data,
     language: state.settingsState.language
   };
 };
@@ -334,7 +319,6 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    updateMedication,
     reset_data,
     set_title,
     set_type,
@@ -346,9 +330,6 @@ export default connect(
     set_notes,
     set_m_id,
     set_user_id,
-    set_image_uri,
-    add_notification,
-    update_notifications,
-    delete_notifications
+    set_image_uri
   }
 )(EditScreen);

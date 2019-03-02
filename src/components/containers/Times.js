@@ -74,7 +74,7 @@ class Times extends Component {
               <View style={styles.addTimeListItemContainer}>
                 <View style={styles.addTimeListItem}>
                   <Text style={styles.addTimesListItemText}>
-                    {this.renderTimeText(item.time)}
+                    {this.renderTimeText(item)}
                   </Text>
 
                   <TouchableOpacity
@@ -110,10 +110,7 @@ class Times extends Component {
     });
 
     if (!isSame) {
-      this.props.add_time({
-        time: time.getTime(),
-        status: true
-      });
+      this.props.add_time(time.getTime());
     } else {
       return Alert.alert(
         "Error",

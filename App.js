@@ -8,6 +8,7 @@ import { store, persistor } from "./src/redux";
 import { Font, Notifications } from "expo";
 
 import Navigation from "./src/components/Navigation";
+import { createTables } from "./src/common/SQLiteHelper";
 
 console.disableYellowBox = true;
 
@@ -21,6 +22,8 @@ export default class App extends React.Component {
     this.state = {
       fontLoad: false
     };
+
+    createTables();
   }
 
   async componentDidMount() {
