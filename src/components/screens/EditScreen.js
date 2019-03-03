@@ -41,11 +41,19 @@ import Title from "../containers/Title";
 import Dosage from "../containers/Dosage";
 import Notes from "../containers/Notes";
 import MedImage from "../containers/MedImage";
-import { getMedicationById, updateMedication } from "../../common/SQLiteHelper";
+import {
+  getMedicationById,
+  updateMedication,
+  getNotificationsByMedicationId
+} from "../../common/SQLiteHelper";
 
 class EditScreen extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      notifications: []
+    };
   }
 
   componentWillMount() {
@@ -67,6 +75,14 @@ class EditScreen extends Component {
       intake_times.map(time => {
         this.props.add_time(parseInt(time));
       });
+
+      getNotificationsByMedicationId(id)
+        .then(result => {
+          this.setState({ notifications: result });
+        })
+        .catch(error => {
+          console.log(error);
+        });
     });
   }
 
@@ -80,7 +96,236 @@ class EditScreen extends Component {
     });
   }
 
-  updateNotification() {
+  isBeforeNow(time) {
+    var myDate = new Date(time);
+    var minutes = myDate.getMinutes();
+    var hours = myDate.getHours();
+
+    var today = new Date(Date.now());
+    var start_date = new Date(this.props.data.start_date);
+
+    var start_day = start_date.getDate();
+    var start_month = start_date.getMonth();
+    var start_year = start_date.getFullYear();
+
+    if (
+      start_day === today.getDate() &&
+      start_month === today.getMonth() &&
+      start_year === today.getFullYear()
+    ) {
+      if (today.getHours() === hours) {
+        return today.getMinutes() >= minutes;
+      } else {
+        return today.getHours() > hours;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  updateNotifications(m_id) {
+    var start_date = new Date(this.props.data.start_date);
+    var end_date = new Date(this.props.data.end_date);
+    var diff = new DateDiff(end_date, start_date);
+
+    var title = this.props.data.title;
+    var body =
+      this.props.data.title +
+      ": " +
+      this.props.data.dosage +
+      " " +
+      this.props.data.type;
+
+    const localNotification = {
+      title,
+      body,
+      ios: {
+        sound: true
+      },
+      android: {
+        channelId: "nextmedNotifications",
+        sound: true,
+        priority: "high",
+        sticky: false,
+        vibrate: true
+      }
+    };
+
+    this.props.data.intake_times.map(time => {
+      var myDate = new Date(time);
+      var minutes = myDate.getMinutes();
+      var hours = myDate.getHours();
+
+      var isBeforeNow = this.isBeforeNow(time);
+
+      var date = new Date(
+        start_date.getFullYear(),
+        start_date.getMonth(),
+        start_date.getDate(),
+        hours,
+        minutes,
+        "0",
+        "0"
+      );
+
+      if (this.props.data.recurrence === "day") {
+        var days = diff.days();
+        if (days > 365) days = 365;
+        for (var i = isBeforeNow ? 1 : 0; i <= days; i++) {
+          let t = new Date(date);
+          t.setDate(t.getDate() + i);
+
+          var schedulingOptions = {
+            time: t.getTime()
+          };
+
+          var result = this.state.notifications.filter(notification => {
+            return notification.date === t.toString();
+          });
+
+          if (result.length > 0) {
+            if (!result[0].status) {
+              addNotification({
+                m_id,
+                notification_id,
+                date: new Date(schedulingOptions.time).toString(),
+                status: false,
+                title,
+                body
+              });
+            } else {
+              Notifications.scheduleLocalNotificationAsync(
+                localNotification,
+                schedulingOptions
+              ).then(notification_id => {
+                schedulingOptions = {
+                  time: t.getTime()
+                };
+
+                addNotification({
+                  m_id,
+                  notification_id,
+                  date: new Date(schedulingOptions.time).toString(),
+                  status: true,
+                  title,
+                  body
+                });
+              });
+            }
+          } else {
+            Notifications.scheduleLocalNotificationAsync(
+              localNotification,
+              schedulingOptions
+            ).then(notification_id => {
+              schedulingOptions = {
+                time: t.getTime()
+              };
+
+              addNotification({
+                m_id,
+                notification_id,
+                date: new Date(schedulingOptions.time).toString(),
+                status: true,
+                title,
+                body
+              });
+            });
+          }
+        }
+      } else if (this.props.data.recurrence === "week") {
+        var weeks = diff.weeks();
+
+        if (weeks > 52) weeks = 52;
+
+        for (var i = isBeforeNow ? 1 : 0; i <= weeks; i++) {
+          let t = new Date(date);
+          t.setDate(t.getDate() + i * 7);
+
+          var schedulingOptions = {
+            time: t.getTime()
+          };
+
+          Notifications.scheduleLocalNotificationAsync(
+            localNotification,
+            schedulingOptions
+          ).then(notification_id => {
+            schedulingOptions = {
+              time: t.getTime()
+            };
+
+            addNotification({
+              m_id,
+              notification_id,
+              date: new Date(schedulingOptions.time).toString(),
+              status: true,
+              title,
+              body
+            });
+          });
+        }
+      } else if (this.props.data.recurrence === "month") {
+        var months = diff.months();
+
+        for (var i = isBeforeNow ? 1 : 0; i <= months; i++) {
+          let t = new Date(date);
+          t.setMonth(t.getMonth() + i);
+
+          var schedulingOptions = {
+            time: t.getTime()
+          };
+
+          Notifications.scheduleLocalNotificationAsync(
+            localNotification,
+            schedulingOptions
+          ).then(notification_id => {
+            schedulingOptions = {
+              time: t.getTime()
+            };
+
+            addNotification({
+              m_id,
+              notification_id,
+              date: new Date(schedulingOptions.time).toString(),
+              status: true,
+              title,
+              body
+            });
+          });
+        }
+      } else if (this.props.data.recurrence === "year") {
+        var years = diff.years();
+
+        for (var i = isBeforeNow ? 1 : 0; i <= years; i++) {
+          let t = new Date(date);
+          t.setFullYear(t.getFullYear() + i);
+
+          var schedulingOptions = {
+            time: t.getTime()
+          };
+
+          Notifications.scheduleLocalNotificationAsync(
+            localNotification,
+            schedulingOptions
+          ).then(notification_id => {
+            schedulingOptions = {
+              time: t.getTime()
+            };
+
+            addNotification({
+              m_id,
+              notification_id,
+              date: new Date(schedulingOptions.time).toString(),
+              status: true,
+              title,
+              body
+            });
+          });
+        }
+      }
+    });
+  }
+
+  updateMedication() {
     var errors = [];
 
     if (this.props.data.title.length <= 0) {
@@ -135,51 +380,6 @@ class EditScreen extends Component {
         { cancelable: false }
       );
     } else {
-      // this.props.update_notifications(
-      //   this.props.data.m_id,
-      //   this.props.data.start_date,
-      //   this.props.data.end_date,
-      //   this.props.data.intake_times,
-      //   this.props.notifications
-      // );
-
-      // var orig_notifications = this.props.notifications.slice();
-
-      // this.props.delete_notifications(orig_notifications, this.props.data.m_id);
-
-      // var start_date = new Date(this.props.data.start_date);
-
-      // this.props.data.intake_times.map(item => {
-      //   var myDate = new Date(item.time);
-      //   var minutes = myDate.getMinutes();
-      //   var hours = myDate.getHours();
-
-      //   var date = new Date(
-      //     start_date.getFullYear(),
-      //     start_date.getMonth(),
-      //     start_date.getDate(),
-      //     hours,
-      //     minutes,
-      //     "0",
-      //     "0"
-      //   );
-
-      //   this.props.update_notifications(
-      //     this.props.data.m_id,
-      //     this.props.data.title,
-      //     this.props.data.title +
-      //       ": " +
-      //       this.props.data.dosage +
-      //       " " +
-      //       this.props.data.type,
-      //     this.props.data.recurrence,
-      //     date,
-      //     this.props.data.end_date,
-      //     true,
-      //     orig_notifications
-      //   );
-      // });
-
       updateMedication(this.props.navigation.state.params.id, {
         title: this.props.data.title,
         type: this.props.data.type,
@@ -190,8 +390,17 @@ class EditScreen extends Component {
         dosage: this.props.data.dosage,
         notes: this.props.data.notes,
         uri: this.props.data.uri
-      });
-      this.props.navigation.navigate("Home");
+      })
+        .then(m_id => {
+          this.updateNotifications(m_id);
+
+          this.setState({ added: true });
+
+          this.props.navigation.navigate("Home");
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   }
 
@@ -223,7 +432,7 @@ class EditScreen extends Component {
         <Notes />
         <View style={styles.updateButtonContainer}>
           <TouchableOpacity
-            onPress={this.updateNotification.bind(this)}
+            onPress={this.updateMedication.bind(this)}
             style={styles.updateButton}
           >
             <Text style={styles.updateButtonTitle}>

@@ -10,13 +10,15 @@ import {
   Platform
 } from "react-native";
 
-import { FileSystem } from "expo";
+import DateDiff from "date-diff";
+
+import { FileSystem, Notifications } from "expo";
 
 import { connect } from "react-redux";
 
 import { reset_data } from "../../redux/actions/data";
 
-import { addMedication } from "../../common/SQLiteHelper";
+import { addMedication, addNotification } from "../../common/SQLiteHelper";
 
 import Metrics from "../../styling/Metrics";
 
@@ -35,16 +37,215 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 class AddScreen extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      added: false
+    };
   }
 
   componentWillUnmount() {
-    if (this.props.data.uri)
-      FileSystem.getInfoAsync(this.props.data.uri).then(
-        result => result.exists && FileSystem.deleteAsync(this.props.data.uri)
-      );
+    if (!this.state.added)
+      if (this.props.data.uri)
+        FileSystem.getInfoAsync(this.props.data.uri).then(
+          result => result.exists && FileSystem.deleteAsync(this.props.data.uri)
+        );
   }
 
-  addNotification() {
+  isBeforeNow(time) {
+    var myDate = new Date(time);
+    var minutes = myDate.getMinutes();
+    var hours = myDate.getHours();
+
+    var today = new Date(Date.now());
+    var start_date = new Date(this.props.data.start_date);
+
+    var start_day = start_date.getDate();
+    var start_month = start_date.getMonth();
+    var start_year = start_date.getFullYear();
+
+    if (
+      start_day === today.getDate() &&
+      start_month === today.getMonth() &&
+      start_year === today.getFullYear()
+    ) {
+      if (today.getHours() === hours) {
+        return today.getMinutes() >= minutes;
+      } else {
+        return today.getHours() > hours;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  addNotifications(m_id) {
+    var start_date = new Date(this.props.data.start_date);
+    var end_date = new Date(this.props.data.end_date);
+    var diff = new DateDiff(end_date, start_date);
+
+    var title = this.props.data.title;
+    var body =
+      this.props.data.title +
+      ": " +
+      this.props.data.dosage +
+      " " +
+      this.props.data.type;
+
+    const localNotification = {
+      title,
+      body,
+      ios: {
+        sound: true
+      },
+      android: {
+        channelId: "nextmedNotifications",
+        sound: true,
+        priority: "high",
+        sticky: false,
+        vibrate: true
+      }
+    };
+
+    this.props.data.intake_times.map(time => {
+      var myDate = new Date(time);
+      var minutes = myDate.getMinutes();
+      var hours = myDate.getHours();
+
+      var isBeforeNow = this.isBeforeNow(time);
+
+      var date = new Date(
+        start_date.getFullYear(),
+        start_date.getMonth(),
+        start_date.getDate(),
+        hours,
+        minutes,
+        "0",
+        "0"
+      );
+
+      if (this.props.data.recurrence === "day") {
+        var days = diff.days();
+        if (days > 365) days = 365;
+        for (var i = isBeforeNow ? 1 : 0; i <= days; i++) {
+          let t = new Date(date);
+          t.setDate(t.getDate() + i);
+
+          var schedulingOptions = {
+            time: t.getTime()
+          };
+
+          Notifications.scheduleLocalNotificationAsync(
+            localNotification,
+            schedulingOptions
+          ).then(notification_id => {
+            schedulingOptions = {
+              time: t.getTime()
+            };
+
+            addNotification({
+              m_id,
+              notification_id,
+              date: new Date(schedulingOptions.time).toString(),
+              status: true,
+              title,
+              body
+            });
+          });
+        }
+      } else if (this.props.data.recurrence === "week") {
+        var weeks = diff.weeks();
+
+        if (weeks > 52) weeks = 52;
+
+        for (var i = isBeforeNow ? 1 : 0; i <= weeks; i++) {
+          let t = new Date(date);
+          t.setDate(t.getDate() + i * 7);
+
+          var schedulingOptions = {
+            time: t.getTime()
+          };
+
+          Notifications.scheduleLocalNotificationAsync(
+            localNotification,
+            schedulingOptions
+          ).then(notification_id => {
+            schedulingOptions = {
+              time: t.getTime()
+            };
+
+            addNotification({
+              m_id,
+              notification_id,
+              date: new Date(schedulingOptions.time).toString(),
+              status: true,
+              title,
+              body
+            });
+          });
+        }
+      } else if (this.props.data.recurrence === "month") {
+        var months = diff.months();
+
+        for (var i = isBeforeNow ? 1 : 0; i <= months; i++) {
+          let t = new Date(date);
+          t.setMonth(t.getMonth() + i);
+
+          var schedulingOptions = {
+            time: t.getTime()
+          };
+
+          Notifications.scheduleLocalNotificationAsync(
+            localNotification,
+            schedulingOptions
+          ).then(notification_id => {
+            schedulingOptions = {
+              time: t.getTime()
+            };
+
+            addNotification({
+              m_id,
+              notification_id,
+              date: new Date(schedulingOptions.time).toString(),
+              status: true,
+              title,
+              body
+            });
+          });
+        }
+      } else if (this.props.data.recurrence === "year") {
+        var years = diff.years();
+
+        for (var i = isBeforeNow ? 1 : 0; i <= years; i++) {
+          let t = new Date(date);
+          t.setFullYear(t.getFullYear() + i);
+
+          var schedulingOptions = {
+            time: t.getTime()
+          };
+
+          Notifications.scheduleLocalNotificationAsync(
+            localNotification,
+            schedulingOptions
+          ).then(notification_id => {
+            schedulingOptions = {
+              time: t.getTime()
+            };
+
+            addNotification({
+              m_id,
+              notification_id,
+              date: new Date(schedulingOptions.time).toString(),
+              status: true,
+              title,
+              body
+            });
+          });
+        }
+      }
+    });
+  }
+
+  addMedication() {
     var errors = [];
 
     if (this.props.data.title.length <= 0) {
@@ -79,38 +280,6 @@ class AddScreen extends Component {
         { cancelable: false }
       );
     } else {
-      // var start_date = new Date(this.props.data.start_date);
-
-      // this.props.data.intake_times.map(item => {
-      //   var myDate = new Date(item.time);
-      //   var minutes = myDate.getMinutes();
-      //   var hours = myDate.getHours();
-
-      //   var date = new Date(
-      //     start_date.getFullYear(),
-      //     start_date.getMonth(),
-      //     start_date.getDate(),
-      //     hours,
-      //     minutes,
-      //     "0",
-      //     "0"
-      //   );
-
-      //   this.props.add_notification(
-      //     this.state.m_id,
-      //     this.props.data.title,
-      //     this.props.data.title +
-      //       ": " +
-      //       this.props.data.dosage +
-      //       " " +
-      //       this.props.data.type,
-      //     this.props.data.recurrence,
-      //     date,
-      //     this.props.data.end_date,
-      //     true
-      //   );
-      // });
-
       addMedication({
         title: this.props.data.title,
         type: this.props.data.type,
@@ -121,8 +290,17 @@ class AddScreen extends Component {
         dosage: this.props.data.dosage,
         notes: this.props.data.notes,
         uri: this.props.data.uri
-      });
-      this.props.navigation.navigate("Home");
+      })
+        .then(m_id => {
+          this.addNotifications(m_id);
+
+          this.setState({ added: true });
+
+          this.props.navigation.navigate("Home");
+        })
+        .catch(error => {
+          console.log(error);
+        });
     }
   }
 
@@ -144,7 +322,7 @@ class AddScreen extends Component {
         <Notes />
         <View style={styles.AddButtoncontainer}>
           <TouchableOpacity
-            onPress={this.addNotification.bind(this)}
+            onPress={this.addMedication.bind(this)}
             style={styles.addButton}
           >
             <Text style={styles.addButtonTitle}>

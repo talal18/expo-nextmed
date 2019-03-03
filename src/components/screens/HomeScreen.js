@@ -9,7 +9,7 @@ import {
   StyleSheet
 } from "react-native";
 
-import { Permissions } from "expo";
+import { Permissions, FileSystem, Notifications } from "expo";
 
 import Metrics from "../../styling/Metrics";
 
@@ -18,7 +18,10 @@ import { connect } from "react-redux";
 import { localizedStrings } from "../../common/languages";
 import {
   getMedications,
-  deleteMedicationById
+  deleteMedicationById,
+  deleteNotificationsByMedicationId,
+  getNotificationsByMedicationId,
+  deleteNotificationById
 } from "../../common/SQLiteHelper";
 import { reset_data } from "../../redux/actions/data";
 
@@ -46,15 +49,26 @@ class HomeScreen extends React.Component {
       payload => {
         getMedications().then(result => {
           this.setState({ data: result });
+          this.props.reset_data();
         });
       }
     );
-
-    this.props.reset_data();
   }
 
   componentWillUnmount() {
     this.didFocusSubscription.remove();
+  }
+
+  deleteNotifications(id) {
+    getNotificationsByMedicationId(id).then(result => {
+      result.map(notification => {
+        Notifications.cancelScheduledNotificationAsync(
+          notification.notification_id
+        );
+
+        deleteNotificationById(notification.id);
+      });
+    });
   }
 
   renderItem = ({ item }) => {
@@ -103,7 +117,14 @@ class HomeScreen extends React.Component {
                     {
                       text: "YES",
                       onPress: () => {
+                        if (item.uri)
+                          FileSystem.getInfoAsync(item.uri).then(
+                            result =>
+                              result.exists && FileSystem.deleteAsync(item.uri)
+                          );
+
                         deleteMedicationById(item.id).then(result => {
+                          this.deleteNotifications(item.id);
                           getMedications().then(result => {
                             this.setState({ data: result });
                           });
