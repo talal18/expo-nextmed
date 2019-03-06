@@ -141,24 +141,27 @@ export const deleteMedicationById = id => {
 
 /* Notifications */
 export const addNotification = notification => {
-  if (db) {
-    db.transaction(tx => {
-      console.log(notification);
-      tx.executeSql(
-        "insert into notifications (m_id, notification_id, date, status, title, body) values (?, ?, ?, ?, ?, ?)",
-        [
-          notification.m_id,
-          notification.notification_id,
-          notification.date,
-          notification.status,
-          notification.title,
-          notification.body
-        ],
-        (tx, results) => {},
-        error => console.log(error)
-      );
-    }, null);
-  }
+  return new Promise(resolve => {
+    if (db) {
+      db.transaction(tx => {
+        tx.executeSql(
+          "insert into notifications (m_id, notification_id, date, status, title, body) values (?, ?, ?, ?, ?, ?)",
+          [
+            notification.m_id,
+            notification.notification_id,
+            notification.date,
+            notification.status,
+            notification.title,
+            notification.body
+          ],
+          (tx, results) => {
+            resolve(results);
+          },
+          error => console.log(error)
+        );
+      }, null);
+    }
+  });
 };
 
 export const getNotificationsByMedicationId = id => {
@@ -178,17 +181,55 @@ export const getNotificationsByMedicationId = id => {
   });
 };
 
+export const notificationExistsByMedicationId = (id, date) => {
+  return new Promise(resolve => {
+    if (db) {
+      db.transaction(tx => {
+        tx.executeSql(
+          `select * from notifications where m_id = ? AND date = ?;`,
+          [id, date],
+          (_, { rows }) => {
+            resolve(rows._array);
+          },
+          error => console.log(error)
+        );
+      });
+    }
+  });
+};
+
 export const updateNotificationStatusById = (id, status) => {
-  if (db) {
-    db.transaction(tx => {
-      tx.executeSql(
-        "update notifications set status = ? where id = ?",
-        [status, id],
-        (tx, results) => {},
-        error => console.log(error)
-      );
-    }, null);
-  }
+  return new Promise(resolve => {
+    if (db) {
+      db.transaction(tx => {
+        tx.executeSql(
+          "update notifications set status = ? where id = ?",
+          [status, id],
+          (tx, results) => {
+            resolve(results);
+          },
+          error => console.log(error)
+        );
+      }, null);
+    }
+  });
+};
+
+export const updateNotificationIdById = (id, notification_id) => {
+  return new Promise(resolve => {
+    if (db) {
+      db.transaction(tx => {
+        tx.executeSql(
+          "update notifications set notification_id = ? where id = ?",
+          [notification_id, id],
+          (tx, results) => {
+            resolve(results);
+          },
+          error => console.log(error)
+        );
+      }, null);
+    }
+  });
 };
 
 export const deleteNotificationById = id => {

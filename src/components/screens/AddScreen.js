@@ -78,7 +78,7 @@ class AddScreen extends Component {
     }
   }
 
-  addNotifications(m_id) {
+  async addNotifications(m_id) {
     var start_date = new Date(this.props.data.start_date);
     var end_date = new Date(this.props.data.end_date);
     var diff = new DateDiff(end_date, start_date);
@@ -146,7 +146,7 @@ class AddScreen extends Component {
               m_id,
               notification_id,
               date: new Date(schedulingOptions.time).toString(),
-              status: true,
+              status: 1,
               title,
               body
             });
@@ -177,7 +177,7 @@ class AddScreen extends Component {
               m_id,
               notification_id,
               date: new Date(schedulingOptions.time).toString(),
-              status: true,
+              status: 1,
               title,
               body
             });
@@ -206,7 +206,7 @@ class AddScreen extends Component {
               m_id,
               notification_id,
               date: new Date(schedulingOptions.time).toString(),
-              status: true,
+              status: 1,
               title,
               body
             });
@@ -235,7 +235,7 @@ class AddScreen extends Component {
               m_id,
               notification_id,
               date: new Date(schedulingOptions.time).toString(),
-              status: true,
+              status: 1,
               title,
               body
             });
@@ -291,8 +291,8 @@ class AddScreen extends Component {
         notes: this.props.data.notes,
         uri: this.props.data.uri
       })
-        .then(m_id => {
-          this.addNotifications(m_id);
+        .then(async m_id => {
+          await this.addNotifications(m_id);
 
           this.setState({ added: true });
 

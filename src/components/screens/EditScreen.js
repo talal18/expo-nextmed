@@ -31,6 +31,8 @@ import {
   reset_data
 } from "../../redux/actions/data";
 
+import { Notifications } from "expo";
+
 import Metrics from "../../styling/Metrics";
 
 import Dates from "../containers/Dates";
@@ -44,7 +46,10 @@ import MedImage from "../containers/MedImage";
 import {
   getMedicationById,
   updateMedication,
-  getNotificationsByMedicationId
+  getNotificationsByMedicationId,
+  notificationExistsByMedicationId,
+  addNotification,
+  deleteNotificationsByMedicationId
 } from "../../common/SQLiteHelper";
 
 class EditScreen extends Component {
@@ -123,7 +128,7 @@ class EditScreen extends Component {
     }
   }
 
-  updateNotifications(m_id) {
+  async updateNotifications(m_id) {
     var start_date = new Date(this.props.data.start_date);
     var end_date = new Date(this.props.data.end_date);
     var diff = new DateDiff(end_date, start_date);
@@ -171,6 +176,11 @@ class EditScreen extends Component {
       if (this.props.data.recurrence === "day") {
         var days = diff.days();
         if (days > 365) days = 365;
+
+        /**
+         * if old days more than new days
+         *
+         */
         for (var i = isBeforeNow ? 1 : 0; i <= days; i++) {
           let t = new Date(date);
           t.setDate(t.getDate() + i);
@@ -184,12 +194,17 @@ class EditScreen extends Component {
           });
 
           if (result.length > 0) {
-            if (!result[0].status) {
+            console.log(result);
+            if (
+              !result[0].status ||
+              new Date(result[0].date).getTime() <
+                new Date(Date.now()).getTime()
+            ) {
               addNotification({
                 m_id,
-                notification_id,
+                notification_id: result[0].notification_id,
                 date: new Date(schedulingOptions.time).toString(),
-                status: false,
+                status: 0,
                 title,
                 body
               });
@@ -206,7 +221,7 @@ class EditScreen extends Component {
                   m_id,
                   notification_id,
                   date: new Date(schedulingOptions.time).toString(),
-                  status: true,
+                  status: 1,
                   title,
                   body
                 });
@@ -225,7 +240,7 @@ class EditScreen extends Component {
                 m_id,
                 notification_id,
                 date: new Date(schedulingOptions.time).toString(),
-                status: true,
+                status: 1,
                 title,
                 body
               });
@@ -245,23 +260,62 @@ class EditScreen extends Component {
             time: t.getTime()
           };
 
-          Notifications.scheduleLocalNotificationAsync(
-            localNotification,
-            schedulingOptions
-          ).then(notification_id => {
-            schedulingOptions = {
-              time: t.getTime()
-            };
-
-            addNotification({
-              m_id,
-              notification_id,
-              date: new Date(schedulingOptions.time).toString(),
-              status: true,
-              title,
-              body
-            });
+          var result = this.state.notifications.filter(notification => {
+            return notification.date === t.toString();
           });
+
+          if (result.length > 0) {
+            if (
+              !result[0].status ||
+              new Date(result[0].date).getTime() <
+                new Date(Date.now()).getTime()
+            ) {
+              addNotification({
+                m_id,
+                notification_id: result[0].notification_id,
+                date: new Date(schedulingOptions.time).toString(),
+                status: 0,
+                title,
+                body
+              });
+            } else {
+              Notifications.scheduleLocalNotificationAsync(
+                localNotification,
+                schedulingOptions
+              ).then(notification_id => {
+                schedulingOptions = {
+                  time: t.getTime()
+                };
+
+                addNotification({
+                  m_id,
+                  notification_id,
+                  date: new Date(schedulingOptions.time).toString(),
+                  status: 1,
+                  title,
+                  body
+                });
+              });
+            }
+          } else {
+            Notifications.scheduleLocalNotificationAsync(
+              localNotification,
+              schedulingOptions
+            ).then(notification_id => {
+              schedulingOptions = {
+                time: t.getTime()
+              };
+
+              addNotification({
+                m_id,
+                notification_id,
+                date: new Date(schedulingOptions.time).toString(),
+                status: 0,
+                title,
+                body
+              });
+            });
+          }
         }
       } else if (this.props.data.recurrence === "month") {
         var months = diff.months();
@@ -274,23 +328,62 @@ class EditScreen extends Component {
             time: t.getTime()
           };
 
-          Notifications.scheduleLocalNotificationAsync(
-            localNotification,
-            schedulingOptions
-          ).then(notification_id => {
-            schedulingOptions = {
-              time: t.getTime()
-            };
-
-            addNotification({
-              m_id,
-              notification_id,
-              date: new Date(schedulingOptions.time).toString(),
-              status: true,
-              title,
-              body
-            });
+          var result = this.state.notifications.filter(notification => {
+            return notification.date === t.toString();
           });
+
+          if (result.length > 0) {
+            if (
+              !result[0].status ||
+              new Date(result[0].date).getTime() <
+                new Date(Date.now()).getTime()
+            ) {
+              addNotification({
+                m_id,
+                notification_id: result[0].notification_id,
+                date: new Date(schedulingOptions.time).toString(),
+                status: 0,
+                title,
+                body
+              });
+            } else {
+              Notifications.scheduleLocalNotificationAsync(
+                localNotification,
+                schedulingOptions
+              ).then(notification_id => {
+                schedulingOptions = {
+                  time: t.getTime()
+                };
+
+                addNotification({
+                  m_id,
+                  notification_id,
+                  date: new Date(schedulingOptions.time).toString(),
+                  status: 1,
+                  title,
+                  body
+                });
+              });
+            }
+          } else {
+            Notifications.scheduleLocalNotificationAsync(
+              localNotification,
+              schedulingOptions
+            ).then(notification_id => {
+              schedulingOptions = {
+                time: t.getTime()
+              };
+
+              addNotification({
+                m_id,
+                notification_id,
+                date: new Date(schedulingOptions.time).toString(),
+                status: 1,
+                title,
+                body
+              });
+            });
+          }
         }
       } else if (this.props.data.recurrence === "year") {
         var years = diff.years();
@@ -303,23 +396,62 @@ class EditScreen extends Component {
             time: t.getTime()
           };
 
-          Notifications.scheduleLocalNotificationAsync(
-            localNotification,
-            schedulingOptions
-          ).then(notification_id => {
-            schedulingOptions = {
-              time: t.getTime()
-            };
-
-            addNotification({
-              m_id,
-              notification_id,
-              date: new Date(schedulingOptions.time).toString(),
-              status: true,
-              title,
-              body
-            });
+          var result = this.state.notifications.filter(notification => {
+            return notification.date === t.toString();
           });
+
+          if (result.length > 0) {
+            if (
+              !result[0].status ||
+              new Date(result[0].date).getTime() <
+                new Date(Date.now()).getTime()
+            ) {
+              addNotification({
+                m_id,
+                notification_id: result[0].notification_id,
+                date: new Date(schedulingOptions.time).toString(),
+                status: 0,
+                title,
+                body
+              });
+            } else {
+              Notifications.scheduleLocalNotificationAsync(
+                localNotification,
+                schedulingOptions
+              ).then(notification_id => {
+                schedulingOptions = {
+                  time: t.getTime()
+                };
+
+                addNotification({
+                  m_id,
+                  notification_id,
+                  date: new Date(schedulingOptions.time).toString(),
+                  status: 1,
+                  title,
+                  body
+                });
+              });
+            }
+          } else {
+            Notifications.scheduleLocalNotificationAsync(
+              localNotification,
+              schedulingOptions
+            ).then(notification_id => {
+              schedulingOptions = {
+                time: t.getTime()
+              };
+
+              addNotification({
+                m_id,
+                notification_id,
+                date: new Date(schedulingOptions.time).toString(),
+                status: 1,
+                title,
+                body
+              });
+            });
+          }
         }
       }
     });
@@ -391,8 +523,10 @@ class EditScreen extends Component {
         notes: this.props.data.notes,
         uri: this.props.data.uri
       })
-        .then(m_id => {
-          this.updateNotifications(m_id);
+        .then(async m_id => {
+          deleteNotificationsByMedicationId(m_id);
+
+          await this.updateNotifications(m_id);
 
           this.setState({ added: true });
 

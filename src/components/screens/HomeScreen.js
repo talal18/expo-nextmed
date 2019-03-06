@@ -64,9 +64,9 @@ class HomeScreen extends React.Component {
       result.map(notification => {
         Notifications.cancelScheduledNotificationAsync(
           notification.notification_id
-        );
-
-        deleteNotificationById(notification.id);
+        ).then(success => {
+          deleteNotificationById(notification.id);
+        });
       });
     });
   }
