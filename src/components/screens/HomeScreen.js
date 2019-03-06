@@ -22,7 +22,9 @@ import {
   deleteMedicationById,
   deleteNotificationsByMedicationId,
   getNotificationsByMedicationId,
-  deleteNotificationById
+  deleteNotificationById,
+  notificationExistsByMedicationId,
+  addNotification
 } from "../../common/SQLiteHelper";
 import { reset_data } from "../../redux/actions/data";
 
@@ -64,28 +66,39 @@ class HomeScreen extends React.Component {
       // loop on each medication
       result.map(medication => {
         var start_date = new Date(medication.start_date);
-        var end_date = new Date(medication.end_date);
         var current_date = new Date(Date.now());
+
+        var title = medication.title;
+        var body =
+          medication.title + ": " + medication.dosage + " " + medication.type;
 
         var intake_times = medication.intake_times.split(",");
         intake_times = intake_times.map(time => {
           return parseInt(time);
         });
 
+        const localNotification = {
+          title,
+          body,
+          ios: {
+            sound: true
+          },
+          android: {
+            channelId: "nextmedNotifications",
+            sound: true,
+            priority: "high",
+            sticky: false,
+            vibrate: true
+          }
+        };
+
         // get all notifications of that medication using the id
         if (medication.recurrence === "day") {
-          // notifications for 30 days
-          // day 29 + 14 --> if 30 - 29 < 14 --> diff 30-29 = 1 the add for 1 day
-
-          //  31 days
           var totalDays = new DateDiff(
             new Date(medication.end_date),
             new Date(medication.start_date)
           ).days();
 
-          console.log("Total Days: " + totalDays);
-
-          // 31 days
           var daysLeft = new DateDiff(
             new Date(medication.end_date),
             new Date(
@@ -95,84 +108,60 @@ class HomeScreen extends React.Component {
             )
           ).days();
 
-          console.log("Days Left: " + daysLeft);
-
-          // add notifications for 14 days
-
-          for (var i = 0; i < (daysLeft < 14 ? daysLeft : 14); i++) {
-            // 9:00 Mar 6 ....
+          for (
+            var i = 0;
+            i < (daysLeft < 14 ? daysLeft : 14) &&
+            current_date.getTime() >
+              new Date(start_date.setDate(start_date.getDate() - 1)).getTime();
+            i++
+          ) {
             intake_times.map(intake_time => {
-              /**
-               * i = 0
-               * Mar 5 8:30   gone (already added)
-               * -- current_date < first_date + 15
-               * Mar 5 8:35   gone (already added)
-               * -- current_date < first_date + 15
-               * Mar 5 9:00   gone (dont add)
-               * i = 1
-               * Mar 6 8:30
-               * Mar 6 8:35
-               * Mar 6 9:00
-               * i = 2
-               * Mar 7 8:30
-               * Mar 7 8:35
-               * Mar 7 9:00
-               * i = 3
-               * Mar 8 8:30
-               * Mar 8 8:35
-               * Mar 8 9:00
-               * ..........
-               * i = 13
-               *
-               */
-
               var myDate = new Date(intake_time);
               var minutes = myDate.getMinutes();
               var hours = myDate.getHours();
 
-              //each day
               var date = new Date(
-                start_date.getTime() > current_date.getTime()
-                  ? start_date.getFullYear()
-                  : current_date.getFullYear(),
-                start_date.getTime() > current_date.getTime()
-                  ? start_date.getMonth()
-                  : current_date.getMonth(),
-                start_date.getTime() > current_date.getTime()
-                  ? start_date.getDate()
-                  : current_date.getDate(),
-                hours,
-                minutes,
-                "0",
-                "0"
-              );
-              //first day only
-              var first_date = new Date(
-                start_date.getFullYear(),
-                start_date.getMonth(),
-                start_date.getDate(),
+                current_date.getFullYear(),
+                current_date.getMonth(),
+                current_date.getDate(),
                 hours,
                 minutes,
                 "0",
                 "0"
               );
 
-              var diff = new DateDiff(first_date, date);
+              let t = new Date(date);
+              t.setDate(t.getDate() + i);
 
-              console.log(diff.minutes());
+              var schedulingOptions = {
+                time: t.getTime()
+              };
 
-              if (diff.minutes() > 15) {
-                let t = new Date(date);
-                t.setDate(t.getDate() + i);
-                console.log(t.toString());
-              }
+              var diff = new DateDiff(t, new Date(medication.date_added));
 
-              // if (diff.minutes() > 15 && myDate.getTime() > now.getTime()) {
-              //   console.log("Added");
-              //   let t = new Date(date);
-              //   t.setDate(t.getDate() + i);
-              //   console.log(t.toString());
-              // }
+              notificationExistsByMedicationId(medication.id, t.toString())
+                .then(result => {
+                  if (result.length === 0) {
+                    if (
+                      diff.minutes() > 15 &&
+                      t.getTime() > current_date.getTime()
+                    ) {
+                      addNotification({
+                        m_id: medication.id,
+                        notification_id: "notification_id",
+                        date: new Date(schedulingOptions.time).toString(),
+                        status: true,
+                        title,
+                        body
+                      });
+                    }
+                  } else {
+                    console.log(result[0]);
+                  }
+                })
+                .catch(error => {
+                  console.log(error);
+                });
             });
           }
         } else if (medication.recurrence === "week") {
@@ -190,9 +179,12 @@ class HomeScreen extends React.Component {
   deleteNotifications(id) {
     getNotificationsByMedicationId(id).then(result => {
       result.map(notification => {
-        Notifications.cancelScheduledNotificationAsync(
-          notification.notification_id
-        );
+        if (
+          new Date(notification.date).getTime() > new Date(Date.now()).getTime()
+        )
+          Notifications.cancelScheduledNotificationAsync(
+            notification.notification_id
+          );
 
         deleteNotificationById(notification.id);
       });

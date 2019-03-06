@@ -68,7 +68,7 @@ class Times extends Component {
           <FlatList
             keyExtractor={(item, index) => index.toString()}
             data={this.props.intake_times.sort(function(a, b) {
-              return a.time - b.time;
+              return a - b;
             })}
             renderItem={({ item }) => (
               <View style={styles.addTimeListItemContainer}>

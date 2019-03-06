@@ -190,9 +190,12 @@ class ManageNotifications extends React.Component {
                 updateNotificationStatusById(item.id, status)
                   .then(result => {
                     if (status === false) {
+                      console.log(item.notification_id);
                       Notifications.cancelScheduledNotificationAsync(
                         item.notification_id
-                      );
+                      ).then(result => {
+                        this.getNotifications();
+                      });
                     } else {
                       const localNotification = {
                         title: item.title,
@@ -218,10 +221,13 @@ class ManageNotifications extends React.Component {
                         schedulingOptions
                       ).then(notification_id => {
                         console.log(notification_id);
-                        updateNotificationIdById(item.id, notification_id);
+                        updateNotificationIdById(item.id, notification_id).then(
+                          result => {
+                            this.getNotifications();
+                          }
+                        );
                       });
                     }
-                    this.getNotifications();
                   })
                   .catch(error => {
                     console.log(error);

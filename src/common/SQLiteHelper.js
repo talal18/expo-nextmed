@@ -12,6 +12,7 @@ export const createTables = () => {
           "type text, " +
           "start_date text, " +
           "end_date text, " +
+          "date_added text, " +
           "intake_times text, " +
           "recurrence text, " +
           "dosage text, " +
@@ -38,12 +39,13 @@ export const addMedication = medication => {
     if (db) {
       db.transaction(tx => {
         tx.executeSql(
-          "insert into medications (title, type, start_date, end_date, intake_times, recurrence, dosage, notes, uri) values (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+          "insert into medications (title, type, start_date, end_date, date_added, intake_times, recurrence, dosage, notes, uri) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
           [
             medication.title,
             medication.type,
             medication.start_date,
             medication.end_date,
+            new Date(Date.now()).toString(),
             medication.intake_times.toString(),
             medication.recurrence,
             medication.dosage,

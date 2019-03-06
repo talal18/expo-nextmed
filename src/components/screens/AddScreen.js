@@ -51,20 +51,6 @@ class AddScreen extends Component {
         );
   }
 
-  dateAfterDate(dateOne, dateTwo) {
-    var one = new Date(dateOne);
-    var two = new Date(dateTwo);
-
-    return (
-      one.getFullYear() > two.getFullYear() ||
-      (one.getFullYear() === two.getFullYear() &&
-        one.getMonth() > two.getMonth()) ||
-      (one.getFullYear() === two.getFullYear() &&
-        one.getMonth() === two.getMonth() &&
-        one.getDate() > two.getDate())
-    );
-  }
-
   async addNotifications(m_id) {
     this.props.data.intake_times.map(time => {
       var start_date = new Date(this.props.data.start_date);
@@ -108,7 +94,7 @@ class AddScreen extends Component {
 
       var diff = new DateDiff(date, now);
 
-      if (diff.minutes() <= 15) {
+      if (diff.minutes() <= 15 && date.getTime() > now.getTime()) {
         var schedulingOptions = {
           time: date.getTime()
         };
@@ -173,7 +159,9 @@ class AddScreen extends Component {
         type: this.props.data.type,
         start_date: this.props.data.start_date,
         end_date: this.props.data.end_date,
-        intake_times: this.props.data.intake_times,
+        intake_times: this.props.data.intake_times.sort(function(a, b) {
+          return a - b;
+        }),
         recurrence: this.props.data.recurrence,
         dosage: this.props.data.dosage,
         notes: this.props.data.notes,
