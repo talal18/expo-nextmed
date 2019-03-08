@@ -154,6 +154,7 @@ class ManageNotifications extends React.Component {
   getNotifications() {
     getNotificationsByMedicationId(this.props.navigation.state.params.id)
       .then(result => {
+        console.log(result);
         this.setState({ notifications: result });
         this.arrayholder = result.map(data => {
           return this.renderCustomDate(data.date);
