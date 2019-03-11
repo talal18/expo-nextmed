@@ -1,0 +1,12 @@
+export const SET_M_ID = "SET_M_ID";
+export const SET_TITLE = "SET_TITLE";
+export const SET_TYPE = "SET_TYPE";
+export const SET_DOSAGE = "SET_DOSAGE";
+export const SET_RECURRENCE = "SET_RECURRENCE";
+export const ADD_TIME = "ADD_TIME";
+export const DELETE_TIME = "DELETE_TIME";
+export const SET_START_DATE = "SET_START_DATE";
+export const SET_END_DATE = "SET_END_DATE";
+export const SET_NOTES = "SET_NOTES";
+export const SET_IMAGE_URI = "SET_IMAGE_URI";
+export const RESET_DATA = "RESET_DATA";
