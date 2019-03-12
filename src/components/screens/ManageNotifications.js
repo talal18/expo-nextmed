@@ -244,21 +244,20 @@ class ManageNotifications extends React.Component {
               borderColor: "gray"
             }}
             theme={{
-              backgroundColor: "#242424",
               calendarBackground: "#242424",
               textSectionTitleColor: "#d6d6d6",
-              selectedDayBackgroundColor: "yellow",
-              selectedDayTextColor: "blue",
-              todayTextColor: "green",
-              dayTextColor: "white",
-              textDisabledColor: "red",
+              selectedDayBackgroundColor: "#009688",
+              selectedDayTextColor: "#d6d6d6",
+              todayTextColor: "#fff",
+              dayTextColor: "#d6d6d6",
+              textDisabledColor: "#595d63",
               dotColor: "white",
               selectedDotColor: "#ffffff",
-              arrowColor: "orange",
-              monthTextColor: "blue",
+              arrowColor: "#009688",
+              monthTextColor: "#d6d6d6",
               textMonthFontWeight: "bold",
-              textDayFontSize: 16,
-              textMonthFontSize: 16,
+              textDayFontSize: Metrics.CalenderDayFontSize,
+              textMonthFontSize: 15,
               textDayHeaderFontSize: 14
             }}
             // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
@@ -279,7 +278,7 @@ class ManageNotifications extends React.Component {
               console.log("selected day", day);
             }}
             // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
-            monthFormat={"yyyy MM"}
+            monthFormat={"MMMM yyyy"}
             // Handler which gets executed when visible month changes in calendar. Default = undefined
             onMonthChange={month => {
               console.log("month changed", month);
@@ -340,9 +339,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#242424"
   },
-  calendarContainer: {},
+  calendarContainer: {
+    paddingTop: 10
+  },
   listContainer: {
-    flex: 1
+    flex: 1,
+    marginTop: 10
   },
   manageListItemContainer: {
     height: Metrics.homeListItemContainerHeight,
