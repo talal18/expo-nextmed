@@ -74,6 +74,8 @@ export const localizedStrings = {
     errorNoStartDate: "You must provide a start date\n",
     errorNoEndDate: "You must provide an end date\n",
     errorNoIntakeTimes: "You must have atleast 1 intake time\n",
+    errorDailyMoreThanThree:
+      "Please select only 3 months for daily frequency\n",
     errorLabel: "Error",
     okLabel: "Ok",
     errorStartDateBeforeTodayDateLabel:
@@ -163,6 +165,8 @@ export const localizedStrings = {
     errorNoStartDate: "Vous devez fournir une date de début\n",
     errorNoEndDate: "Vous devez fournir une date de fin\n",
     errorNoIntakeTimes: "Vous devez avoir au moins 1 heure de consommation\n",
+    errorDailyMoreThanThree:
+      "Please select only 3 months for daily frequency\n",
     errorLabel: "Erreur",
     okLabel: "D'accord",
     errorStartDateBeforeTodayDateLabel:
@@ -252,6 +256,8 @@ export const localizedStrings = {
     errorNoStartDate: "Debe proporcionar una fecha de inicio\n",
     errorNoEndDate: "Usted debe proporcionar una fecha de finalización\n",
     errorNoIntakeTimes: "Debe tener al menos 1 tiempo de ingesta\n",
+    errorDailyMoreThanThree:
+      "Please select only 3 months for daily frequency\n",
     errorLabel: "Error",
     okLabel: "De acuerdo",
     errorStartDateBeforeTodayDateLabel:
@@ -337,6 +343,8 @@ export const localizedStrings = {
     errorNoStartDate: "يجب عليك ادخال تاريخ البدء\n",
     errorNoEndDate: "يجب عليك ادخال تاريخ الانتهاء\n",
     errorNoIntakeTimes: "يجب ادخال وقت اخذ الدواء على الأقل مرة واحدة\n",
+    errorDailyMoreThanThree:
+      "Please select only 3 months for daily frequency\n",
     errorLabel: "خطأ",
     okLabel: "تم",
     errorStartDateBeforeTodayDateLabel:

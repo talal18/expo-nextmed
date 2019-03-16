@@ -3,15 +3,34 @@ import { Notifications } from "expo";
 import {
   ADD_NOTIFICATIONS,
   DELETE_NOTIFICATIONS,
-  UPDATE_NOTIFICATION
+  UPDATE_NOTIFICATION,
+  IS_LOADING_NOTIFICATIONS,
+  ADD_NOTIFICATION
 } from "../types/notifications";
 
 const initialState = {
-  notifications: {}
+  notifications: {},
+  loading: false
 };
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case IS_LOADING_NOTIFICATIONS:
+      return {
+        ...state,
+        loading: action.loading
+      };
+    case ADD_NOTIFICATION:
+      return {
+        ...state,
+        notifications: {
+          ...state.notifications,
+          [action.notification.m_id]: {
+            ...state.notifications[action.notification.m_id],
+            [action.notification.id]: action.notification
+          }
+        }
+      };
     case ADD_NOTIFICATIONS:
       return {
         ...state,
@@ -36,10 +55,15 @@ export default (state = initialState, action) => {
         }
       };
     case DELETE_NOTIFICATIONS:
-      var notifications = state.notifications;
+      let notifications = state.notifications;
+
+      /**
+       * Scheduale notifications and generate ids -> store them in an array = { generated_id, date,  }
+       * Insert each generated id from previous to redux
+       */
 
       if (action.m_id in notifications) {
-        var data = notifications[action.m_id];
+        let data = notifications[action.m_id];
 
         for (notification in data) {
           if (

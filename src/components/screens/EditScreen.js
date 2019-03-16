@@ -34,6 +34,7 @@ import {
 import { updateMedication } from "../../redux/actions/medications";
 
 import {
+  addNotification,
   addNotifications,
   updateNotification,
   deleteNotifications
@@ -67,7 +68,7 @@ class EditScreen extends Component {
   }
 
   getMedication(id) {
-    var medication = this.props.medications[id];
+    let medication = this.props.medications[id];
     this.props.set_title(medication.title);
     this.props.set_dosage(parseFloat(medication.dosage));
     this.props.set_notes(medication.notes);
@@ -86,8 +87,8 @@ class EditScreen extends Component {
     this.props.reset_data();
     this.getMedication(this.props.navigation.state.params.id);
 
-    var notifications = {};
-    var medData = this.props.notifications[
+    let notifications = {};
+    let medData = this.props.notifications[
       this.props.navigation.state.params.id
     ];
 
@@ -109,16 +110,16 @@ class EditScreen extends Component {
   }
 
   isBeforeNow(time) {
-    var myDate = new Date(time);
-    var minutes = myDate.getMinutes();
-    var hours = myDate.getHours();
+    let myDate = new Date(time);
+    let minutes = myDate.getMinutes();
+    let hours = myDate.getHours();
 
-    var today = new Date(Date.now());
-    var start_date = new Date(this.props.data.start_date);
+    let today = new Date(Date.now());
+    let start_date = new Date(this.props.data.start_date);
 
-    var start_day = start_date.getDate();
-    var start_month = start_date.getMonth();
-    var start_year = start_date.getFullYear();
+    let start_day = start_date.getDate();
+    let start_month = start_date.getMonth();
+    let start_year = start_date.getFullYear();
 
     if (
       start_day === today.getDate() &&
@@ -135,86 +136,99 @@ class EditScreen extends Component {
     }
   }
 
-  updateNotifications(m_id) {
-    return new Promise(resolve => {
-      var start_date = new Date(this.props.data.start_date);
-      var end_date = new Date(this.props.data.end_date);
-      var diff = new DateDiff(end_date, start_date);
+  async updateNotifications(m_id) {
+    let start_date = new Date(this.props.data.start_date);
+    let end_date = new Date(this.props.data.end_date);
+    let diff = new DateDiff(end_date, start_date);
 
-      var title = this.props.data.title;
-      var body =
-        this.props.data.title +
-        ": " +
-        this.props.data.dosage +
-        " " +
-        this.props.data.type;
+    let title = this.props.data.title;
+    let body =
+      this.props.data.title +
+      ": " +
+      this.props.data.dosage +
+      " " +
+      this.props.data.type;
 
-      var notifications = {};
+    const localNotification = {
+      title,
+      body,
+      ios: {
+        sound: true
+      },
+      android: {
+        channelId: "nextmedNotifications",
+        sound: true,
+        priority: "high",
+        sticky: false,
+        vibrate: true
+      }
+    };
 
-      this.props.data.intake_times.map(time => {
-        var myDate = new Date(time);
-        var minutes = myDate.getMinutes();
-        var hours = myDate.getHours();
+    this.props.data.intake_times.map(async time => {
+      let myDate = new Date(time);
+      let minutes = myDate.getMinutes();
+      let hours = myDate.getHours();
 
-        var isBeforeNow = this.isBeforeNow(time);
+      let isBeforeNow = this.isBeforeNow(time);
 
-        var date = new Date(
-          start_date.getFullYear(),
-          start_date.getMonth(),
-          start_date.getDate(),
-          hours,
-          minutes,
-          "0",
-          "0"
+      let date = new Date(
+        start_date.getFullYear(),
+        start_date.getMonth(),
+        start_date.getDate(),
+        hours,
+        minutes,
+        "0",
+        "0"
+      );
+
+      let count = 0;
+      let recurrence = this.props.data.recurrence;
+
+      if (recurrence === "day") count = diff.days();
+      else if (recurrence === "week")
+        count = diff.weeks() > 52 ? 52 : diff.weeks();
+      else if (recurrence === "month") count = diff.months();
+      else if (recurrence === "year") count = diff.years();
+
+      for (let i = isBeforeNow ? 1 : 0; i <= count; i++) {
+        let t = new Date(date);
+
+        if (recurrence === "day") t.setDate(t.getDate() + i);
+        else if (recurrence === "week") t.setDate(t.getDate() + i * 7);
+        else if (recurrence === "month") t.setMonth(t.getMonth() + i);
+        else if (recurrence === "year") t.setFullYear(t.getFullYear() + i);
+
+        let id =
+          Math.random()
+            .toString(36)
+            .substr(2, 9) +
+          "_" +
+          Date.now();
+
+        schedulingOptions = {
+          time: t.getTime()
+        };
+
+        let notification_id = await Notifications.scheduleLocalNotificationAsync(
+          localNotification,
+          schedulingOptions
         );
 
-        var count = 0;
-        var recurrence = this.props.data.recurrence;
-
-        if (recurrence === "day") count = diff.days() > 365 ? 365 : diff.days();
-        else if (recurrence === "week")
-          count = diff.weeks() > 52 ? 52 : diff.weeks();
-        else if (recurrence === "month") count = diff.months();
-        else if (recurrence === "year") count = diff.years();
-
-        for (var i = isBeforeNow ? 1 : 0; i <= count; i++) {
-          let t = new Date(date);
-
-          if (recurrence === "day") t.setDate(t.getDate() + i);
-          else if (recurrence === "week") t.setDate(t.getDate() + i * 7);
-          else if (recurrence === "month") t.setMonth(t.getMonth() + i);
-          else if (recurrence === "year") t.setFullYear(t.getFullYear() + i);
-
-          var id =
-            Math.random()
-              .toString(36)
-              .substr(2, 9) +
-            "_" +
-            Date.now();
-
-          notifications[id] = {
-            m_id,
-            id,
-            date: t.toString(),
-            status: true,
-            title,
-            body,
-            notification_id: ""
-          };
-        }
-      });
-
-      if (Object.values(notifications).length > 0) {
-        this.props.addNotifications(m_id, notifications);
-        resolve("success");
-      } else {
-        resolve("empty");
+        this.props.addNotification({
+          m_id,
+          id,
+          date: t.toString(),
+          status: true,
+          title,
+          body,
+          notification_id
+        });
       }
     });
   }
 
-  updateMedication() {
-    var errors = [];
+  async updateMedication() {
+    let errors = [];
 
     if (this.props.data.title.length <= 0) {
       errors.push(localizedStrings[this.props.language].errorNoTitle);
@@ -235,11 +249,25 @@ class EditScreen extends Component {
       errors.push(localizedStrings[this.props.language].errorNoIntakeTimes);
     }
 
-    var dateNow = new Date(Date.now());
-    var startDate = new Date(this.props.data.start_date);
-    var start_day = startDate.getDate();
-    var start_month = startDate.getMonth();
-    var start_year = startDate.getFullYear();
+    let dailyLength = new DateDiff(
+      new Date(this.props.data.end_date),
+      new Date(this.props.data.start_date)
+    );
+
+    if (
+      this.props.data.recurrence === "day" &&
+      Math.ceil(dailyLength.months()) > 3
+    ) {
+      errors.push(
+        localizedStrings[this.props.language].errorDailyMoreThanThree
+      );
+    }
+
+    let dateNow = new Date(Date.now());
+    let startDate = new Date(this.props.data.start_date);
+    let start_day = startDate.getDate();
+    let start_month = startDate.getMonth();
+    let start_year = startDate.getFullYear();
 
     if (
       start_year < dateNow.getFullYear() ||
@@ -282,101 +310,11 @@ class EditScreen extends Component {
         uri: this.props.data.uri
       });
 
-      schedule = async () => {
-        var notifications = this.props.notifications[this.state.m_id];
+      await this.updateNotifications(this.state.m_id);
 
-        var title = this.props.data.title;
-        var body =
-          this.props.data.title +
-          ": " +
-          this.props.data.dosage +
-          " " +
-          this.props.data.type;
+      this.setState({ added: true });
 
-        const localNotification = {
-          title,
-          body,
-          ios: {
-            sound: true
-          },
-          android: {
-            channelId: "nextmedNotifications",
-            sound: true,
-            priority: "high",
-            sticky: false,
-            vibrate: true
-          }
-        };
-
-        add = async (date, notification, m_id, status) => {
-          var schedulingOptions = {
-            time: date.getTime()
-          };
-
-          var notification_id = await Notifications.scheduleLocalNotificationAsync(
-            localNotification,
-            schedulingOptions
-          );
-
-          this.props.updateNotification(
-            notification,
-            m_id,
-            notification_id,
-            status
-          );
-        };
-
-        for (notification in notifications) {
-          var date = new Date(notifications[notification].date);
-
-          schedulingOptions = {
-            time: date.getTime()
-          };
-
-          //status: this.state.notifications[t.getTime()].status,
-
-          if (date.getTime() in this.state.notifications) {
-            if (
-              this.state.notifications[date.getTime()].status === true &&
-              new Date(
-                this.state.notifications[date.getTime()].date
-              ).getTime() > new Date(Date.now()).getTime()
-            ) {
-              add(date, notification, notifications[notification].m_id, true);
-            } else {
-              this.props.updateNotification(
-                notification,
-                notifications[notification].m_id,
-                notifications[notification].notification_id,
-                false
-              );
-            }
-          } else {
-            add(date, notification, notifications[notification].m_id, true);
-          }
-        }
-      };
-
-      this.updateNotifications(this.state.m_id).then(async result => {
-        if (result === "success") {
-          this.setState({ added: true });
-
-          await schedule();
-          this.props.navigation.navigate("Home");
-        } else if (result === "empty") {
-          return Alert.alert(
-            localizedStrings[this.props.language].errorLabel,
-            "No notifications will be schedualed. Please check dates and intake times",
-            [
-              {
-                text: localizedStrings[this.props.language].okLabel,
-                onPress: () => {}
-              }
-            ],
-            { cancelable: false }
-          );
-        }
-      });
+      this.props.navigation.navigate("Home");
     }
   }
 
@@ -519,6 +457,7 @@ export default connect(
     set_user_id,
     set_image_uri,
     updateMedication,
+    addNotification,
     addNotifications,
     updateNotification,
     deleteNotifications
