@@ -35,8 +35,6 @@ import { updateMedication } from "../../redux/actions/medications";
 
 import {
   addNotification,
-  addNotifications,
-  updateNotification,
   deleteNotifications
 } from "../../redux/actions/notifications";
 
@@ -87,19 +85,8 @@ class EditScreen extends Component {
     this.props.reset_data();
     this.getMedication(this.props.navigation.state.params.id);
 
-    let notifications = {};
-    let medData = this.props.notifications[
-      this.props.navigation.state.params.id
-    ];
-
-    for (notification in medData) {
-      notifications[new Date(medData[notification].date).getTime()] =
-        medData[notification];
-    }
-
     this.setState({
-      m_id: this.props.navigation.state.params.id,
-      notifications
+      m_id: this.props.navigation.state.params.id
     });
   }
 
@@ -138,8 +125,6 @@ class EditScreen extends Component {
 
   async updateNotifications(m_id) {
     let start_date = new Date(this.props.data.start_date);
-    let end_date = new Date(this.props.data.end_date);
-    let diff = new DateDiff(end_date, start_date);
 
     let title = this.props.data.title;
     let body =
@@ -164,12 +149,49 @@ class EditScreen extends Component {
       }
     };
 
+    let recurrence = this.props.data.recurrence;
+
+    let end_date_time = new Date(
+      this.props.data.intake_times[this.props.data.intake_times.length - 1]
+    );
+
+    let end_date_reminder = new Date(
+      end_date.getFullYear(),
+      end_date.getMonth(),
+      end_date.getDate(),
+      end_date_time.getHours(),
+      end_date_time.getMinutes(),
+      "0",
+      "0"
+    );
+
+    let end_date_id = await Notifications.scheduleLocalNotificationAsync(
+      {
+        data: {
+          m_id
+        },
+        title,
+        body,
+        ios: {
+          sound: true
+        },
+        android: {
+          channelId: "nextmedNotifications",
+          sound: true,
+          priority: "high",
+          vibrate: true,
+          sticky: true
+        }
+      },
+      {
+        time: end_date_reminder.getTime()
+      }
+    );
+
     this.props.data.intake_times.map(async time => {
       let myDate = new Date(time);
       let minutes = myDate.getMinutes();
       let hours = myDate.getHours();
-
-      let isBeforeNow = this.isBeforeNow(time);
 
       let date = new Date(
         start_date.getFullYear(),
@@ -181,49 +203,43 @@ class EditScreen extends Component {
         "0"
       );
 
-      let count = 0;
-      let recurrence = this.props.data.recurrence;
-
-      if (recurrence === "day") count = diff.days();
-      else if (recurrence === "week")
-        count = diff.weeks() > 52 ? 52 : diff.weeks();
-      else if (recurrence === "month") count = diff.months();
-      else if (recurrence === "year") count = diff.years();
-
-      for (let i = isBeforeNow ? 1 : 0; i <= count; i++) {
-        let t = new Date(date);
-
-        if (recurrence === "day") t.setDate(t.getDate() + i);
-        else if (recurrence === "week") t.setDate(t.getDate() + i * 7);
-        else if (recurrence === "month") t.setMonth(t.getMonth() + i);
-        else if (recurrence === "year") t.setFullYear(t.getFullYear() + i);
-
-        let id =
-          Math.random()
-            .toString(36)
-            .substr(2, 9) +
-          "_" +
-          Date.now();
-
-        schedulingOptions = {
-          time: t.getTime()
-        };
-
-        let notification_id = await Notifications.scheduleLocalNotificationAsync(
-          localNotification,
-          schedulingOptions
-        );
-
-        this.props.addNotification({
-          m_id,
-          id,
-          date: t.toString(),
-          status: true,
-          title,
-          body,
-          notification_id
-        });
+      if (date.getTime() < new Date(Date.now()).getTime()) {
+        if (this.props.data.recurrence === "day")
+          date.setDate(date.getDate() + 1);
+        else if (this.props.data.recurrence === "week")
+          date.setDate(date.getDate() + 1 * 7);
+        else if (this.props.data.recurrence === "month")
+          date.setMonth(date.getMonth() + 1);
+        else if (this.props.data.recurrence === "year")
+          date.setFullYear(date.getFullYear() + 1);
       }
+
+      let schedulingOptions = {
+        time: date.getTime(),
+        repeat: recurrence
+      };
+
+      let notification_id = await Notifications.scheduleLocalNotificationAsync(
+        localNotification,
+        schedulingOptions
+      );
+
+      let id =
+        Math.random()
+          .toString(36)
+          .substr(2, 9) +
+        "_" +
+        Date.now();
+
+      this.props.addNotification({
+        m_id,
+        id,
+        date: date.toString(),
+        status: true,
+        title,
+        body,
+        notification_id
+      });
     });
   }
 
@@ -247,20 +263,6 @@ class EditScreen extends Component {
     }
     if (this.props.data.intake_times.length <= 0) {
       errors.push(localizedStrings[this.props.language].errorNoIntakeTimes);
-    }
-
-    let dailyLength = new DateDiff(
-      new Date(this.props.data.end_date),
-      new Date(this.props.data.start_date)
-    );
-
-    if (
-      this.props.data.recurrence === "day" &&
-      Math.ceil(dailyLength.months()) > 3
-    ) {
-      errors.push(
-        localizedStrings[this.props.language].errorDailyMoreThanThree
-      );
     }
 
     let dateNow = new Date(Date.now());
@@ -310,7 +312,7 @@ class EditScreen extends Component {
         uri: this.props.data.uri
       });
 
-      await this.updateNotifications(this.state.m_id);
+      this.updateNotifications(this.state.m_id);
 
       this.setState({ added: true });
 
@@ -458,8 +460,6 @@ export default connect(
     set_image_uri,
     updateMedication,
     addNotification,
-    addNotifications,
-    updateNotification,
     deleteNotifications
   }
 )(EditScreen);

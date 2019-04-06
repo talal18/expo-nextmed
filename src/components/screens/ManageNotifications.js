@@ -1,12 +1,5 @@
 import React from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  Switch,
-  FlatList,
-  TextInput
-} from "react-native";
+import { Text, View, StyleSheet, Switch, FlatList, Alert } from "react-native";
 
 import { connect } from "react-redux";
 
@@ -16,8 +9,6 @@ import Metrics from "../../styling/Metrics";
 import { localizedStrings } from "../../common/languages";
 
 import { Notifications } from "expo";
-
-import { Calendar } from "react-native-calendars";
 
 class ManageNotifications extends React.Component {
   constructor(props) {
@@ -135,18 +126,7 @@ class ManageNotifications extends React.Component {
 
     return {
       date,
-      customText:
-        dayName +
-        " " +
-        monthName +
-        " " +
-        day +
-        " " +
-        year +
-        " " +
-        hours +
-        ":" +
-        minutes
+      customText: hours + ":" + minutes
     };
   };
 
@@ -166,22 +146,48 @@ class ManageNotifications extends React.Component {
           <View style={styles.switchContainer}>
             <Switch
               style={styles.switch}
-              disabled={
-                new Date(item.date).getTime() < new Date(Date.now()).getTime()
-              }
               value={item.status}
-              onValueChange={status => {
+              onValueChange={async status => {
                 if (status === false) {
-                  if (item.notification_id !== null)
-                    Notifications.cancelScheduledNotificationAsync(
-                      item.notification_id
-                    );
+                  Alert.alert(
+                    localizedStrings[this.props.language].infoLabel,
+                    localizedStrings[this.props.language]
+                      .futureNotificationsLabel,
+                    [
+                      {
+                        text: localizedStrings[this.props.language].noLabel,
+                        onPress: async () => {
+                          if (item.notification_id !== null)
+                            await Notifications.cancelScheduledNotificationAsync(
+                              item.notification_id
+                            );
 
-                  this.props.updateNotification(
-                    item.id,
-                    item.m_id,
-                    item.notification_id,
-                    status
+                          this.props.updateNotification(
+                            item.id,
+                            item.m_id,
+                            item.notification_id,
+                            true
+                          );
+                        }
+                      },
+                      {
+                        text: localizedStrings[this.props.language].yesLabel,
+                        onPress: async () => {
+                          if (item.notification_id !== null)
+                            await Notifications.cancelScheduledNotificationAsync(
+                              item.notification_id
+                            );
+
+                          this.props.updateNotification(
+                            item.id,
+                            item.m_id,
+                            item.notification_id,
+                            status
+                          );
+                        }
+                      }
+                    ],
+                    { cancelable: false }
                   );
                 } else {
                   const localNotification = {
@@ -199,21 +205,37 @@ class ManageNotifications extends React.Component {
                     }
                   };
 
-                  var schedulingOptions = {
-                    time: new Date(item.date).getTime()
+                  let now = new Date(Date.now());
+                  let myDate = new Date(item.date);
+                  let minutes = myDate.getMinutes();
+                  let hours = myDate.getHours();
+
+                  let date = new Date(
+                    now.getFullYear(),
+                    now.getMonth(),
+                    now.getDate(),
+                    hours,
+                    minutes,
+                    "0",
+                    "0"
+                  );
+
+                  let schedulingOptions = {
+                    time: date.getTime(),
+                    repeat: this.props.data.recurrence
                   };
 
-                  Notifications.scheduleLocalNotificationAsync(
+                  let notification_id = await Notifications.scheduleLocalNotificationAsync(
                     localNotification,
                     schedulingOptions
-                  ).then(notification_id => {
-                    this.props.updateNotification(
-                      item.id,
-                      item.m_id,
-                      notification_id,
-                      status
-                    );
-                  });
+                  );
+
+                  this.props.updateNotification(
+                    item.id,
+                    item.m_id,
+                    notification_id,
+                    status
+                  );
                 }
               }}
               thumbColor="#D4D4D4"
@@ -237,94 +259,13 @@ class ManageNotifications extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={styles.calendarContainer}>
-          <Calendar
-            style={{
-              borderWidth: 1,
-              borderColor: "gray"
-            }}
-            theme={{
-              calendarBackground: "#242424",
-              textSectionTitleColor: "#d6d6d6",
-              selectedDayBackgroundColor: "#009688",
-              selectedDayTextColor: "#d6d6d6",
-              todayTextColor: "#fff",
-              dayTextColor: "#d6d6d6",
-              textDisabledColor: "#595d63",
-              dotColor: "white",
-              selectedDotColor: "#ffffff",
-              arrowColor: "#009688",
-              monthTextColor: "#d6d6d6",
-              textMonthFontWeight: "bold",
-              textDayFontSize: Metrics.CalenderDayFontSize,
-              textMonthFontSize: 15,
-              textDayHeaderFontSize: 14
-            }}
-            // Minimum date that can be selected, dates before minDate will be grayed out. Default = undefined
-            minDate={new Date(this.props.data.start_date)}
-            // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
-            maxDate={new Date(this.props.data.end_date)}
-            // Handler which gets executed on day press. Default = undefined
-            onDayPress={day => {
-              var selectedDate = new Date(day.dateString);
-
-              this.setState({
-                selectedDate,
-                selected: day.dateString
-              });
-            }}
-            // Handler which gets executed on day long press. Default = undefined
-            onDayLongPress={day => {
-              console.log("selected day", day);
-            }}
-            // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
-            monthFormat={"MMMM yyyy"}
-            // Handler which gets executed when visible month changes in calendar. Default = undefined
-            onMonthChange={month => {
-              console.log("month changed", month);
-            }}
-            // Hide month navigation arrows. Default = false
-            hideArrows={false}
-            // Replace default arrows with custom ones (direction can be 'left' or 'right')
-            // Do not show days of other months in month page. Default = false
-            hideExtraDays={true}
-            // If hideArrows=false and hideExtraDays=false do not switch month when tapping on greyed out
-            // day from another month that is visible in calendar page. Default = false
-            disableMonthChange={true}
-            // Hide day names. Default = false
-            hideDayNames={false}
-            // Show week numbers to the left. Default = false
-            showWeekNumbers={false}
-            // Handler which gets executed when press arrow icon left. It receive a callback can go back month
-            onPressArrowLeft={substractMonth => substractMonth()}
-            // Handler which gets executed when press arrow icon left. It receive a callback can go next month
-            onPressArrowRight={addMonth => addMonth()}
-            markedDates={{
-              [this.state.selected]: {
-                selected: true,
-                disableTouchEvent: true,
-                selectedDotColor: "orange"
-              }
-            }}
-          />
-        </View>
         <View style={styles.listContainer}>
           <FlatList
             data={Object.values(
               this.props.notifications[this.props.navigation.state.params.id]
-            )
-              .filter(notification => {
-                var date = new Date(notification.date);
-                var selectedDate = new Date(this.state.selectedDate);
-                return (
-                  date.getDate() === selectedDate.getDate() + 1 &&
-                  date.getMonth() === selectedDate.getMonth() &&
-                  date.getFullYear() === selectedDate.getFullYear()
-                );
-              })
-              .sort(function(a, b) {
-                return new Date(a.date) - new Date(b.date);
-              })}
+            ).sort(function(a, b) {
+              return new Date(a.date) - new Date(b.date);
+            })}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => index.toString()}
           />

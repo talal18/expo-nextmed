@@ -2,7 +2,8 @@ import {
   ADD_MEDICATION,
   UPDATE_MEDICATION,
   DELETE_MEDICATION,
-  RESET_MEDICATIONS
+  RESET_MEDICATIONS,
+  UPDATE_HISTORY
 } from "../types/medications";
 
 const defaultState = {
@@ -17,6 +18,17 @@ export default function reducer(state = defaultState, action) {
         medications: {
           ...state.medications,
           [action.medication.m_id]: action.medication
+        }
+      };
+    case UPDATE_HISTORY:
+      return {
+        ...state,
+        medications: {
+          ...state.medications,
+          [action.m_id]: {
+            ...state.medications[action.m_id],
+            history: action.history
+          }
         }
       };
     case UPDATE_MEDICATION:

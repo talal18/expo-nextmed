@@ -10,8 +10,6 @@ import {
   Platform
 } from "react-native";
 
-import DateDiff from "date-diff";
-
 import { FileSystem, Notifications } from "expo";
 
 import { connect } from "react-redux";
@@ -19,11 +17,7 @@ import { connect } from "react-redux";
 import { reset_data } from "../../redux/actions/data";
 
 import { addMedication } from "../../redux/actions/medications";
-import {
-  addNotification,
-  addNotifications,
-  updateNotification
-} from "../../redux/actions/notifications";
+import { addNotification } from "../../redux/actions/notifications";
 
 import Metrics from "../../styling/Metrics";
 
@@ -45,9 +39,7 @@ class AddScreen extends Component {
 
     this.state = {
       added: false,
-      m_id: "",
-      tempNotifications: [],
-      notificationsCount: 0
+      m_id: ""
     };
   }
 
@@ -72,50 +64,54 @@ class AddScreen extends Component {
         );
   }
 
-  isBeforeNow(time) {
-    let myDate = new Date(time);
-    let minutes = myDate.getMinutes();
-    let hours = myDate.getHours();
-
-    let today = new Date(Date.now());
+  async addNotifications(m_id) {
     let start_date = new Date(this.props.data.start_date);
+    let end_date = new Date(this.props.data.end_date);
 
-    let start_day = start_date.getDate();
-    let start_month = start_date.getMonth();
-    let start_year = start_date.getFullYear();
+    let title = this.props.data.title;
+    let body =
+      this.props.data.title +
+      ": " +
+      this.props.data.dosage +
+      " " +
+      this.props.data.type;
 
-    if (
-      start_day === today.getDate() &&
-      start_month === today.getMonth() &&
-      start_year === today.getFullYear()
-    ) {
-      if (today.getHours() === hours) {
-        return today.getMinutes() >= minutes;
-      } else {
-        return today.getHours() > hours;
+    const localNotification = {
+      title,
+      body,
+      ios: {
+        sound: true
+      },
+      android: {
+        channelId: "nextmedNotifications",
+        sound: true,
+        priority: "high",
+        sticky: false,
+        vibrate: true
       }
-    } else {
-      return false;
-    }
-  }
+    };
 
-  addNotifications(m_id) {
-    return new Promise(resolve => {
-      let start_date = new Date(this.props.data.start_date);
-      let end_date = new Date(this.props.data.end_date);
-      let diff = new DateDiff(end_date, start_date);
+    let recurrence = this.props.data.recurrence;
 
-      let notifications = []; // 90 notification
+    let end_date_time = new Date(
+      this.props.data.intake_times[this.props.data.intake_times.length - 1]
+    );
 
-      let title = this.props.data.title;
-      let body =
-        this.props.data.title +
-        ": " +
-        this.props.data.dosage +
-        " " +
-        this.props.data.type;
+    let end_date_reminder = new Date(
+      end_date.getFullYear(),
+      end_date.getMonth(),
+      end_date.getDate(),
+      end_date_time.getHours(),
+      end_date_time.getMinutes(),
+      "0",
+      "0"
+    );
 
-      const localNotification = {
+    let end_date_id = await Notifications.scheduleLocalNotificationAsync(
+      {
+        data: {
+          m_id
+        },
         title,
         body,
         ios: {
@@ -125,98 +121,67 @@ class AddScreen extends Component {
           channelId: "nextmedNotifications",
           sound: true,
           priority: "high",
-          sticky: false,
-          vibrate: true
+          vibrate: true,
+          sticky: true
         }
+      },
+      {
+        time: end_date_reminder.getTime()
+      }
+    );
+
+    this.props.data.intake_times.map(async time => {
+      let myDate = new Date(time);
+      let minutes = myDate.getMinutes();
+      let hours = myDate.getHours();
+
+      let date = new Date(
+        start_date.getFullYear(),
+        start_date.getMonth(),
+        start_date.getDate(),
+        hours,
+        minutes,
+        "0",
+        "0"
+      );
+
+      if (date.getTime() < new Date(Date.now()).getTime()) {
+        if (this.props.data.recurrence === "day")
+          date.setDate(date.getDate() + 1);
+        else if (this.props.data.recurrence === "week")
+          date.setDate(date.getDate() + 1 * 7);
+        else if (this.props.data.recurrence === "month")
+          date.setMonth(date.getMonth() + 1);
+        else if (this.props.data.recurrence === "year")
+          date.setFullYear(date.getFullYear() + 1);
+      }
+
+      let schedulingOptions = {
+        time: date.getTime(),
+        repeat: recurrence
       };
 
-      let count = 0;
-      let recurrence = this.props.data.recurrence;
+      let notification_id = await Notifications.scheduleLocalNotificationAsync(
+        localNotification,
+        schedulingOptions
+      );
 
-      if (recurrence === "day") count = diff.days();
-      else if (recurrence === "week")
-        count = diff.weeks() > 52 ? 52 : diff.weeks();
-      else if (recurrence === "month") count = diff.months();
-      else if (recurrence === "year") count = diff.years();
+      let id =
+        Math.random()
+          .toString(36)
+          .substr(2, 9) +
+        "_" +
+        Date.now();
 
-      let notificationsCount = 0;
-
-      this.props.data.intake_times.map(time => {
-        let myDate = new Date(time);
-        let minutes = myDate.getMinutes();
-        let hours = myDate.getHours();
-
-        let isBeforeNow = this.isBeforeNow(time);
-
-        notificationsCount =
-          count * this.props.data.intake_times.length -
-          (isBeforeNow ? 1 : 0) +
-          1;
-
-        this.setState({ notificationsCount });
-
-        console.log(notificationsCount);
-
-        let date = new Date(
-          start_date.getFullYear(),
-          start_date.getMonth(),
-          start_date.getDate(),
-          hours,
-          minutes,
-          "0",
-          "0"
-        );
-
-        for (let i = isBeforeNow ? 1 : 0; i <= count; i++) {
-          let t = new Date(date);
-
-          if (recurrence === "day") t.setDate(t.getDate() + i);
-          else if (recurrence === "week") t.setDate(t.getDate() + i * 7);
-          else if (recurrence === "month") t.setMonth(t.getMonth() + i);
-          else if (recurrence === "year") t.setFullYear(t.getFullYear() + i);
-
-          let id =
-            Math.random()
-              .toString(36)
-              .substr(2, 9) +
-            "_" +
-            Date.now();
-
-          schedulingOptions = {
-            time: t.getTime()
-          };
-
-          Notifications.scheduleLocalNotificationAsync(
-            localNotification,
-            schedulingOptions
-          ).then(notification_id => {
-            console.log(notification_id);
-            this.setState({
-              tempNotifications: [
-                ...this.state.tempNotifications,
-                {
-                  m_id,
-                  id,
-                  date: t.toString(),
-                  status: true,
-                  title,
-                  body,
-                  notification_id
-                }
-              ]
-            });
-          });
-          console.log("test " + i);
-        }
+      this.props.addNotification({
+        m_id,
+        id,
+        date: date.toString(),
+        status: true,
+        title,
+        body,
+        notification_id
       });
-
-      if (
-        this.state.tempNotifications.length === this.state.notificationsCount
-      ) {
-        resolve("success");
-      } else {
-        resolve("empty");
-      }
     });
   }
 
@@ -242,20 +207,6 @@ class AddScreen extends Component {
       errors.push(localizedStrings[this.props.language].errorNoIntakeTimes);
     }
 
-    let dailyLength = new DateDiff(
-      new Date(this.props.data.end_date),
-      new Date(this.props.data.start_date)
-    );
-
-    if (
-      this.props.data.recurrence === "day" &&
-      Math.ceil(dailyLength.months()) > 3
-    ) {
-      errors.push(
-        localizedStrings[this.props.language].errorDailyMoreThanThree
-      );
-    }
-
     if (errors.length > 0) {
       Alert.alert(
         localizedStrings[this.props.language].errorLabel,
@@ -279,47 +230,15 @@ class AddScreen extends Component {
         recurrence: this.props.data.recurrence,
         dosage: this.props.data.dosage,
         notes: this.props.data.notes,
-        uri: this.props.data.uri
+        uri: this.props.data.uri,
+        history: false
       });
 
-      // await this.addNotifications(this.state.m_id);
+      this.addNotifications(this.state.m_id);
 
-      // do {
-      //   console.log(this.state.notificationsCount);
-      //   if (
-      //     this.state.notificationsCount === this.state.tempNotifications.length
-      //   ) {
-      //     console.log("Here");
+      this.setState({ added: true });
 
-      //     this.setState({ added: true });
-
-      //     this.props.navigation.navigate("Home");
-      //   }
-      // } while (
-      //   this.state.notificationsCount <= this.state.tempNotifications.length
-      // );
-
-      this.addNotifications(this.state.m_id).then(async result => {
-        if (result === "success") {
-          this.setState({ added: true });
-
-          console.log(this.state.notificationsCount);
-
-          this.props.navigation.navigate("Home");
-        } else if (result === "empty") {
-          return Alert.alert(
-            localizedStrings[this.props.language].errorLabel,
-            "No notifications will be schedualed. Please check dates and intake times",
-            [
-              {
-                text: localizedStrings[this.props.language].okLabel,
-                onPress: () => {}
-              }
-            ],
-            { cancelable: false }
-          );
-        }
-      });
+      this.props.navigation.navigate("Home");
     }
   }
 
@@ -427,8 +346,7 @@ const mapStateToProps = state => {
   return {
     data: state.dataState.data,
     language: state.settingsState.language,
-    notifications: state.notState.notifications,
-    loading: state.notState.loading
+    notifications: state.notState.notifications
   };
 };
 
@@ -437,8 +355,6 @@ export default connect(
   {
     addMedication,
     addNotification,
-    addNotifications,
-    updateNotification,
     reset_data
   }
 )(AddScreen);

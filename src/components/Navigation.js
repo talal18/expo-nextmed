@@ -19,6 +19,7 @@ import EditScreen from "./screens/EditScreen";
 
 import ManageNotifications from "./screens/ManageNotifications";
 import { localizedStrings } from "../common/languages";
+import HistoryScreen from "./screens/HistoryScreen";
 
 const AppNavigator = createStackNavigator({
   Tabs: {
@@ -49,6 +50,22 @@ const AppNavigator = createStackNavigator({
                   />
                 </TouchableOpacity>
               )
+            })
+          }
+        }),
+        History: createStackNavigator({
+          History: {
+            screen: HistoryScreen,
+            navigationOptions: ({ navigation, screenProps }) => ({
+              headerTitle: localizedStrings[screenProps.language].homeTitle,
+              headerStyle: {
+                backgroundColor: "#595d63"
+              },
+              headerTintColor: "#d6d6d6",
+              headerTitleStyle: {
+                fontSize: Metrics.navigationTitleFontSize,
+                fontFamily: "sansBold"
+              }
             })
           }
         }),

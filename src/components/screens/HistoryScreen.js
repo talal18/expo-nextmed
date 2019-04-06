@@ -26,7 +26,7 @@ import {
 
 import { updateNotification } from "../../redux/actions/notifications";
 
-class HomeScreen extends React.Component {
+class HistoryScreen extends React.Component {
   constructor(props) {
     super(props);
   }
@@ -149,7 +149,7 @@ class HomeScreen extends React.Component {
         {this.props.medications.length > 0 ? (
           <FlatList
             data={this.props.medications.filter(item => {
-              return item.history === false;
+              return item.history === true;
             })}
             renderItem={this.renderItem}
             keyExtractor={(item, index) => index.toString()}
@@ -251,4 +251,4 @@ export default connect(
     updateMedicationHistory,
     updateNotification
   }
-)(HomeScreen);
+)(HistoryScreen);

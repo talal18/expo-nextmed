@@ -77,7 +77,12 @@ export const localizedStrings = {
     errorDailyMoreThanThree:
       "Please select only 3 months for daily frequency\n",
     errorLabel: "Error",
+    infoLabel: "Info",
     okLabel: "Ok",
+    yesLabel: "Yes",
+    noLabel: "No",
+    futureNotificationsLabel:
+      "Would you like to stop future notifications for this time?",
     errorStartDateBeforeTodayDateLabel:
       "Start date can't be before today's date\n",
     notificationDueLabel: "is now due. You should take"
@@ -168,7 +173,12 @@ export const localizedStrings = {
     errorDailyMoreThanThree:
       "Please select only 3 months for daily frequency\n",
     errorLabel: "Erreur",
+    infoLabel: "Info",
     okLabel: "D'accord",
+    yesLabel: "Yes",
+    noLabel: "No",
+    futureNotificationsLabel:
+      "Would you like to stop future notifications for this time?",
     errorStartDateBeforeTodayDateLabel:
       "La date de début ne peut pas être antérieure à la date du jour\n",
     notificationDueLabel: "est maintenant due. Tu devrais prendre"
@@ -259,7 +269,12 @@ export const localizedStrings = {
     errorDailyMoreThanThree:
       "Please select only 3 months for daily frequency\n",
     errorLabel: "Error",
+    infoLabel: "Info",
     okLabel: "De acuerdo",
+    yesLabel: "Yes",
+    noLabel: "No",
+    futureNotificationsLabel:
+      "Would you like to stop future notifications for this time?",
     errorStartDateBeforeTodayDateLabel:
       "La fecha de inicio no puede ser anterior a la fecha de hoy\n",
     notificationDueLabel: "ahora se debe Deberías tomar"
@@ -346,7 +361,12 @@ export const localizedStrings = {
     errorDailyMoreThanThree:
       "Please select only 3 months for daily frequency\n",
     errorLabel: "خطأ",
+    infoLabel: "Info",
     okLabel: "تم",
+    yesLabel: "Yes",
+    noLabel: "No",
+    futureNotificationsLabel:
+      "Would you like to stop future notifications for this time?",
     errorStartDateBeforeTodayDateLabel:
       "لا يمكن أن يكون تاريخ البدء قبل تاريخ اليوم\n",
     notificationDueLabel: "هو الآن وقته. يجب عليك ان تاخذ"
