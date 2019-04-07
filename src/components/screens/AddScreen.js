@@ -110,7 +110,8 @@ class AddScreen extends Component {
     let end_date_id = await Notifications.scheduleLocalNotificationAsync(
       {
         data: {
-          m_id
+          m_id,
+          isEndDate: true
         },
         title,
         body,

@@ -41,7 +41,11 @@ class HomeScreen extends React.Component {
     this.props.reset_data();
 
     Notifications.addListener(notification => {
-      if (notification.origin === "selected") {
+      if (
+        notification.origin === "selected" &&
+        notification.data.isEndDate !== null &&
+        notification.data.isEndDate === true
+      ) {
         let notifications = this.props.notifications[notification.data.m_id];
 
         for (id in notifications) {

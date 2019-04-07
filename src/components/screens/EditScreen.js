@@ -168,7 +168,8 @@ class EditScreen extends Component {
     let end_date_id = await Notifications.scheduleLocalNotificationAsync(
       {
         data: {
-          m_id
+          m_id,
+          isEndDate: true
         },
         title,
         body,
@@ -309,7 +310,8 @@ class EditScreen extends Component {
         recurrence: this.props.data.recurrence,
         dosage: this.props.data.dosage,
         notes: this.props.data.notes,
-        uri: this.props.data.uri
+        uri: this.props.data.uri,
+        history: false
       });
 
       this.updateNotifications(this.state.m_id);
