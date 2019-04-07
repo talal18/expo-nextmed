@@ -149,45 +149,16 @@ class ManageNotifications extends React.Component {
               value={item.status}
               onValueChange={async status => {
                 if (status === false) {
-                  Alert.alert(
-                    localizedStrings[this.props.language].infoLabel,
-                    localizedStrings[this.props.language]
-                      .futureNotificationsLabel,
-                    [
-                      {
-                        text: localizedStrings[this.props.language].noLabel,
-                        onPress: async () => {
-                          if (item.notification_id !== null)
-                            await Notifications.cancelScheduledNotificationAsync(
-                              item.notification_id
-                            );
+                  if (item.notification_id !== null)
+                    await Notifications.cancelScheduledNotificationAsync(
+                      item.notification_id
+                    );
 
-                          this.props.updateNotification(
-                            item.id,
-                            item.m_id,
-                            item.notification_id,
-                            true
-                          );
-                        }
-                      },
-                      {
-                        text: localizedStrings[this.props.language].yesLabel,
-                        onPress: async () => {
-                          if (item.notification_id !== null)
-                            await Notifications.cancelScheduledNotificationAsync(
-                              item.notification_id
-                            );
-
-                          this.props.updateNotification(
-                            item.id,
-                            item.m_id,
-                            item.notification_id,
-                            status
-                          );
-                        }
-                      }
-                    ],
-                    { cancelable: false }
+                  this.props.updateNotification(
+                    item.id,
+                    item.m_id,
+                    item.notification_id,
+                    status
                   );
                 } else {
                   const localNotification = {

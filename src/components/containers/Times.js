@@ -104,7 +104,7 @@ class Times extends Component {
   _handleTimePicked = time => {
     var isSame = false;
     this.props.intake_times.map((item, index) => {
-      if (item.time === time.getTime()) {
+      if (item === time.getTime()) {
         isSame = true;
       }
     });

@@ -45,19 +45,25 @@ class HomeScreen extends React.Component {
         let notifications = this.props.notifications[notification.data.m_id];
 
         for (id in notifications) {
-          let notification = notifications[id];
+          let item = notifications[id];
 
-          if (notification.status === true) {
-            if (notification.notification_id !== null) {
-              this.props.updateNotification(
-                notification.id,
-                notification.data.m_id,
-                notification.notification_id,
-                false
-              );
+          if (item.status === true) {
+            if (item.notification_id !== null) {
               Notifications.cancelScheduledNotificationAsync(
-                notification.notification_id
-              );
+                item.notification_id
+              )
+                .then(result => {
+                  console.log(item);
+                  this.props.updateNotification(
+                    item.id,
+                    item.m_id,
+                    item.notification_id,
+                    false
+                  );
+                })
+                .catch(error => {
+                  console.log(error);
+                });
             }
           }
         }

@@ -3,6 +3,7 @@ export const localizedStrings = {
   en: {
     //Page Titles
     homeTitle: "Medicine List",
+    historyTitle: "History",
     addTitle: "Add",
     editTitle: "Edit",
     settingsTitle: "Settings",
@@ -93,6 +94,7 @@ export const localizedStrings = {
     //Page Titles
     homeTitle: "Liste de médecine",
     addTitle: "Ajouter",
+    historyTitle: "History",
     editTitle: "modifier",
     settingsTitle: "Réglages",
     backupTitle: "Des sauvegardes",
@@ -189,6 +191,7 @@ export const localizedStrings = {
     //Page Titles
     homeTitle: "Lista de medicamentos",
     addTitle: "Añadir",
+    historyTitle: "History",
     editTitle: "Editar",
     settingsTitle: "Ajustes",
     backupTitle: "Copias de seguridad",
@@ -284,6 +287,7 @@ export const localizedStrings = {
   ar: {
     //Page Titles
     homeTitle: "قائمة الأدوية",
+    historyTitle: "History",
     addTitle: "إضافة",
     editTitle: "تعديل",
     settingsTitle: "الإعدادات",

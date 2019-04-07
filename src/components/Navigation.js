@@ -57,7 +57,7 @@ const AppNavigator = createStackNavigator({
           History: {
             screen: HistoryScreen,
             navigationOptions: ({ navigation, screenProps }) => ({
-              headerTitle: localizedStrings[screenProps.language].homeTitle,
+              headerTitle: localizedStrings[screenProps.language].historyTitle,
               headerStyle: {
                 backgroundColor: "#595d63"
               },

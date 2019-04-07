@@ -31,45 +31,6 @@ class HistoryScreen extends React.Component {
     super(props);
   }
 
-  async componentDidMount() {
-    let result = await Permissions.askAsync(
-      Permissions.NOTIFICATIONS,
-      Permissions.CAMERA,
-      Permissions.CAMERA_ROLL
-    );
-
-    this.props.reset_data();
-
-    Notifications.addListener(notification => {
-      if (notification.origin === "selected") {
-        let notifications = this.props.notifications[notification.data.m_id];
-
-        for (id in notifications) {
-          let notification = notifications[id];
-
-          if (notification.status === true) {
-            if (notification.notification_id !== null) {
-              this.props.updateNotification(
-                notification.id,
-                notification.data.m_id,
-                notification.notification_id,
-                false
-              );
-              Notifications.cancelScheduledNotificationAsync(
-                notification.notification_id
-              );
-            }
-          }
-        }
-
-        this.props.updateMedicationHistory(notification.data.m_id, true);
-
-        // console.log(notification);
-        // console.log(notifications);
-      }
-    });
-  }
-
   renderItem = ({ item }) => {
     return (
       <View>
