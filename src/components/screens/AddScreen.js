@@ -39,7 +39,8 @@ class AddScreen extends Component {
 
     this.state = {
       added: false,
-      m_id: ""
+      m_id: "",
+      endDateNotificationId: 0
     };
   }
 
@@ -107,7 +108,7 @@ class AddScreen extends Component {
       "0"
     );
 
-    let end_date_id = await Notifications.scheduleLocalNotificationAsync(
+    let endDateNotificationId = await Notifications.scheduleLocalNotificationAsync(
       {
         data: {
           m_id,
@@ -131,6 +132,8 @@ class AddScreen extends Component {
       }
     );
 
+    this.setState({ endDateNotificationId });
+
     this.props.data.intake_times.map(async time => {
       let myDate = new Date(time);
       let minutes = myDate.getMinutes();
@@ -146,16 +149,16 @@ class AddScreen extends Component {
         "0"
       );
 
-      if (date.getTime() < new Date(Date.now()).getTime()) {
-        if (this.props.data.recurrence === "day")
-          date.setDate(date.getDate() + 1);
-        else if (this.props.data.recurrence === "week")
-          date.setDate(date.getDate() + 1 * 7);
-        else if (this.props.data.recurrence === "month")
-          date.setMonth(date.getMonth() + 1);
-        else if (this.props.data.recurrence === "year")
-          date.setFullYear(date.getFullYear() + 1);
-      }
+      // if (date.getTime() < new Date(Date.now()).getTime()) {
+      //   if (this.props.data.recurrence === "day")
+      //     date.setDate(date.getDate() + 1);
+      //   else if (this.props.data.recurrence === "week")
+      //     date.setDate(date.getDate() + 1 * 7);
+      //   else if (this.props.data.recurrence === "month")
+      //     date.setMonth(date.getMonth() + 1);
+      //   else if (this.props.data.recurrence === "year")
+      //     date.setFullYear(date.getFullYear() + 1);
+      // }
 
       let schedulingOptions = {
         time: date.getTime(),
@@ -221,6 +224,8 @@ class AddScreen extends Component {
         { cancelable: false }
       );
     } else {
+      await this.addNotifications(this.state.m_id);
+
       this.props.addMedication({
         m_id: this.state.m_id,
         title: this.props.data.title,
@@ -232,10 +237,9 @@ class AddScreen extends Component {
         dosage: this.props.data.dosage,
         notes: this.props.data.notes,
         uri: this.props.data.uri,
-        history: false
+        history: false,
+        endDateNotificationId: this.state.endDateNotificationId
       });
-
-      this.addNotifications(this.state.m_id);
 
       this.setState({ added: true });
 

@@ -15,7 +15,8 @@ export const localizedStrings = {
     //Home page
     medicineListLabel: "Medicine List",
     homeEmptyListLabel:
-      "You don't have any scheduled medicines, Please add you medications.",
+      "You don't have any scheduled medicines, Please add you medications",
+    historyEmptyListLabel: "You don't have any completed medicines",
     //Settings Page
     languagesLabel: "Languages",
     selectedLanguageLabel: "English",
@@ -106,7 +107,9 @@ export const localizedStrings = {
     //Home page
     medicineListLabel: "Liste de médecine",
     homeEmptyListLabel:
-      "Vous n'avez pas de médicaments prévus, veuillez ajouter vos médicaments.",
+      "Vous n'avez pas de médicaments prévus, veuillez ajouter vos médicaments",
+    historyEmptyListLabel: "You don't have any completed medicines",
+
     //Settings Page
     languagesLabel: "Les langues",
     selectedLanguageLabel: "francés",
@@ -203,7 +206,9 @@ export const localizedStrings = {
     //Home page
     medicineListLabel: "Lista de medicamentos",
     homeEmptyListLabel:
-      "No tienes ningún medicamento programado, por favor agrega tus medicamentos.",
+      "No tienes ningún medicamento programado, por favor agrega tus medicamentos",
+    historyEmptyListLabel: "You don't have any completed medicines",
+
     //Settings Page
     languagesLabel: "Idiomas",
     selectedLanguageLabel: "Español",
@@ -300,6 +305,7 @@ export const localizedStrings = {
     //Home page
     medicineListLabel: "قائمة الأدوية",
     homeEmptyListLabel: "  ليس لديك أي أدوية مجدولة",
+    historyEmptyListLabel: "You don't have any completed medicines.",
     //Settings Page
     languagesLabel: "اللغة",
     selectedLanguageLabel: "العربية",

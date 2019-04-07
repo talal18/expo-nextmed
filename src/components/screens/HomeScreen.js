@@ -156,7 +156,9 @@ class HomeScreen extends React.Component {
     // console.log(this.props.medications);
     return (
       <View style={styles.container}>
-        {this.props.medications.length > 0 ? (
+        {this.props.medications.filter(item => {
+          return item.history === false;
+        }).length > 0 ? (
           <FlatList
             data={this.props.medications.filter(item => {
               return item.history === false;

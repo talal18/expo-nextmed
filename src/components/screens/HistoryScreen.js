@@ -107,7 +107,9 @@ class HistoryScreen extends React.Component {
     // console.log(this.props.medications);
     return (
       <View style={styles.container}>
-        {this.props.medications.length > 0 ? (
+        {this.props.medications.filter(item => {
+          return item.history === true;
+        }).length > 0 ? (
           <FlatList
             data={this.props.medications.filter(item => {
               return item.history === true;
@@ -119,7 +121,7 @@ class HistoryScreen extends React.Component {
           <View style={styles.emptyFlatListContainer}>
             <View style={styles.emptyTextContainer}>
               <Text style={styles.emptyFlatListText}>
-                {localizedStrings[this.props.language].homeEmptyListLabel}
+                {localizedStrings[this.props.language].historyEmptyListLabel}
               </Text>
             </View>
           </View>
