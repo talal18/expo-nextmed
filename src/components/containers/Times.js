@@ -135,6 +135,7 @@ class Times extends Component {
       <DateTimePicker
         confirmTextStyle={{ color: "#009688" }}
         cancelTextStyle={{ color: "#009688" }}
+        style={{ backgroundColor: "green" }}
         is24Hour={false}
         mode={"time"}
         isVisible={this.state.time_dialog_visible}

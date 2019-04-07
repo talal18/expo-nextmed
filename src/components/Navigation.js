@@ -119,6 +119,13 @@ const AppNavigator = createStackNavigator({
                   source={require("../../assets/home-tab.png")}
                 />
               );
+            } else if (routeName === "History") {
+              return (
+                <Image
+                  style={{ width: 35, height: 35 }}
+                  source={require("../../assets/history-tab.png")}
+                />
+              );
             } else if (routeName === "Settings") {
               return (
                 <Image
