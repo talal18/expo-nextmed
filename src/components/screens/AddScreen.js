@@ -108,31 +108,40 @@ class AddScreen extends Component {
       "0"
     );
 
-    let endDateNotificationId = await Notifications.scheduleLocalNotificationAsync(
-      {
-        data: {
-          m_id,
-          isEndDate: true
+    if (
+      end_date_reminder.getTime() < end_date.getTime() &&
+      (end_date_reminder.getDate() === end_date.getDate() &&
+        end_date_reminder.getMonth() === end_date.getMonth() &&
+        end_date_reminder.getFullYear() === end_date.getFullYear())
+    ) {
+    } else {
+      let endDateNotificationId = await Notifications.scheduleLocalNotificationAsync(
+        {
+          data: {
+            m_id,
+            isEndDate: true
+          },
+          title:
+            localizedStrings[this.props.language].endDateNotificationTitleLabel,
+          body: localizedStrings[this.props.language].endDateNotificationBody,
+          ios: {
+            sound: true
+          },
+          android: {
+            channelId: "nextmedNotifications",
+            sound: true,
+            priority: "high",
+            vibrate: true,
+            sticky: true
+          }
         },
-        title,
-        body,
-        ios: {
-          sound: true
-        },
-        android: {
-          channelId: "nextmedNotifications",
-          sound: true,
-          priority: "high",
-          vibrate: true,
-          sticky: true
+        {
+          time: end_date_reminder.getTime()
         }
-      },
-      {
-        time: end_date_reminder.getTime()
-      }
-    );
+      );
 
-    this.setState({ endDateNotificationId });
+      this.setState({ endDateNotificationId });
+    }
 
     this.props.data.intake_times.map(async time => {
       let myDate = new Date(time);
@@ -149,43 +158,140 @@ class AddScreen extends Component {
         "0"
       );
 
-      // if (date.getTime() < new Date(Date.now()).getTime()) {
-      //   if (this.props.data.recurrence === "day")
-      //     date.setDate(date.getDate() + 1);
-      //   else if (this.props.data.recurrence === "week")
-      //     date.setDate(date.getDate() + 1 * 7);
-      //   else if (this.props.data.recurrence === "month")
-      //     date.setMonth(date.getMonth() + 1);
-      //   else if (this.props.data.recurrence === "year")
-      //     date.setFullYear(date.getFullYear() + 1);
-      // }
+      let tempDate = date;
 
-      let schedulingOptions = {
-        time: date.getTime(),
-        repeat: recurrence
-      };
+      if (date.getTime() < new Date(Date.now()).getTime()) {
+        if (this.props.data.recurrence === "day") {
+          tempDate.setDate(tempDate.getDate() + 1);
+          if (tempDate.getTime() <= end_date.getTime()) {
+            date.setDate(date.getDate() + 1);
 
-      let notification_id = await Notifications.scheduleLocalNotificationAsync(
-        localNotification,
-        schedulingOptions
-      );
+            let schedulingOptions = {
+              time: date.getTime(),
+              repeat: recurrence
+            };
 
-      let id =
-        Math.random()
-          .toString(36)
-          .substr(2, 9) +
-        "_" +
-        Date.now();
+            let notification_id = await Notifications.scheduleLocalNotificationAsync(
+              localNotification,
+              schedulingOptions
+            );
 
-      this.props.addNotification({
-        m_id,
-        id,
-        date: date.toString(),
-        status: true,
-        title,
-        body,
-        notification_id
-      });
+            let id =
+              Math.random()
+                .toString(36)
+                .substr(2, 9) +
+              "_" +
+              Date.now();
+
+            this.props.addNotification({
+              m_id,
+              id,
+              date: date.toString(),
+              status: true,
+              title,
+              body,
+              notification_id
+            });
+          } else {
+          }
+        } else if (this.props.data.recurrence === "week") {
+          tempDate.setDate(tempDate.getDate() + 1 * 7);
+          if (tempDate.getTime() <= end_date.getTime()) {
+            date.setDate(date.getDate() + 1 * 7);
+
+            let schedulingOptions = {
+              time: date.getTime(),
+              repeat: recurrence
+            };
+
+            let notification_id = await Notifications.scheduleLocalNotificationAsync(
+              localNotification,
+              schedulingOptions
+            );
+
+            let id =
+              Math.random()
+                .toString(36)
+                .substr(2, 9) +
+              "_" +
+              Date.now();
+
+            this.props.addNotification({
+              m_id,
+              id,
+              date: date.toString(),
+              status: true,
+              title,
+              body,
+              notification_id
+            });
+          }
+        } else if (this.props.data.recurrence === "month") {
+          tempDate.setMonth(tempDate.getMonth() + 1);
+          if (tempDate.getTime() <= end_date.getTime()) {
+            date.setMonth(date.getMonth() + 1);
+
+            let schedulingOptions = {
+              time: date.getTime(),
+              repeat: recurrence
+            };
+
+            let notification_id = await Notifications.scheduleLocalNotificationAsync(
+              localNotification,
+              schedulingOptions
+            );
+
+            let id =
+              Math.random()
+                .toString(36)
+                .substr(2, 9) +
+              "_" +
+              Date.now();
+
+            this.props.addNotification({
+              m_id,
+              id,
+              date: date.toString(),
+              status: true,
+              title,
+              body,
+              notification_id
+            });
+          }
+        } else if (this.props.data.recurrence === "year") {
+          tempDate.setFullYear(tempDate.getFullYear() + 1);
+          if (tempDate.getTime() <= end_date.getTime()) {
+            date.setFullYear(date.getFullYear() + 1);
+
+            let schedulingOptions = {
+              time: date.getTime(),
+              repeat: recurrence
+            };
+
+            let notification_id = await Notifications.scheduleLocalNotificationAsync(
+              localNotification,
+              schedulingOptions
+            );
+
+            let id =
+              Math.random()
+                .toString(36)
+                .substr(2, 9) +
+              "_" +
+              Date.now();
+
+            this.props.addNotification({
+              m_id,
+              id,
+              date: date.toString(),
+              status: true,
+              title,
+              body,
+              notification_id
+            });
+          }
+        }
+      }
     });
   }
 

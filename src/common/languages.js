@@ -29,6 +29,9 @@ export const localizedStrings = {
     backupLabel: "Backups",
 
     //Add-Edit screen
+    endDateNotificationTitleLabel: "Medicine Finished",
+    endDateNotificationBody:
+      "You must tap on this notification to stop the medicine schedule",
     medicineTitleLabel: "Title",
     addImageLabel: "Add Image",
     editImageLabel: "Edit Image",
@@ -122,6 +125,9 @@ export const localizedStrings = {
     backupLabel: "Des sauvegardes",
 
     //Add-Edit screen
+    endDateNotificationTitleLabel: "Medicine Finished",
+    endDateNotificationBody:
+      "You must tap on this notification to stop the medicine schedule",
     medicineTitleLabel: "Titre",
     addImageLabel: "Ajouter une image",
     editImageLabel: "éditer l'image",
@@ -221,6 +227,9 @@ export const localizedStrings = {
     backupLabel: "Copias de seguridad",
 
     //Add-Edit screen
+    endDateNotificationTitleLabel: "Medicine Finished",
+    endDateNotificationBody:
+      "You must tap on this notification to stop the medicine schedule",
     medicineTitleLabel: "Título",
     addImageLabel: "Añadir imagen",
     editImageLabel: "Editar imagen",
@@ -318,6 +327,9 @@ export const localizedStrings = {
     backupLabel: "النسخ الاحتياطي",
 
     //Add-Edit screen
+    endDateNotificationTitleLabel: "Medicine Finished",
+    endDateNotificationBody:
+      "You must tap on this notification to stop the medicine schedule",
     medicineTitleLabel: "اسم الدواء",
     addImageLabel: "إضافة صورة",
     editImageLabel: "تعديل الصورة",
